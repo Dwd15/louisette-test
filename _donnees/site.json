@@ -12,7 +12,7 @@
     "affiche": "09 74 64 03 84"
   },
   "email": "contact@louisette-paris.com",
-  "reservation": "https://bookings.zenchef.com/results?rid=364667&amp;pid=1001",
+  "reservation": "https://bookings.zenchef.com/results?rid=364667&pid=1001",
   "mention_alcool": "L'abus d'alcool est dangereux pour la santé, à consommer avec modération.",
   "navigation": [
     [
@@ -64,7 +64,7 @@
         ],
         [
           "bar-cocktails.html",
-          "Bar &amp; cocktails"
+          "Bar & cocktails"
         ]
       ]
     ],
@@ -73,7 +73,7 @@
       [
         [
           "groupes.html",
-          "Groupes &amp; privatisation"
+          "Groupes & privatisation"
         ],
         [
           "terrasse.html",
