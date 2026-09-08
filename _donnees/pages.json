@@ -40,5 +40,19 @@
     "description": "Adresse, horaires et accès de La Maison Louisette : 8 boulevard Saint-Denis, Paris 10, métro Strasbourg-Saint-Denis, ouvert tous les jours de 8 h à 2 h.",
     "og_titre": "Infos pratiques — La Maison Louisette",
     "ariane": "Infos pratiques"
+  },
+  "mentions-legales": {
+    "titre": "Mentions légales — La Maison Louisette",
+    "description": "Mentions légales de La Maison Louisette, 8 boulevard Saint-Denis, 75010 Paris.",
+    "og_titre": "Mentions légales — La Maison Louisette",
+    "ariane": "Mentions légales",
+    "prix_autorises": true
+  },
+  "confidentialite": {
+    "titre": "Politique de confidentialité — La Maison Louisette",
+    "description": "Politique de confidentialité et cookies de La Maison Louisette.",
+    "og_titre": "Confidentialité — La Maison Louisette",
+    "ariane": "Confidentialité",
+    "prix_autorises": true
   }
 }

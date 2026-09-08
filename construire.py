@@ -184,12 +184,23 @@ def controler(faites):
         t = lire(f)
         for l in set(re.findall(r'href="([a-z0-9-]+\.html)(?:#[^"]*)?"', t)):
             if l not in presentes: pbs.append("%s : lien mort vers %s" % (f, l))
-        if re.search(r'\d\s?€', t) and f != "index.html":
+        slug = f[:-5]
+        prix_ok = f == "index.html" or P.get(slug, {}).get("prix_autorises")
+        if re.search(r'\d\s?€', t) and not prix_ok:
             pbs.append("%s : un prix apparait alors que les prix ne sont pas reconcilies" % f)
         if "8h30" in t or "8 h 30" in t: pbs.append("%s : horaire 8h30" % f)
         for mot in ("100 % maison", "tout fait maison", "entièrement travaillée sur place"):
             if mot in t: pbs.append('%s : formulation interdite "%s"' % (f, mot))
         if "abus d'alcool" not in t: pbs.append("%s : mention alcool absente" % f)
+        for img in (re.findall(r'<img [^>]*>', t) if f != "index.html" else []):
+            if not re.search(r'alt="[^"]+"', img):
+                pbs.append("%s : une image n'a pas de description alt" % f)
+            if not (re.search(r'width="\d+"', img) and re.search(r'height="\d+"', img)):
+                pbs.append("%s : une image n'a pas ses dimensions, la page sautera au chargement" % f)
+        for note in re.findall(r'<!--(.*?)-->', t, re.S):
+            if re.search(r'CONTR[OÔ]LE BLOQUANT|[AÀ] CONFIRMER|TODO|REMPLACER|V[EÉ]RIFIER', note, re.I):
+                pbs.append("%s : une note de travail est restee dans le fichier publie" % f)
+                break
         if "&amp;amp;" in t: pbs.append("%s : double mise en forme (&amp;amp;), une donnee a ete traitee deux fois" % f)
     return pbs
 
