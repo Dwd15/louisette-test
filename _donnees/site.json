@@ -29,6 +29,117 @@
     ],
     [
       "bar-cocktails.html",
+      "Bar"
+    ],
+    [
+      "infos-pratiques.html",
+      "Infos pratiques"
+    ]
+  ],
+  "tiroir_extra": [
+    [
+      "terrasse.html",
+      "La terrasse"
+    ],
+    [
+      "brunch.html",
+      "Le brunch"
+    ]
+  ],
+  "pied": [
+    [
+      "La maison",
+      [
+        [
+          "./",
+          "Accueil"
+        ],
+        [
+          "la-maison.html",
+          "La Maison"
+        ],
+        [
+          "theatres.html",
+          "Quartier des théâtres"
+        ],
+        [
+          "bar-cocktails.html",
+          "Bar &amp; cocktails"
+        ]
+      ]
+    ],
+    [
+      "Recevoir",
+      [
+        [
+          "groupes.html",
+          "Groupes &amp; privatisation"
+        ],
+        [
+          "terrasse.html",
+          "La terrasse"
+        ],
+        [
+          "brunch.html",
+          "Le brunch"
+        ]
+      ]
+    ],
+    [
+      "Pratique",
+      [
+        [
+          "infos-pratiques.html",
+          "Infos pratiques"
+        ]
+      ]
+    ],
+    [
+      "Légal",
+      [
+        [
+          "mentions-legales.html",
+          "Mentions légales"
+        ],
+        [
+          "confidentialite.html",
+          "Confidentialité"
+        ]
+      ]
+    ]
+  ]
+}
+{
+  "nom": "La Maison Louisette",
+  "adresse": "8 boulevard Saint-Denis, 75010 Paris",
+  "metro": "Strasbourg-Saint-Denis — lignes 4, 8 et 9",
+  "horaires": "Ouvert 7 j/7 de 8 h à 2 h",
+  "tel_salle": {
+    "lien": "+33140342057",
+    "affiche": "01 40 34 20 57"
+  },
+  "tel_groupes": {
+    "lien": "+33974640384",
+    "affiche": "09 74 64 03 84"
+  },
+  "email": "contact@louisette-paris.com",
+  "reservation": "https://bookings.zenchef.com/results?rid=364667&amp;pid=1001",
+  "mention_alcool": "L'abus d'alcool est dangereux pour la santé, à consommer avec modération.",
+  "navigation": [
+    [
+      "la-maison.html",
+      "La Maison"
+    ],
+    [
+      "groupes.html",
+      "Groupes"
+    ],
+    [
+      "theatres.html",
+      "Théâtres"
+    ],
+    [
+      "bar-cocktails.html",
       "Bar &amp; cocktails"
     ],
     [
