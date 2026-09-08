@@ -18,6 +18,11 @@ Il ecrit :
 RIEN D'AUTRE N'EST TOUCHE. Le fichier index.html garde tout son contenu :
 seuls les blocs entre les marqueurs <!-- NAV:debut --> ... <!-- NAV:fin -->
 et <!-- PIED:debut --> ... <!-- PIED:fin --> sont remplaces.
+
+DANS LES FICHIERS _donnees/*.json ON ECRIT DU TEXTE ORDINAIRE.
+On ecrit "Bar & cocktails", pas "Bar &amp; cocktails" : le generateur
+s'occupe seul de la mise en forme HTML. Les deux ecritures fonctionnent,
+mais le texte ordinaire est celui qu'il faut utiliser.
 """
 import io, os, json, re, sys
 
@@ -25,32 +30,56 @@ RACINE = os.path.dirname(os.path.abspath(__file__))
 def lire(p):  return io.open(os.path.join(RACINE, p), encoding="utf-8").read()
 def ecrire(p, t): io.open(os.path.join(RACINE, p), "w", encoding="utf-8").write(t)
 
-S = json.loads(lire("_donnees/site.json"))
-P = json.loads(lire("_donnees/pages.json"))
+def charger(p):
+    """Lit un fichier de donnees et s'arrete avec un message clair s'il est mal ecrit."""
+    try:
+        return json.loads(lire(p))
+    except ValueError as e:
+        print("ARRET : le fichier %s est mal ecrit." % p)
+        print("        %s" % e)
+        print("        Cherchez a cet endroit une virgule en trop, une virgule qui manque,")
+        print("        un guillemet non ferme ou une accolade en trop. Rien n'a ete publie.")
+        sys.exit(1)
+    except IOError:
+        print("ARRET : le fichier %s est introuvable. Rien n'a ete publie." % p)
+        sys.exit(1)
+
+S = charger("_donnees/site.json")
+P = charger("_donnees/pages.json")
+
+def esc(t):
+    """Met un texte en forme pour le HTML. Deja mis en forme, il ne bouge pas."""
+    t = re.sub(r'&(?!#?[0-9A-Za-z]{1,10};)', '&amp;', str(t))
+    return t.replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
+
+def txt(t):
+    """Texte nu, pour le JSON-LD : les entites HTML y sont interdites."""
+    t = str(t).replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').replace('&quot;', '"')
+    return json.dumps(t, ensure_ascii=False)
 
 # ----------------------------------------------------------------- morceaux communs
 def navigation(courante):
     return ('<nav class="nav" aria-label="Navigation principale">'
-            + "".join('<a href="%s"%s>%s</a>' % (h, ' aria-current="page"' if h == courante else '', l)
+            + "".join('<a href="%s"%s>%s</a>' % (esc(h), ' aria-current="page"' if h == courante else '', esc(l))
                       for h, l in S["navigation"]) + '</nav>')
 
 def tiroir():
     liens = S["navigation"] + S["tiroir_extra"]
     return ('<div class="tiroir" id="tiroir" role="dialog" aria-modal="true" aria-label="Menu">'
             '<div class="haut"><span class="n"><b>L</b>ouisette</span>'
-            '<button class="x" id="tiroirX" aria-label="Fermer le menu">✕</button></div>'
-            + "".join('<a class="lien" href="%s">%s</a>' % (h, l) for h, l in liens)
-            + '<a class="resa" href="%s" target="_blank" rel="noopener">Réserver une table</a></div>' % S["reservation"])
+            '<button class="x" id="tiroirX" aria-label="Fermer le menu">&#10005;</button></div>'
+            + "".join('<a class="lien" href="%s">%s</a>' % (esc(h), esc(l)) for h, l in liens)
+            + '<a class="resa" href="%s" target="_blank" rel="noopener">Réserver une table</a></div>' % esc(S["reservation"]))
 
 def barre(courante=None):
     return ('<div class="minihd" id="minihd">'
             '<span class="n"><a href="./" style="color:inherit;text-decoration:none"><b>L</b>ouisette</a></span>'
             + navigation(courante) +
-            '<button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>'
-            '<a href="%s" target="_blank" rel="noopener">Réserver</a></div>' % S["reservation"])
+            '<button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">&#9776;</button>'
+            '<a href="%s" target="_blank" rel="noopener">Réserver</a></div>' % esc(S["reservation"]))
 
 def pied():
-    cols = "".join('<div><h3>%s</h3>%s</div>' % (titre, "".join('<a href="%s">%s</a>' % (h, l) for h, l in liens))
+    cols = "".join('<div><h3>%s</h3>%s</div>' % (esc(titre), "".join('<a href="%s">%s</a>' % (esc(h), esc(l)) for h, l in liens))
                    for titre, liens in S["pied"])
     ts, tg = S["tel_salle"], S["tel_groupes"]
     return ('<footer class="foot"><div class="wrap">'
@@ -60,9 +89,9 @@ def pied():
             '<p>%s — <a href="tel:%s" style="color:inherit">%s</a> · groupes <a href="tel:%s" style="color:inherit">%s</a></p>'
             '<p><a href="mailto:%s" style="color:inherit">%s</a></p>'
             '<p class="evin">%s</p>'
-            '</div></footer>' % (S["nom"], S["adresse"], S["metro"].split(" — ")[0],
-                                 S["horaires"], ts["lien"], ts["affiche"], tg["lien"], tg["affiche"],
-                                 S["email"], S["email"], S["mention_alcool"]))
+            '</div></footer>' % (esc(S["nom"]), esc(S["adresse"]), esc(S["metro"].split(" — ")[0]),
+                                 esc(S["horaires"]), esc(ts["lien"]), esc(ts["affiche"]), esc(tg["lien"]), esc(tg["affiche"]),
+                                 esc(S["email"]), esc(S["email"]), esc(S["mention_alcool"])))
 
 def dock():
     ts, tg = S["tel_salle"], S["tel_groupes"]
@@ -70,7 +99,7 @@ def dock():
             '<a class="btn" href="%s" target="_blank" rel="noopener">Réserver</a>'
             '<a class="btn ghost" href="tel:%s" aria-label="Appeler le %s">Appeler</a>'
             '<a class="btn ghost" href="tel:%s" aria-label="Appeler la ligne groupes">Groupe</a>'
-            '</div>' % (S["reservation"], ts["lien"], ts["affiche"], tg["lien"]))
+            '</div>' % (esc(S["reservation"]), esc(ts["lien"]), esc(ts["affiche"]), esc(tg["lien"])))
 
 FAVICON = ("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E"
            "%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2712%27%20fill%3D%27%230C0910%27%2F%3E%3Ctext%20x%3D%2732%27%20"
@@ -83,12 +112,12 @@ POLICES = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
            '0,6..96,600;1,6..96,400;1,6..96,500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">')
 
 def fil(nom):
-    return '<nav class="ariane" aria-label="Fil d\'Ariane"><a href="./">Accueil</a> · %s</nav>' % nom
+    return '<nav class="ariane" aria-label="Fil d\'Ariane"><a href="./">Accueil</a> · %s</nav>' % esc(nom)
 
 def ariane_ld(nom, slug):
     return ('<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList",'
             '"itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://louisette-paris.com/"},'
-            '{"@type":"ListItem","position":2,"name":"%s","item":"https://louisette-paris.com/%s"}]}</script>' % (nom, slug))
+            '{"@type":"ListItem","position":2,"name":%s,"item":"https://louisette-paris.com/%s"}]}</script>' % (txt(nom), slug))
 
 # ----------------------------------------------------------------- une page
 def page(slug):
@@ -97,16 +126,16 @@ def page(slug):
     h = ['<!DOCTYPE html>', '<html lang="fr">', '<head>',
          '<meta charset="utf-8">',
          '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">',
-         '<title>%s</title>' % m["titre"],
-         '<meta name="description" content="%s">' % m["description"],
+         '<title>%s</title>' % esc(m["titre"]),
+         '<meta name="description" content="%s">' % esc(m["description"]),
          '<meta name="robots" content="noindex,nofollow">',
          '<meta name="theme-color" content="#0C0910">',
          '<link rel="icon" href="%s">' % FAVICON,
          '<meta property="og:type" content="article">',
-         '<meta property="og:site_name" content="%s">' % S["nom"],
+         '<meta property="og:site_name" content="%s">' % esc(S["nom"]),
          '<meta property="og:locale" content="fr_FR">',
-         '<meta property="og:title" content="%s">' % m["og_titre"],
-         '<meta property="og:description" content="%s">' % m["description"],
+         '<meta property="og:title" content="%s">' % esc(m["og_titre"]),
+         '<meta property="og:description" content="%s">' % esc(m["description"]),
          '<link rel="canonical" href="https://louisette-paris.com/%s">' % f,
          POLICES,
          '<link rel="stylesheet" href="assets/site.css">',
@@ -130,7 +159,7 @@ def accueil():
     for nom, contenu in (("NAV", barre() + "\n" + tiroir()), ("PIED", pied()), ("DOCK", dock())):
         motif = re.compile(r'<!-- %s:debut -->.*?<!-- %s:fin -->' % (nom, nom), re.S)
         if motif.search(h):
-            h = motif.sub('<!-- %s:debut -->%s<!-- %s:fin -->' % (nom, contenu, nom), h)
+            h = motif.sub(lambda _m, n=nom, c=contenu: '<!-- %s:debut -->%s<!-- %s:fin -->' % (n, c, n), h)
         else:
             print("   ATTENTION : marqueurs %s absents d'index.html, bloc non mis a jour" % nom)
     if h != avant:
@@ -161,6 +190,7 @@ def controler(faites):
         for mot in ("100 % maison", "tout fait maison", "entièrement travaillée sur place"):
             if mot in t: pbs.append('%s : formulation interdite "%s"' % (f, mot))
         if "abus d'alcool" not in t: pbs.append("%s : mention alcool absente" % f)
+        if "&amp;amp;" in t: pbs.append("%s : double mise en forme (&amp;amp;), une donnee a ete traitee deux fois" % f)
     return pbs
 
 if __name__ == "__main__":
