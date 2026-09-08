@@ -1,0 +1,51 @@
+name: Construire le site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '_contenu/**'
+      - '_donnees/**'
+      - 'construire.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: construction-louisette
+  cancel-in-progress: false
+
+jobs:
+  construire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Construire les pages
+        run: python3 construire.py
+
+      - name: Verifier que le site est complet
+        run: |
+          set -euo pipefail
+          NB=$(ls -1 *.html 2>/dev/null | wc -l | tr -d ' ')
+          test "$NB" -ge 10 || { echo "ARRET : seulement $NB pages HTML."; exit 1; }
+          for f in index.html sitemap.xml assets/site.css assets/site.js; do
+            test -s "$f" || { echo "ARRET : $f absent ou vide."; exit 1; }
+          done
+          echo "Site complet : $NB pages."
+
+      - name: Publier si quelque chose a change
+        run: |
+          set -euo pipefail
+          git config user.name  "Construction automatique"
+          git config user.email "actions@github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Rien a publier."
+            exit 0
+          fi
+          echo "Fichiers republies :"
+          git diff --cached --name-only
+          git commit -m "reconstruction automatique du site [skip ci]"
+          git push
