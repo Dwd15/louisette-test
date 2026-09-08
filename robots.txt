@@ -1,2 +1,8 @@
 User-agent: *
 Disallow: /
+
+# Site en préparation : indexation bloquée.
+# À la mise en public, remplacer par :
+#   User-agent: *
+#   Allow: /
+#   Sitemap: https://louisette-paris.com/sitemap.xml
