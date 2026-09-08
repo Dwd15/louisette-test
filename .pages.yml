@@ -1,0 +1,46 @@
+# Interface d'edition du site — pagescms.org
+# On n'expose QUE ce qui doit pouvoir changer. La mise en page, les couleurs
+# et les animations ne sont pas modifiables ici : elles ne peuvent donc pas etre cassees.
+media: { input: p, output: /p }
+
+content:
+  - name: infos
+    label: "Les informations de la maison"
+    path: _donnees/site.json
+    type: file
+    format: json
+    fields:
+      - { name: nom,      label: "Nom de l'etablissement", type: string }
+      - { name: adresse,  label: "Adresse",                type: string }
+      - { name: metro,    label: "Metro",                  type: string }
+      - { name: horaires, label: "Horaires (phrase affichee partout)", type: string }
+      - name: tel_salle
+        label: "Telephone du restaurant"
+        type: object
+        fields:
+          - { name: lien,    label: "Numero technique (+33...)", type: string }
+          - { name: affiche, label: "Numero affiche",            type: string }
+      - name: tel_groupes
+        label: "Telephone groupes"
+        type: object
+        fields:
+          - { name: lien,    label: "Numero technique (+33...)", type: string }
+          - { name: affiche, label: "Numero affiche",            type: string }
+      - { name: email,          label: "Adresse e-mail", type: string }
+      - { name: reservation,    label: "Lien de reservation", type: string }
+      - { name: mention_alcool, label: "Mention sanitaire alcool (obligatoire)", type: string }
+
+  - name: pages
+    label: "Titres et descriptions des pages"
+    path: _donnees/pages.json
+    type: file
+    format: json
+
+  - name: textes
+    label: "Le texte des pages"
+    path: _contenu
+    filename: "{primary}.html"
+    type: collection
+    format: raw
+    fields:
+      - { name: body, label: "Contenu de la page", type: text }
