@@ -359,3 +359,21 @@ body.page .minihd{transform:none;opacity:1;pointer-events:auto;position:fixed;
 
 /* --- bandeau photo : le navigateur ne calcule que les vignettes visibles --- */
 .gband .gtile{content-visibility:auto;contain-intrinsic-size:480px 320px}
+
+/* Les pages interieures n'ont pas le script de l'accueil : la barre d'action
+   doit s'y afficher d'elle-meme. Sur grand ecran, le bouton Reserver de la
+   barre du haut suffit — on evite le doublon. */
+body.page .dock{transform:translateY(140%)}
+@media(max-width:900px){body.page .dock{transform:none}}
+
+/* Les trois boutons debordaient de l'ecran sous 520 px : ils se partagent
+   maintenant la largeur disponible au lieu de reclamer chacun la leur. */
+@media(max-width:520px){
+  .dock{padding-left:12px;padding-right:12px;gap:8px}
+  .dock .btn{flex:1 1 0;width:auto;min-width:0;max-width:none;
+    padding-left:6px;padding-right:6px;font-size:10.5px;letter-spacing:.08em}
+}
+
+/* Les boutons secondaires de la barre d'action laissaient lire le texte
+   de la page a travers eux : ils recoivent un fond. */
+.dock .btn.ghost{background:rgba(12,9,16,.93);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
