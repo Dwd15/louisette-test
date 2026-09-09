@@ -1,138 +1,144 @@
 {
-  "nom": "La Maison Louisette",
-  "adresse": "8 boulevard Saint-Denis, 75010 Paris",
-  "metro": "Strasbourg-Saint-Denis — lignes 4, 8 et 9",
-  "horaires": "Ouvert 7 j/7 de 8 h à 2 h",
-  "tel_salle": {
-    "lien": "+33140342057",
-    "affiche": "01 40 34 20 57"
-  },
-  "tel_groupes": {
-    "lien": "+33974640384",
-    "affiche": "09 74 64 03 84"
-  },
-  "email": "contact@louisette-paris.com",
-  "reservation": "https://bookings.zenchef.com/results?rid=364667&pid=1001",
-  "mention_alcool": "L'abus d'alcool est dangereux pour la santé, à consommer avec modération.",
-  "navigation": [
-    [
-      "la-maison.html",
-      "La Maison"
-    ],
-    [
-      "groupes.html",
-      "Groupes"
-    ],
-    [
-      "theatres.html",
-      "Théâtres"
-    ],
-    [
-      "bar-cocktails.html",
-      "Bar"
-    ],
-    [
-      "infos-pratiques.html",
-      "Infos pratiques"
-    ]
+ "nom": "La Maison Louisette",
+ "adresse": "8 boulevard Saint-Denis, 75010 Paris",
+ "metro": "Strasbourg-Saint-Denis — lignes 4, 8 et 9",
+ "horaires": "Ouvert 7 j/7 de 8 h à 2 h",
+ "tel_salle": {
+  "lien": "+33140342057",
+  "affiche": "01 40 34 20 57"
+ },
+ "tel_groupes": {
+  "lien": "+33974640384",
+  "affiche": "09 74 64 03 84"
+ },
+ "email": "contact@louisette-paris.com",
+ "reservation": "https://bookings.zenchef.com/results?rid=364667&pid=1001",
+ "mention_alcool": "L'abus d'alcool est dangereux pour la santé, à consommer avec modération.",
+ "navigation": [
+  [
+   "la-maison.html",
+   "La Maison"
   ],
-  "tiroir_extra": [
-    [
-      "terrasse.html",
-      "La terrasse"
-    ],
-    [
-      "brunch.html",
-      "Le brunch"
-    ]
+  [
+   "groupes.html",
+   "Groupes"
   ],
-  "pied": [
-    [
-      "La maison",
-      [
-        [
-          "./",
-          "Accueil"
-        ],
-        [
-          "la-maison.html",
-          "La Maison"
-        ],
-        [
-          "theatres.html",
-          "Quartier des théâtres"
-        ],
-        [
-          "bar-cocktails.html",
-          "Bar & cocktails"
-        ]
-      ]
-    ],
-    [
-      "Recevoir",
-      [
-        [
-          "groupes.html",
-          "Groupes & privatisation"
-        ],
-        [
-          "terrasse.html",
-          "La terrasse"
-        ],
-        [
-          "brunch.html",
-          "Le brunch"
-        ]
-      ]
-    ],
-    [
-      "Pratique",
-      [
-        [
-          "infos-pratiques.html",
-          "Infos pratiques"
-        ],
-        [
-          "infos-pratiques.html#newsletter",
-          "Nos actualités"
-        ]
-      ]
-    ],
-    [
-      "Légal",
-      [
-        [
-          "mentions-legales.html",
-          "Mentions légales"
-        ],
-        [
-          "confidentialite.html",
-          "Confidentialité"
-        ]
-      ]
-    ]
+  [
+   "theatres.html",
+   "Théâtres"
   ],
-  "reseaux": [
-    [
-      "Instagram",
-      "https://www.instagram.com/louisetteparisx/"
-    ],
-    [
-      "Facebook",
-      "https://www.facebook.com/profile.php?id=61559221645547"
-    ],
-    [
-      "TikTok",
-      "https://www.tiktok.com/@louisetteparisx"
-    ]
+  [
+   "bar-cocktails.html",
+   "Bar"
   ],
-  "formulaire_groupe": {
-    "action": "",
-    "commentaire": "Laisser vide tant qu'aucun prestataire n'est choisi : le formulaire bascule alors sur l'envoi par la messagerie du visiteur, qui fonctionne sans rien installer."
-  },
-  "newsletter": {
-    "action": "",
-    "frequence": "une fois par mois",
-    "commentaire": "Tant que 'action' est vide, l'inscription passe par la messagerie du visiteur : le message qu'il envoie vaut preuve ecrite de son consentement, horodatee. Des qu'un prestataire est choisi, coller ici l'adresse de son formulaire."
-  }
+  [
+   "infos-pratiques.html",
+   "Infos pratiques"
+  ]
+ ],
+ "tiroir_extra": [
+  [
+   "terrasse.html",
+   "La terrasse"
+  ],
+  [
+   "brunch.html",
+   "Le brunch"
+  ]
+ ],
+ "pied": [
+  [
+   "La maison",
+   [
+    [
+     "./",
+     "Accueil"
+    ],
+    [
+     "la-maison.html",
+     "La Maison"
+    ],
+    [
+     "theatres.html",
+     "Quartier des théâtres"
+    ],
+    [
+     "bar-cocktails.html",
+     "Bar & cocktails"
+    ]
+   ]
+  ],
+  [
+   "Recevoir",
+   [
+    [
+     "groupes.html",
+     "Groupes & privatisation"
+    ],
+    [
+     "terrasse.html",
+     "La terrasse"
+    ],
+    [
+     "brunch.html",
+     "Le brunch"
+    ]
+   ]
+  ],
+  [
+   "Pratique",
+   [
+    [
+     "infos-pratiques.html",
+     "Infos pratiques"
+    ],
+    [
+     "infos-pratiques.html#newsletter",
+     "Nos actualités"
+    ]
+   ]
+  ],
+  [
+   "Légal",
+   [
+    [
+     "mentions-legales.html",
+     "Mentions légales"
+    ],
+    [
+     "confidentialite.html",
+     "Confidentialité"
+    ]
+   ]
+  ]
+ ],
+ "reseaux": [
+  [
+   "Instagram",
+   "https://www.instagram.com/louisetteparisx/"
+  ],
+  [
+   "Facebook",
+   "https://www.facebook.com/profile.php?id=61559221645547"
+  ],
+  [
+   "TikTok",
+   "https://www.tiktok.com/@louisetteparisx"
+  ]
+ ],
+ "formulaire_groupe": {
+  "action": "",
+  "commentaire": "Laisser vide tant qu'aucun prestataire n'est choisi : le formulaire bascule alors sur l'envoi par la messagerie du visiteur, qui fonctionne sans rien installer."
+ },
+ "newsletter": {
+  "action": "",
+  "frequence": "une fois par mois",
+  "commentaire": "Tant que 'action' est vide, l'inscription passe par la messagerie du visiteur : le message qu'il envoie vaut preuve ecrite de son consentement, horodatee. Des qu'un prestataire est choisi, coller ici l'adresse de son formulaire."
+ },
+ "whatsapp": {
+  "numero": "33616121497",
+  "affiche": "06 16 12 14 97",
+  "message": "Bonjour Louisette, je souhaite un devis pour un groupe. Date : … / Nombre de personnes : … / Occasion : …",
+  "commentaire": "Numero mobile personnel, rendu public sur le site le 09/09/2026 sur decision de Dawoud. Pour le retirer partout : supprimer cette cle et relancer construire.py."
+ }
 }

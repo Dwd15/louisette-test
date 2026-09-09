@@ -50,6 +50,28 @@ SITE = "https://louisette-paris.com/"
 OG_IMAGE = "img/og-louisette.jpg"
 OG_ALT = "Le neon Louisette au-dessus des banquettes de la salle, brasserie parisienne des Grands Boulevards"
 
+def bouton_whatsapp():
+    """Bouton WhatsApp de la page groupes, avec le message deja redige.
+
+    Rien ne s affiche si aucun numero n est declare : la page reste correcte."""
+    u = whatsapp()
+    return ('<a class="b2" href="%s" target="_blank" rel="noopener">WhatsApp</a>' % esc(u)) if u else ""
+
+def whatsapp(message=None):
+    """Lien de conversation WhatsApp, ou chaine vide si aucun numero n est declare.
+
+    Le numero est en clair dans l URL : le publier, c est le rendre lisible par
+    n importe quel aspirateur d adresses. Il ne figure ici que parce que Dawoud
+    l a decide le 09/09/2026. Retirer la cle "whatsapp" de site.json le fait
+    disparaitre des dix pages d un coup."""
+    w = S.get("whatsapp") or {}
+    n = (w.get("numero") or "").strip()
+    if not n: return ""
+    t = message if message is not None else w.get("message", "")
+    from urllib.parse import quote
+    return "https://wa.me/%s%s" % (n, ("?text=" + quote(t)) if t else "")
+
+
 P = charger("_donnees/pages.json")
 
 def esc(t):
@@ -87,8 +109,11 @@ def pied():
     cols = "".join('<div><h3>%s</h3>%s</div>' % (esc(titre), "".join('<a href="%s">%s</a>' % (esc(h), esc(l)) for h, l in liens))
                    for titre, liens in S["pied"])
     ts, tg = S["tel_salle"], S["tel_groupes"]
+    liens_soc = list(S.get("reseaux", []))
+    w = whatsapp()
+    if w: liens_soc.append(("WhatsApp", w))
     soc = "".join('<a href="%s" target="_blank" rel="noopener me">%s</a>' % (esc(u), esc(n))
-                  for n, u in S.get("reseaux", []))
+                  for n, u in liens_soc)
     soc = ('<div class="soc" aria-label="Nos reseaux">' + soc + '</div>') if soc else ""
     return ('<footer class="foot"><div class="wrap">'
             '<div class="plan">' + cols + '</div>' + soc +
@@ -262,7 +287,7 @@ def page(slug):
          '<a href="#contenu" class="skip">Aller au contenu</a>',
          '<div class="grain" aria-hidden="true"></div>',
          barre(f), tiroir(), fil(m["ariane"]),
-         '<main id="contenu">', corps.replace("<!-- FORMULAIRE -->", formulaire()).replace("<!-- NEWSLETTER -->", newsletter()), '</main>',
+         '<main id="contenu">', corps.replace("<!-- FORMULAIRE -->", formulaire()).replace("<!-- NEWSLETTER -->", newsletter()).replace("<!-- WHATSAPP -->", bouton_whatsapp()), '</main>',
          pied(), dock(),
          '<script src="assets/mesure.js" defer></script>',
          '<script src="assets/site.js" defer></script>',
