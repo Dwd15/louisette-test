@@ -399,7 +399,8 @@ def galerie():
 def sitemap(faites):
     # faites contient deja les pages legales : les rajouter les dupliquait
     # dans le sitemap (12 entrees pour 10 pages, constate le 9 septembre).
-    urls = [""] + [u for u in faites if u != "index.html"]
+    brouillons = set("%s.html" % k for k, v in P.items() if v.get("brouillon"))
+    urls = [""] + [u for u in faites if u != "index.html" and u not in brouillons]
     from datetime import date
     d = date.today().isoformat()
     ecrire("sitemap.xml",
@@ -410,6 +411,18 @@ def sitemap(faites):
 # ----------------------------------------------------------------- controles
 def controler(faites):
     pbs = []
+    # Une page sortie du brouillon ne doit plus porter son marqueur de contenu
+    # a venir : c est le seul garde-fou qui empeche de publier une coquille.
+    for slug, m in P.items():
+        f = slug + ".html"
+        if f not in faites: continue
+        marque = "CARTE-A-VENIR" in lire("_contenu/%s.html" % slug)
+        if m.get("brouillon") and not marque:
+            pbs.append("%s : la page est en brouillon mais le marqueur CARTE-A-VENIR a disparu ; "
+                       "si le contenu est arrete, passer brouillon a false dans pages.json" % f)
+        if not m.get("brouillon") and marque:
+            pbs.append("%s : la page est publiee alors qu elle porte encore le marqueur "
+                       "CARTE-A-VENIR — le contenu n est pas arrete" % f)
     # --- phototheque : la visionneuse resout data-gi par le NUMERO de la photo.
     # Un numero absent de meta.js ouvrirait une autre vue ; un fichier absent
     # afficherait un trou. Les deux bloquent la publication.
@@ -473,4 +486,7 @@ if __name__ == "__main__":
     pbs = controler(faites)
     if pbs:
         print("\nCONTROLES EN ECHEC :"); [print("   -", p) for p in pbs]; sys.exit(1)
+    en_cours = [k for k, v in P.items() if v.get("brouillon")]
+    if en_cours:
+        print("\nEN BROUILLON, hors navigation et hors sitemap : %s" % ", ".join(sorted(en_cours)))
     print("\ncontroles : tout est bon.")

@@ -47,10 +47,11 @@
   RewriteRule ^mentions-legales/?$        /mentions-legales.html [R=301,L]
 
   # ================= EN ATTENTE DE DECISION =================
-  # 1. LA CARTE. /menu, /la-carte, /notre-carte sont indexes et n ont aucune
-  #    cible : le nouveau site n a pas de page carte (projet "Carte & Fiches").
-  #    Tant qu elle n existe pas, ces URLs renvoient vers l accueil, ce qui
-  #    decoit une intention tres precise. A rebrancher des que carte.html existe.
+  # 1. LA CARTE. carte.html existe depuis le 09/09/2026, mais EN BROUILLON :
+  #    la coquille est ecrite, le contenu vient du projet "Carte & Fiches" et
+  #    n est pas encore arrete. Ces trois URLs continuent donc de renvoyer vers
+  #    l accueil. Le jour ou pages.json passe "brouillon" a false, remplacer
+  #    ces trois lignes par /carte.html en 301.
   RewriteRule ^menu/?$                    /                      [R=302,L]
   RewriteRule ^la-carte/?$                /                      [R=302,L]
   RewriteRule ^notre-carte/?$             /                      [R=302,L]

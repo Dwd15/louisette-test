@@ -1,58 +1,67 @@
 {
-  "la-maison": {
-    "titre": "La Maison — Louisette, brasserie des Grands Boulevards",
-    "description": "Une brasserie parisienne au 8 boulevard Saint-Denis, au pied de la Porte Saint-Denis : le lieu, le quartier, la cuisine française et italienne, la façon de recevoir.",
-    "og_titre": "La Maison — Louisette",
-    "ariane": "La Maison"
-  },
-  "groupes": {
-    "titre": "Groupes, privatisation et événements — Louisette, Paris 10",
-    "description": "Anniversaires, EVJF, séminaires et privatisation à Paris 10 : jusqu'à 250 convives assis ou 400 en cocktail, au pied du métro Strasbourg-Saint-Denis.",
-    "og_titre": "Groupes et privatisation — La Maison Louisette",
-    "ariane": "Groupes"
-  },
-  "theatres": {
-    "titre": "Dîner avant ou après le théâtre — Louisette, Paris 10",
-    "description": "Treize salles de spectacle à moins de douze minutes à pied du 8 boulevard Saint-Denis. Cuisine servie en continu de 8 h à 2 h, avant le lever de rideau comme après le rappel.",
-    "og_titre": "Quartier des théâtres — La Maison Louisette",
-    "ariane": "Quartier des théâtres"
-  },
-  "bar-cocktails": {
-    "titre": "Bar à cocktails et soirées — Louisette, Paris 10",
-    "description": "Le comptoir de La Maison Louisette, 8 boulevard Saint-Denis : cocktails signature, vins au verre et soirées DJ du jeudi au samedi, jusqu'à 2 h du matin.",
-    "og_titre": "Le bar et les cocktails — La Maison Louisette",
-    "ariane": "Bar & cocktails"
-  },
-  "terrasse": {
-    "titre": "La terrasse fleurie — Louisette, Paris 10",
-    "description": "La terrasse fleurie de La Maison Louisette sur le boulevard Saint-Denis, ouverte de 8 h à 2 h. Ce que nous pouvons garantir, et ce que nous ne pouvons pas.",
-    "og_titre": "La terrasse — La Maison Louisette",
-    "ariane": "La terrasse"
-  },
-  "brunch": {
-    "titre": "Le brunch — Louisette, Grands Boulevards, Paris 10",
-    "description": "Le brunch de La Maison Louisette, 8 boulevard Saint-Denis, Paris 10. Service continu de 8 h à 2 h, sept jours sur sept.",
-    "og_titre": "Le brunch — La Maison Louisette",
-    "ariane": "Le brunch"
-  },
-  "infos-pratiques": {
-    "titre": "Infos pratiques — Louisette, 8 bd Saint-Denis, Paris 10",
-    "description": "Adresse, horaires et accès de La Maison Louisette : 8 boulevard Saint-Denis, Paris 10, métro Strasbourg-Saint-Denis, ouvert tous les jours de 8 h à 2 h.",
-    "og_titre": "Infos pratiques — La Maison Louisette",
-    "ariane": "Infos pratiques"
-  },
-  "mentions-legales": {
-    "titre": "Mentions légales — La Maison Louisette",
-    "description": "Mentions légales de La Maison Louisette, 8 boulevard Saint-Denis, 75010 Paris.",
-    "og_titre": "Mentions légales — La Maison Louisette",
-    "ariane": "Mentions légales",
-    "prix_autorises": true
-  },
-  "confidentialite": {
-    "titre": "Politique de confidentialité — La Maison Louisette",
-    "description": "Politique de confidentialité et cookies de La Maison Louisette.",
-    "og_titre": "Confidentialité — La Maison Louisette",
-    "ariane": "Confidentialité",
-    "prix_autorises": true
-  }
+ "la-maison": {
+  "titre": "La Maison — Louisette, brasserie des Grands Boulevards",
+  "description": "Une brasserie parisienne au 8 boulevard Saint-Denis, au pied de la Porte Saint-Denis : le lieu, le quartier, la cuisine française et italienne, la façon de recevoir.",
+  "og_titre": "La Maison — Louisette",
+  "ariane": "La Maison"
+ },
+ "groupes": {
+  "titre": "Groupes, privatisation et événements — Louisette, Paris 10",
+  "description": "Anniversaires, EVJF, séminaires et privatisation à Paris 10 : jusqu'à 250 convives assis ou 400 en cocktail, au pied du métro Strasbourg-Saint-Denis.",
+  "og_titre": "Groupes et privatisation — La Maison Louisette",
+  "ariane": "Groupes"
+ },
+ "theatres": {
+  "titre": "Dîner avant ou après le théâtre — Louisette, Paris 10",
+  "description": "Treize salles de spectacle à moins de douze minutes à pied du 8 boulevard Saint-Denis. Cuisine servie en continu de 8 h à 2 h, avant le lever de rideau comme après le rappel.",
+  "og_titre": "Quartier des théâtres — La Maison Louisette",
+  "ariane": "Quartier des théâtres"
+ },
+ "bar-cocktails": {
+  "titre": "Bar à cocktails et soirées — Louisette, Paris 10",
+  "description": "Le comptoir de La Maison Louisette, 8 boulevard Saint-Denis : cocktails signature, vins au verre et soirées DJ du jeudi au samedi, jusqu'à 2 h du matin.",
+  "og_titre": "Le bar et les cocktails — La Maison Louisette",
+  "ariane": "Bar & cocktails"
+ },
+ "terrasse": {
+  "titre": "La terrasse fleurie — Louisette, Paris 10",
+  "description": "La terrasse fleurie de La Maison Louisette sur le boulevard Saint-Denis, ouverte de 8 h à 2 h. Ce que nous pouvons garantir, et ce que nous ne pouvons pas.",
+  "og_titre": "La terrasse — La Maison Louisette",
+  "ariane": "La terrasse"
+ },
+ "brunch": {
+  "titre": "Le brunch — Louisette, Grands Boulevards, Paris 10",
+  "description": "Le brunch de La Maison Louisette, 8 boulevard Saint-Denis, Paris 10. Service continu de 8 h à 2 h, sept jours sur sept.",
+  "og_titre": "Le brunch — La Maison Louisette",
+  "ariane": "Le brunch"
+ },
+ "infos-pratiques": {
+  "titre": "Infos pratiques — Louisette, 8 bd Saint-Denis, Paris 10",
+  "description": "Adresse, horaires et accès de La Maison Louisette : 8 boulevard Saint-Denis, Paris 10, métro Strasbourg-Saint-Denis, ouvert tous les jours de 8 h à 2 h.",
+  "og_titre": "Infos pratiques — La Maison Louisette",
+  "ariane": "Infos pratiques"
+ },
+ "mentions-legales": {
+  "titre": "Mentions légales — La Maison Louisette",
+  "description": "Mentions légales de La Maison Louisette, 8 boulevard Saint-Denis, 75010 Paris.",
+  "og_titre": "Mentions légales — La Maison Louisette",
+  "ariane": "Mentions légales",
+  "prix_autorises": true
+ },
+ "confidentialite": {
+  "titre": "Politique de confidentialité — La Maison Louisette",
+  "description": "Politique de confidentialité et cookies de La Maison Louisette.",
+  "og_titre": "Confidentialité — La Maison Louisette",
+  "ariane": "Confidentialité",
+  "prix_autorises": true
+ },
+ "carte": {
+  "titre": "La carte — Louisette, brasserie des Grands Boulevards, Paris 10",
+  "description": "La carte de La Maison Louisette, 8 boulevard Saint-Denis, Paris 10. Cuisine française et italienne, service continu de 8 h à 2 h, sept jours sur sept.",
+  "og_titre": "La carte — La Maison Louisette",
+  "ariane": "La carte",
+  "prix_autorises": true,
+  "brouillon": true,
+  "commentaire_brouillon": "Coquille creee le 09/09/2026. Le contenu vient du projet « 1-LOU Carte & Fiches » et n est pas encore arrete. Tant que brouillon vaut true, la page est construite mais tenue hors de la navigation et hors du sitemap. Passer a false quand la carte est arretee : la construction refusera de le faire tant que le marqueur CARTE-A-VENIR est encore dans _contenu/carte.html."
+ }
 }
