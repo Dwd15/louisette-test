@@ -12,7 +12,8 @@
    "motifs": [
     "oeuvre encadree d un tiers"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "2": {
    "cap": "En terrasse",
@@ -1348,7 +1349,8 @@
    "motifs": [
     "marque tierce identifiable"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "220": {
    "cap": "Le sucré",
@@ -1544,7 +1546,8 @@
    "motifs": [
     "marque tierce identifiable"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "252": {
    "cap": "En salle",
@@ -1624,7 +1627,8 @@
    "motifs": [
     "oeuvre encadree d un tiers"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "265": {
    "cap": "À l'assiette",
@@ -1662,7 +1666,8 @@
    "motifs": [
     "marque tierce identifiable"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "271": {
    "cap": "À l'assiette",
@@ -1701,7 +1706,8 @@
     "marque tierce identifiable",
     "nettete faible"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "277": {
    "cap": "Le sucré",
@@ -1773,7 +1779,8 @@
    "motifs": [
     "marque tierce identifiable"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "288": {
    "cap": "Le sucré",
@@ -1951,7 +1958,8 @@
    "motifs": [
     "marque tierce identifiable"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "316": {
    "cap": "La façade",
@@ -1971,7 +1979,8 @@
    "motifs": [
     "marque tierce identifiable"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "319": {
    "cap": "La façade",
@@ -2011,7 +2020,8 @@
    "motifs": [
     "oeuvre encadree d un tiers"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "325": {
    "cap": "L'enseigne",
@@ -2052,7 +2062,8 @@
     "oeuvre encadree d un tiers",
     "nettete faible"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "331": {
    "cap": "En salle",
@@ -2538,7 +2549,8 @@
    "motifs": [
     "oeuvre encadree d un tiers"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "408": {
    "cap": "Le décor",
@@ -2546,7 +2558,8 @@
    "motifs": [
     "oeuvre encadree d un tiers"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "409": {
    "cap": "Le décor",
@@ -2554,7 +2567,8 @@
    "motifs": [
     "oeuvre encadree d un tiers"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "410": {
    "cap": "Le décor",
@@ -2562,7 +2576,8 @@
    "motifs": [
     "oeuvre encadree d un tiers"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "411": {
    "cap": "Le décor",
@@ -2570,7 +2585,8 @@
    "motifs": [
     "oeuvre encadree d un tiers"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "412": {
    "cap": "En salle",
@@ -2596,7 +2612,8 @@
    "motifs": [
     "oeuvre encadree d un tiers"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "416": {
    "cap": "Le décor",
@@ -2658,7 +2675,8 @@
    "motifs": [
     "oeuvre encadree d un tiers"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "426": {
    "cap": "Le décor",
@@ -3154,7 +3172,8 @@
    "motifs": [
     "oeuvre encadree d un tiers"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "507": {
    "cap": "La terrasse",
@@ -3210,7 +3229,8 @@
    "motifs": [
     "oeuvre encadree d un tiers"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "516": {
    "cap": "L'enseigne",
@@ -3266,7 +3286,8 @@
    "motifs": [
     "marque tierce identifiable"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "525": {
    "cap": "La terrasse",
@@ -3566,7 +3587,8 @@
    "motifs": [
     "marque tierce identifiable"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "574": {
    "cap": "Les douceurs",
@@ -3715,7 +3737,8 @@
    "motifs": [
     "marque tierce identifiable"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "596": {
    "cap": "Le décor",
@@ -3723,7 +3746,8 @@
    "motifs": [
     "marque tierce identifiable"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "597": {
    "cap": "Le décor",
@@ -3827,7 +3851,8 @@
    "motifs": [
     "marque tierce identifiable"
    ],
-   "action": "A ARBITRER"
+   "action": "CONSERVER",
+   "arbitrage": "conservee sur decision de Dawoud, 9 septembre 2026"
   },
   "613": {
    "cap": "Le décor",
@@ -3918,33 +3943,7 @@
   613,
   614
  ],
- "arbitrer": [
-  1,
-  219,
-  251,
-  264,
-  270,
-  276,
-  287,
-  315,
-  318,
-  324,
-  330,
-  407,
-  408,
-  409,
-  410,
-  411,
-  415,
-  425,
-  506,
-  515,
-  524,
-  573,
-  595,
-  596,
-  612
- ],
+ "arbitrer": [],
  "filigrane": [
   141,
   174,
@@ -4058,5 +4057,40 @@
    576,
    6
   ]
- ]
+ ],
+ "arbitre_par_dawoud": {
+  "date": "2026-09-09",
+  "decision": "conserver",
+  "photos": [
+   1,
+   219,
+   251,
+   264,
+   270,
+   276,
+   287,
+   315,
+   318,
+   324,
+   330,
+   407,
+   408,
+   409,
+   410,
+   411,
+   415,
+   425,
+   506,
+   515,
+   524,
+   573,
+   595,
+   596,
+   612
+  ],
+  "motifs_connus": [
+   "marque tierce identifiable",
+   "oeuvre encadree d un tiers"
+  ]
+ }
 }
