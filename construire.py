@@ -260,7 +260,10 @@ def page(slug):
 def accueil():
     """Ne remplace que les blocs marques. Tout le reste d'index.html est intact."""
     h = lire("index.html"); avant = h
-    for nom, contenu in (("NAV", barre() + "\n" + tiroir()), ("PIED", pied()), ("DOCK", dock())):
+    vues = _meta()
+    if meta_js(vues): print("meta.js : regenere depuis _donnees/photos.json")
+    pistes, nb_vues = galerie()
+    for nom, contenu in (("NAV", barre() + "\n" + tiroir()), ("PIED", pied()), ("DOCK", dock()), ("GALERIE", pistes)):
         motif = re.compile(r'<!-- %s:debut -->.*?<!-- %s:fin -->' % (nom, nom), re.S)
         if motif.search(h):
             h = motif.sub(lambda _m, n=nom, c=contenu: '<!-- %s:debut -->%s<!-- %s:fin -->' % (n, c, n), h)
@@ -269,6 +272,84 @@ def accueil():
     if h != avant:
         ecrire("index.html", h); return "mis a jour"
     return "deja a jour"
+
+# ----------------------------------------------------------------- galerie
+TUILES_EN_TETE = 24     # tuiles ecrites dans index.html, par piste
+PISTES         = 5
+SECONDES_TUILE = 4.32   # vitesse de defilement, inchangee depuis l origine
+
+def _meta():
+    """Rend la liste des vues, dans l ordre.
+
+    La source est _donnees/photos.json : c est un des dossiers que le robot
+    surveille, donc modifier une legende declenche la reconstruction. meta.js,
+    lu par le navigateur, en est fabrique — il n est plus a editer a la main."""
+    return charger("_donnees/photos.json")
+
+def meta_js(vues):
+    """Reecrit meta.js a partir de la source, seulement s il a change."""
+    t = "window.GMETA=" + json.dumps(vues, ensure_ascii=False) + ";\n"
+    try:
+        if lire("meta.js") == t: return False
+    except IOError:
+        pass
+    ecrire("meta.js", t); return True
+
+def _tuile(m):
+    n = "%03d" % m["i"]
+    return ('<figure class="gtile" data-gi="%d" data-ii="%d" role="button" tabindex="0" aria-label="Agrandir : %s">'
+            '<img data-src="t/%s.webp" alt="%s" decoding="async" width="480" height="320"></figure>'
+            % (m["i"], m["i"], esc(m.get("cap", "")), n, esc(m.get("alt", ""))))
+
+_SCRIPT_GALERIE = (
+ # La suite de la phototheque n est ni dans le document ni chargee au demarrage :
+ # elle arrive quand la bande approche de l ecran. Un visiteur qui ne descend
+ # jamais jusqu a la galerie ne telecharge rien et ne calcule rien.
+ # La charger des le chargement de la page repoussait le LCP a 6,3 s sur
+ # 4 mesures sur 5 (essai du 9 septembre) : l insertion et la peinture des
+ # 1 188 tuiles retombaient dans la fenetre de mesure.
+ '<script>(function(){'
+ 'var b=document.querySelector(".gband");if(!b)return;'
+ 'var vis=1,file=[],k=0,tourne=0,pose=0;'
+ 'function empiler(){file=file.concat([].slice.call(b.querySelectorAll("img[data-src]")));if(!tourne){tourne=1;vague();}}'
+ 'function vague(){var g=document.getElementById("glb");'
+ 'if(g&&g.classList.contains("open")){setTimeout(vague,400);return;}'
+ 'if(!vis){setTimeout(vague,600);return;}'
+ 'var n=0;while(k<file.length&&n<8){var e=file[k++];var d=e.getAttribute("data-src");if(d){e.src=d;e.removeAttribute("data-src");}n++;}'
+ 'if(k<file.length){setTimeout(vague,150);}else{tourne=0;}}'
+ 'function doubler(){var t=b.querySelectorAll(".gtrack");for(var i=0;i<t.length;i++){t[i].insertAdjacentHTML("beforeend",t[i].innerHTML);}}'
+ 'function suite(){if(pose)return;pose=1;function fini(){doubler();empiler();}'
+ 'try{fetch("photos-suite.json").then(function(r){return r.json();}).then(function(s){'
+ 'var t=b.querySelectorAll(".gtrack");for(var i=0;i<s.length&&i<t.length;i++){if(s[i]){t[i].insertAdjacentHTML("beforeend",s[i]);}}'
+ 'fini();}).catch(fini);}catch(x){fini();}}'
+ 'if("IntersectionObserver" in window){'
+ 'new IntersectionObserver(function(es){vis=es[0].isIntersecting?1:0;},{rootMargin:"300px"}).observe(b);'
+ 'var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){o.disconnect();suite();}});},{rootMargin:"600px"});o.observe(b);'
+ '}else{addEventListener("load",suite);}'
+ '})();</script>')
+
+def galerie():
+    """Fabrique les pistes de la phototheque a partir de meta.js.
+
+    Seules les premieres tuiles de chaque piste (TUILES_EN_TETE) partent
+    dans index.html ;
+    la suite va dans photos-suite.json, chargee quand la bande approche de
+    l ecran — jamais si le visiteur ne descend pas jusque-la.
+    C est le poids du document qui retarde l affichage, pas le nombre
+    d elements : mesure du 9 septembre, note 145."""
+    vues = _meta()
+    pistes = [[] for _ in range(PISTES)]
+    for rang, m in enumerate(vues):
+        pistes[rang % PISTES].append(m)
+    tete, suite = [], []
+    for i, piste in enumerate(pistes):
+        dur = int(round(len(piste) * SECONDES_TUILE))
+        cls = "gmq grev" if i % 2 else "gmq"
+        tete.append('<div class="%s" style="--gdur:%ds"><div class="gtrack">%s</div></div>'
+                    % (cls, dur, "".join(_tuile(m) for m in piste[:TUILES_EN_TETE])))
+        suite.append("".join(_tuile(m) for m in piste[TUILES_EN_TETE:]))
+    ecrire("photos-suite.json", json.dumps(suite, ensure_ascii=False))
+    return "\n".join(tete) + "\n" + _SCRIPT_GALERIE, len(vues)
 
 # ----------------------------------------------------------------- sitemap
 def sitemap(faites):
@@ -283,6 +364,26 @@ def sitemap(faites):
 # ----------------------------------------------------------------- controles
 def controler(faites):
     pbs = []
+    # --- phototheque : la visionneuse resout data-gi par le NUMERO de la photo.
+    # Un numero absent de meta.js ouvrirait une autre vue ; un fichier absent
+    # afficherait un trou. Les deux bloquent la publication.
+    try:
+        vues = _meta()
+        nums = set(m["i"] for m in vues)
+        pages = lire("index.html") + " ".join(json.loads(lire("photos-suite.json")))
+        gis = set(int(x) for x in re.findall(r'data-gi="(\d+)"', pages))
+        for n in sorted(gis - nums):
+            pbs.append("phototheque : la vignette %d n'existe pas dans meta.js" % n)
+        for n in sorted(nums - gis):
+            pbs.append("phototheque : la vue %d de meta.js n'est affichee nulle part" % n)
+        for n in sorted(nums):
+            for d in ("t", "p"):
+                if not os.path.exists(os.path.join(RACINE, d, "%03d.webp" % n)):
+                    pbs.append("phototheque : le fichier %s/%03d.webp manque" % (d, n))
+        if len(gis) != len(vues):
+            pbs.append("phototheque : %d tuiles pour %d vues" % (len(gis), len(vues)))
+    except Exception as e:
+        pbs.append("phototheque : controle impossible (%s)" % e)
     presentes = set(os.listdir(RACINE))
     for f in faites + ["index.html"]:
         t = lire(f)

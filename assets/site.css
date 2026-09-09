@@ -47,12 +47,15 @@ a{color:inherit}
 @keyframes veilin{from{opacity:0}to{opacity:1}}
 .hero .bg,.hero .poster-img{animation:heroin 2.6s cubic-bezier(.22,.61,.36,1) both}
 .hero .veil{animation:veilin 1.6s ease .3s both}
-.hero .in>*{animation:rise 1s cubic-bezier(.22,.61,.36,1) both}
-.hero .in>*:nth-child(1){animation-delay:.35s}
-.hero .in>*:nth-child(2){animation-delay:.50s}
-.hero .in>*:nth-child(3){animation-delay:.68s}
-.hero .in>*:nth-child(4){animation-delay:.86s}
-.hero .in>*:nth-child(5){animation-delay:1.04s}
+/* L entree du hero ne retarde plus l affichage : les elements partaient a
+   opacite 0 avec jusqu a 1,04 s de delai, ce qui repoussait le LCP d autant.
+   Le mouvement reste, il est simplement joue tout de suite. Note 145. */
+.hero .in>*{animation:rise .45s cubic-bezier(.22,.61,.36,1) both}
+.hero .in>*:nth-child(1){animation-delay:0s}
+.hero .in>*:nth-child(2){animation-delay:.04s}
+.hero .in>*:nth-child(3){animation-delay:.08s}
+.hero .in>*:nth-child(4){animation-delay:.12s}
+.hero .in>*:nth-child(5){animation-delay:.16s}
 @keyframes cuein{from{opacity:0;transform:translate(-50%,14px)}to{opacity:.6;transform:translate(-50%,0)}}
 .scrollcue{animation:cuein .9s cubic-bezier(.22,.61,.36,1) 1.5s both,bob 2.6s ease-in-out 2.4s infinite}
 @keyframes bob{0%,100%{transform:translate(-50%,0);opacity:.6}50%{transform:translate(-50%,7px);opacity:1}}
