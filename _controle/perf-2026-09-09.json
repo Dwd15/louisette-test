@@ -1,0 +1,655 @@
+{
+ "date": "2026-09-09",
+ "objet": "challenge du point 3 du plan d action site : alleger la video d accueil",
+ "protocole": {
+  "outil": "Lighthouse 13.4.1, Chromium 1194",
+  "profil": "mobile, ecran emule",
+  "bridage": "reel (--throttling-method=devtools) — le bridage simule par defaut renvoie des valeurs predites par modele, pas mesurees",
+  "polices": "fonts.googleapis.com et fonts.gstatic.com bloques a l identique sur toutes les variantes",
+  "passages": "2 a 7 par variante, mediane des passages exploitables",
+  "passage_exploitable": "passage ou Lighthouse a identifie l element LCP dans la trace ; sinon la valeur affichee est une valeur de repli et n est pas comparable",
+  "limite": "conteneur Linux, Chromium sans ecran : seuls les ecarts entre variantes sont exploitables, pas les valeurs absolues"
+ },
+ "element_lcp": "header.hero > div.wrap > p.meta > span#livetxt",
+ "decomposition_lcp_depart": {
+  "temps_de_reponse_serveur_ms": 12,
+  "delai_de_rendu_de_l_element_ms": 3983
+ },
+ "variantes": {
+  "depart (aujourd hui)": {
+   "passages": 7,
+   "passages_exploitables": 7,
+   "mediane": {
+    "lcp_ms": 3994,
+    "score": 83,
+    "fcp_ms": 2386,
+    "poids_ko": 1047,
+    "dom": 2717
+   },
+   "detail": [
+    {
+     "lcp_ms": 3994,
+     "score": 83,
+     "fcp_ms": 2375,
+     "poids_ko": 1048,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 4019,
+     "score": 83,
+     "fcp_ms": 2370,
+     "poids_ko": 1047,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 3879,
+     "score": 84,
+     "fcp_ms": 2404,
+     "poids_ko": 1047,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 3968,
+     "score": 83,
+     "fcp_ms": 2386,
+     "poids_ko": 1047,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 4080,
+     "score": 83,
+     "fcp_ms": 2381,
+     "poids_ko": 1048,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 3908,
+     "score": 83,
+     "fcp_ms": 2416,
+     "poids_ko": 1047,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 4027,
+     "score": 82,
+     "fcp_ms": 2419,
+     "poids_ko": 1046,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    }
+   ]
+  },
+  "video reencodee": {
+   "passages": 2,
+   "passages_exploitables": 2,
+   "mediane": {
+    "lcp_ms": 4011.5,
+    "score": 83.0,
+    "fcp_ms": 2408.0,
+    "poids_ko": 1047.0,
+    "dom": 2717.0
+   },
+   "detail": [
+    {
+     "lcp_ms": 4035,
+     "score": 83,
+     "fcp_ms": 2409,
+     "poids_ko": 1046,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 3988,
+     "score": 83,
+     "fcp_ms": 2407,
+     "poids_ko": 1048,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    }
+   ]
+  },
+  "aucune video": {
+   "passages": 2,
+   "passages_exploitables": 2,
+   "mediane": {
+    "lcp_ms": 3913.5,
+    "score": 84.5,
+    "fcp_ms": 2351.0,
+    "poids_ko": 1015.0,
+    "dom": 2716.0
+   },
+   "detail": [
+    {
+     "lcp_ms": 3908,
+     "score": 85,
+     "fcp_ms": 2345,
+     "poids_ko": 1015,
+     "dom": 2716,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 3919,
+     "score": 84,
+     "fcp_ms": 2357,
+     "poids_ko": 1015,
+     "dom": 2716,
+     "element_lcp_identifie": true
+    }
+   ]
+  },
+  "video differee et reencodee": {
+   "passages": 2,
+   "passages_exploitables": 2,
+   "mediane": {
+    "lcp_ms": 3978.0,
+    "score": 83.5,
+    "fcp_ms": 2394.0,
+    "poids_ko": 1048.5,
+    "dom": 2717.0
+   },
+   "detail": [
+    {
+     "lcp_ms": 3941,
+     "score": 84,
+     "fcp_ms": 2383,
+     "poids_ko": 1050,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 4015,
+     "score": 83,
+     "fcp_ms": 2405,
+     "poids_ko": 1047,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    }
+   ]
+  },
+  "phototheque reduite a 200 vues, seule": {
+   "passages": 2,
+   "passages_exploitables": 0,
+   "mediane": {
+    "lcp_ms": 6279.5,
+    "score": 74.0,
+    "fcp_ms": 2278.0,
+    "poids_ko": 927.0,
+    "dom": 1141.0
+   },
+   "detail": [
+    {
+     "lcp_ms": 6281,
+     "score": 73,
+     "fcp_ms": 2297,
+     "poids_ko": 927,
+     "dom": 1141,
+     "element_lcp_identifie": false
+    },
+    {
+     "lcp_ms": 6278,
+     "score": 75,
+     "fcp_ms": 2259,
+     "poids_ko": 927,
+     "dom": 1141,
+     "element_lcp_identifie": false
+    }
+   ]
+  },
+  "phototheque reduite a 120 vues, seule": {
+   "passages": 7,
+   "passages_exploitables": 0,
+   "mediane": {
+    "lcp_ms": 6263,
+    "score": 74,
+    "fcp_ms": 2346,
+    "poids_ko": 907,
+    "dom": 821
+   },
+   "detail": [
+    {
+     "lcp_ms": 6228,
+     "score": 74,
+     "fcp_ms": 2320,
+     "poids_ko": 905,
+     "dom": 821,
+     "element_lcp_identifie": false
+    },
+    {
+     "lcp_ms": 6205,
+     "score": 73,
+     "fcp_ms": 2353,
+     "poids_ko": 907,
+     "dom": 821,
+     "element_lcp_identifie": false
+    },
+    {
+     "lcp_ms": 6268,
+     "score": 73,
+     "fcp_ms": 2372,
+     "poids_ko": 907,
+     "dom": 821,
+     "element_lcp_identifie": false
+    },
+    {
+     "lcp_ms": 6260,
+     "score": 74,
+     "fcp_ms": 2287,
+     "poids_ko": 905,
+     "dom": 821,
+     "element_lcp_identifie": false
+    },
+    {
+     "lcp_ms": 6320,
+     "score": 72,
+     "fcp_ms": 2271,
+     "poids_ko": 907,
+     "dom": 821,
+     "element_lcp_identifie": false
+    },
+    {
+     "lcp_ms": 6283,
+     "score": 74,
+     "fcp_ms": 2353,
+     "poids_ko": 907,
+     "dom": 821,
+     "element_lcp_identifie": false
+    },
+    {
+     "lcp_ms": 6263,
+     "score": 74,
+     "fcp_ms": 2346,
+     "poids_ko": 907,
+     "dom": 821,
+     "element_lcp_identifie": false
+    }
+   ]
+  },
+  "hero sans delai d entree, seul": {
+   "passages": 2,
+   "passages_exploitables": 2,
+   "mediane": {
+    "lcp_ms": 3948.5,
+    "score": 83.0,
+    "fcp_ms": 2411.0,
+    "poids_ko": 1048.0,
+    "dom": 2717.0
+   },
+   "detail": [
+    {
+     "lcp_ms": 3935,
+     "score": 83,
+     "fcp_ms": 2411,
+     "poids_ko": 1048,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 3962,
+     "score": 83,
+     "fcp_ms": 2411,
+     "poids_ko": 1048,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    }
+   ]
+  },
+  "HTML allege + hero sans delai + video differee": {
+   "passages": 7,
+   "passages_exploitables": 5,
+   "mediane": {
+    "lcp_ms": 2698,
+    "score": 92,
+    "fcp_ms": 2335,
+    "poids_ko": 907,
+    "dom": 821
+   },
+   "detail": [
+    {
+     "lcp_ms": 6264,
+     "score": 71,
+     "fcp_ms": 2321,
+     "poids_ko": 932,
+     "dom": 821,
+     "element_lcp_identifie": false
+    },
+    {
+     "lcp_ms": 2675,
+     "score": 93,
+     "fcp_ms": 2287,
+     "poids_ko": 907,
+     "dom": 821,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 6263,
+     "score": 73,
+     "fcp_ms": 2303,
+     "poids_ko": 906,
+     "dom": 821,
+     "element_lcp_identifie": false
+    },
+    {
+     "lcp_ms": 2609,
+     "score": 93,
+     "fcp_ms": 2340,
+     "poids_ko": 909,
+     "dom": 821,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 2698,
+     "score": 92,
+     "fcp_ms": 2270,
+     "poids_ko": 907,
+     "dom": 821,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 2739,
+     "score": 92,
+     "fcp_ms": 2358,
+     "poids_ko": 906,
+     "dom": 821,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 2795,
+     "score": 92,
+     "fcp_ms": 2335,
+     "poids_ko": 912,
+     "dom": 821,
+     "element_lcp_identifie": true
+    }
+   ]
+  },
+  "HTML allege + hero sans delai, video intacte": {
+   "passages": 5,
+   "passages_exploitables": 2,
+   "mediane": {
+    "lcp_ms": 2744.5,
+    "score": 92.0,
+    "fcp_ms": 2327.5,
+    "poids_ko": 906.0,
+    "dom": 821.0
+   },
+   "detail": [
+    {
+     "lcp_ms": 2821,
+     "score": 91,
+     "fcp_ms": 2344,
+     "poids_ko": 907,
+     "dom": 821,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 6282,
+     "score": 74,
+     "fcp_ms": 2317,
+     "poids_ko": 906,
+     "dom": 821,
+     "element_lcp_identifie": false
+    },
+    {
+     "lcp_ms": 2668,
+     "score": 93,
+     "fcp_ms": 2311,
+     "poids_ko": 905,
+     "dom": 821,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 6283,
+     "score": 75,
+     "fcp_ms": 2275,
+     "poids_ko": 907,
+     "dom": 821,
+     "element_lcp_identifie": false
+    },
+    {
+     "lcp_ms": 6284,
+     "score": 73,
+     "fcp_ms": 2356,
+     "poids_ko": 907,
+     "dom": 821,
+     "element_lcp_identifie": false
+    }
+   ]
+  },
+  "hero sans delai + video differee, HTML intact": {
+   "passages": 5,
+   "passages_exploitables": 5,
+   "mediane": {
+    "lcp_ms": 3987,
+    "score": 83,
+    "fcp_ms": 2399,
+    "poids_ko": 1049,
+    "dom": 2717
+   },
+   "detail": [
+    {
+     "lcp_ms": 4023,
+     "score": 83,
+     "fcp_ms": 2399,
+     "poids_ko": 1049,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 3953,
+     "score": 84,
+     "fcp_ms": 2500,
+     "poids_ko": 1047,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 3954,
+     "score": 84,
+     "fcp_ms": 2391,
+     "poids_ko": 1049,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 4001,
+     "score": 83,
+     "fcp_ms": 2412,
+     "poids_ko": 1056,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 3987,
+     "score": 83,
+     "fcp_ms": 2390,
+     "poids_ko": 1052,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    }
+   ]
+  },
+  "HTML allege + video differee, delais intacts": {
+   "passages": 5,
+   "passages_exploitables": 0,
+   "mediane": {
+    "lcp_ms": 6140,
+    "score": 73,
+    "fcp_ms": 2322,
+    "poids_ko": 908,
+    "dom": 821
+   },
+   "detail": [
+    {
+     "lcp_ms": 6089,
+     "score": 72,
+     "fcp_ms": 2322,
+     "poids_ko": 906,
+     "dom": 821,
+     "element_lcp_identifie": false
+    },
+    {
+     "lcp_ms": 6125,
+     "score": 74,
+     "fcp_ms": 2317,
+     "poids_ko": 909,
+     "dom": 821,
+     "element_lcp_identifie": false
+    },
+    {
+     "lcp_ms": 6237,
+     "score": 71,
+     "fcp_ms": 2351,
+     "poids_ko": 911,
+     "dom": 821,
+     "element_lcp_identifie": false
+    },
+    {
+     "lcp_ms": 6140,
+     "score": 74,
+     "fcp_ms": 2270,
+     "poids_ko": 907,
+     "dom": 821,
+     "element_lcp_identifie": false
+    },
+    {
+     "lcp_ms": 6149,
+     "score": 73,
+     "fcp_ms": 2337,
+     "poids_ko": 908,
+     "dom": 821,
+     "element_lcp_identifie": false
+    }
+   ]
+  },
+  "594 vues, injection du DOM apres chargement, + hero sans delai": {
+   "passages": 5,
+   "passages_exploitables": 5,
+   "mediane": {
+    "lcp_ms": 3978,
+    "score": 83,
+    "fcp_ms": 2400,
+    "poids_ko": 1048,
+    "dom": 2722
+   },
+   "detail": [
+    {
+     "lcp_ms": 3996,
+     "score": 82,
+     "fcp_ms": 2363,
+     "poids_ko": 1049,
+     "dom": 2722,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 3979,
+     "score": 83,
+     "fcp_ms": 2409,
+     "poids_ko": 1048,
+     "dom": 2722,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 3953,
+     "score": 83,
+     "fcp_ms": 2401,
+     "poids_ko": 1048,
+     "dom": 2722,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 3969,
+     "score": 83,
+     "fcp_ms": 2400,
+     "poids_ko": 1049,
+     "dom": 2722,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 3978,
+     "score": 83,
+     "fcp_ms": 2397,
+     "poids_ko": 1047,
+     "dom": 2722,
+     "element_lcp_identifie": true
+    }
+   ]
+  },
+  "594 vues, HTML allege et suite dans un fichier a part, + hero sans delai": {
+   "passages": 5,
+   "passages_exploitables": 5,
+   "mediane": {
+    "lcp_ms": 2733,
+    "score": 91,
+    "fcp_ms": 2325,
+    "poids_ko": 1059,
+    "dom": 2717
+   },
+   "detail": [
+    {
+     "lcp_ms": 2838,
+     "score": 90,
+     "fcp_ms": 2346,
+     "poids_ko": 1058,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 2708,
+     "score": 92,
+     "fcp_ms": 2337,
+     "poids_ko": 1059,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 2646,
+     "score": 93,
+     "fcp_ms": 2283,
+     "poids_ko": 1059,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 2781,
+     "score": 91,
+     "fcp_ms": 2325,
+     "poids_ko": 1062,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    },
+    {
+     "lcp_ms": 2733,
+     "score": 90,
+     "fcp_ms": 2311,
+     "poids_ko": 1059,
+     "dom": 2717,
+     "element_lcp_identifie": true
+    }
+   ]
+  }
+ },
+ "conclusions": [
+  "La video ne pese pas sur le LCP : la supprimer entierement vaut 80 ms et 1 point ; la differer et la reencoder vaut 16 ms.",
+  "Le levier reel est la combinaison de deux corrections : alleger le HTML initial de l accueil (202 Ko -> 61 Ko) ET supprimer les delais d animation d entree du hero. Aucune des deux seule ne donne quoi que ce soit.",
+  "La variante O atteint 2 733 ms et 91 points en conservant les 594 vues : la suite de la phototheque part dans un fichier charge apres l affichage.",
+  "Alleger le DOM sans alleger les octets de HTML (variante N) ne donne rien : c est le poids du document, pas le nombre d elements."
+ ],
+ "gain_retenu": {
+  "lcp_ms": {
+   "avant": 3994,
+   "apres": 2733,
+   "ecart": -1261
+  },
+  "score": {
+   "avant": 83,
+   "apres": 91,
+   "ecart": 8
+  }
+ }
+}
