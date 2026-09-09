@@ -63,5 +63,13 @@
   "prix_autorises": true,
   "brouillon": true,
   "commentaire_brouillon": "Coquille creee le 09/09/2026. Le contenu vient du projet « 1-LOU Carte & Fiches » et n est pas encore arrete. Tant que brouillon vaut true, la page est construite mais tenue hors de la navigation et hors du sitemap. Passer a false quand la carte est arretee : la construction refusera de le faire tant que le marqueur CARTE-A-VENIR est encore dans _contenu/carte.html."
+ },
+ "introuvable": {
+  "titre": "Page introuvable — Louisette, Paris 10",
+  "description": "Cette page n'existe pas. Les pages principales de La Maison Louisette, 8 boulevard Saint-Denis, Paris 10.",
+  "og_titre": "Page introuvable — La Maison Louisette",
+  "ariane": "Page introuvable",
+  "hors_navigation": true,
+  "commentaire": "Page d erreur 404. Construite comme les autres pour heriter de la charte et de la navigation, mais tenue hors du sitemap : une 404 indexee est une erreur. Le fichier livre s appelle 404.html, voir la fin de construire.py."
  }
 }

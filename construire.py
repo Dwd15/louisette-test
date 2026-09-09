@@ -399,8 +399,8 @@ def galerie():
 def sitemap(faites):
     # faites contient deja les pages legales : les rajouter les dupliquait
     # dans le sitemap (12 entrees pour 10 pages, constate le 9 septembre).
-    brouillons = set("%s.html" % k for k, v in P.items() if v.get("brouillon"))
-    urls = [""] + [u for u in faites if u != "index.html" and u not in brouillons]
+    caches = set("%s.html" % k for k, v in P.items() if v.get("brouillon") or v.get("hors_navigation"))
+    urls = [""] + [u for u in faites if u != "index.html" and u not in caches]
     from datetime import date
     d = date.today().isoformat()
     ecrire("sitemap.xml",
@@ -446,6 +446,17 @@ def controler(faites):
     presentes = set(os.listdir(RACINE))
     for f in faites + ["index.html"]:
         t = lire(f)
+        # Les liens sortants n etaient pas controles : la page carte est partie
+        # le 09/09 avec un & non echappe et sans rel=noopener, sans que rien
+        # ne s en apercoive. On les regarde desormais un par un.
+        for m in re.finditer(r'<a [^>]*href="(https?://[^"]+)"[^>]*>', t):
+            balise, url = m.group(0), m.group(1)
+            if "&" in url and "&amp;" not in url:
+                pbs.append("%s : lien sortant avec un & non echappe — %s" % (f, url[:70]))
+            if 'target="_blank"' not in balise:
+                pbs.append("%s : lien sortant sans target=\"_blank\" — %s" % (f, url[:70]))
+            elif "noopener" not in balise:
+                pbs.append("%s : lien sortant en nouvel onglet sans rel=\"noopener\" — %s" % (f, url[:70]))
         for l in set(re.findall(r'href="([a-z0-9-]+\.html)(?:#[^"]*)?"', t)):
             if l not in presentes: pbs.append("%s : lien mort vers %s" % (f, l))
         slug = f[:-5]
@@ -483,6 +494,8 @@ if __name__ == "__main__":
     print("pages construites :", ", ".join(faites))
     print("accueil :", accueil())
     sitemap(faites); print("sitemap.xml ecrit")
+    if "introuvable.html" in faites:
+        ecrire("404.html", lire("introuvable.html")); print("404.html ecrit")
     pbs = controler(faites)
     if pbs:
         print("\nCONTROLES EN ECHEC :"); [print("   -", p) for p in pbs]; sys.exit(1)
