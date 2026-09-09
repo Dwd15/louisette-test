@@ -106,10 +106,16 @@ FAVICON = ("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F200
            "y%3D%2746%27%20font-family%3D%27Didot%2CBodoni%20MT%2CTimes%20New%20Roman%2Cserif%27%20font-size%3D%2744%27%20"
            "font-style%3D%27italic%27%20fill%3D%27%23FF5FC4%27%20text-anchor%3D%27middle%27%3EL%3C%2Ftext%3E%3C%2Fsvg%3E")
 
+# La feuille de Google bloquait l'affichage pendant 400 ms : on la charge
+# sans bloquer, et le navigateur affiche le texte avec la police de secours
+# en attendant (display=swap).
+_GF = ("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;"
+       "0,6..96,600;1,6..96,400;1,6..96,500&family=Instrument+Sans:wght@400;500;600&display=swap")
 POLICES = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
            '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-           '<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;'
-           '0,6..96,600;1,6..96,400;1,6..96,500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">')
+           '<link rel="preload" as="style" href="%s">'
+           '<link rel="stylesheet" href="%s" media="print" onload="this.media=\'all\'">'
+           '<noscript><link rel="stylesheet" href="%s"></noscript>' % (_GF, _GF, _GF))
 
 def fil(nom):
     return '<nav class="ariane" aria-label="Fil d\'Ariane"><a href="./">Accueil</a> · %s</nav>' % esc(nom)
