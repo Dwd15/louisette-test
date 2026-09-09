@@ -464,6 +464,22 @@ def controler(faites):
         if re.search(r'\d\s?€', t) and not prix_ok:
             pbs.append("%s : un prix apparait alors que les prix ne sont pas reconcilies" % f)
         if "8h30" in t or "8 h 30" in t: pbs.append("%s : horaire 8h30" % f)
+        # Un retour a la ligne au milieu d une phrase suffisait a faire passer
+        # ces controles a cote : le 09/09, une septieme mention du Grand Rex
+        # "a trois minutes" a survecu a six corrections pour cette seule raison.
+        # On les fait donc travailler sur un texte a espaces normalises.
+        plat = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", t))
+
+        # Le Grand Rex est a 543 m, soit sept minutes. Toute autre duree
+        # accolee a son nom est une affirmation qu un client dement avec son
+        # telephone, debout sur le trottoir.
+        for m in re.finditer(r"Grand Rex[^.]{0,80}", plat):
+            bout = m.group(0)
+            d = re.search(r"\b(une|deux|trois|quatre|cinq|six|huit|neuf|dix|\d+)\s*(minutes?|min)\b", bout)
+            if d and "sept" not in bout:
+                pbs.append('%s : le Grand Rex annonce a "%s" — il est a 543 m, soit sept minutes'
+                           % (f, d.group(0)))
+
         # La mention "fait maison" est reglementee (decret 2014-797, art. D.121-13-1
         # du code de la consommation) : elle vise un plat elabore sur place a partir
         # de produits crus. Le site achete viennoiseries, glaces et charcuteries.
@@ -474,7 +490,7 @@ def controler(faites):
                 (r"(?i)\b(tout|100\s*%|entièrement|intégralement)\b[^.]{0,40}\bfait[e]?s?\s+maison\b", "un « fait maison » etendu a toute la carte"),
                 (r"(?i)\bfait\s+maison\b[^.]{0,30}\b(partout|sans exception)\b", "un « fait maison » sans exception"),
                 (r"(?i)entièrement travaillée sur place", "« entièrement travaillée sur place »")):
-            m = re.search(motif, t)
+            m = re.search(motif, plat)
             if m: pbs.append('%s : formulation interdite — %s : "%s"' % (f, quoi, m.group(0)[:70]))
         if "abus d'alcool" not in t: pbs.append("%s : mention alcool absente" % f)
         for img in (re.findall(r'<img [^>]*>', t) if f != "index.html" else []):
