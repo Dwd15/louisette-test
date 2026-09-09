@@ -107,5 +107,23 @@
         ]
       ]
     ]
-  ]
+  ],
+  "reseaux": [
+    [
+      "Instagram",
+      "https://www.instagram.com/louisetteparisx/"
+    ],
+    [
+      "Facebook",
+      "https://www.facebook.com/profile.php?id=61559221645547"
+    ],
+    [
+      "TikTok",
+      "https://www.tiktok.com/@louisetteparisx"
+    ]
+  ],
+  "formulaire_groupe": {
+    "action": "",
+    "commentaire": "Laisser vide tant qu'aucun prestataire n'est choisi : le formulaire bascule alors sur l'envoi par la messagerie du visiteur, qui fonctionne sans rien installer."
+  }
 }

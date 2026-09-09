@@ -82,8 +82,11 @@ def pied():
     cols = "".join('<div><h3>%s</h3>%s</div>' % (esc(titre), "".join('<a href="%s">%s</a>' % (esc(h), esc(l)) for h, l in liens))
                    for titre, liens in S["pied"])
     ts, tg = S["tel_salle"], S["tel_groupes"]
+    soc = "".join('<a href="%s" target="_blank" rel="noopener me">%s</a>' % (esc(u), esc(n))
+                  for n, u in S.get("reseaux", []))
+    soc = ('<div class="soc" aria-label="Nos reseaux">' + soc + '</div>') if soc else ""
     return ('<footer class="foot"><div class="wrap">'
-            '<div class="plan">' + cols + '</div>'
+            '<div class="plan">' + cols + '</div>' + soc +
             '<b>%s</b>'
             '<p>%s — métro %s</p>'
             '<p>%s — <a href="tel:%s" style="color:inherit">%s</a> · groupes <a href="tel:%s" style="color:inherit">%s</a></p>'
@@ -125,6 +128,54 @@ def ariane_ld(nom, slug):
             '"itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://louisette-paris.com/"},'
             '{"@type":"ListItem","position":2,"name":%s,"item":"https://louisette-paris.com/%s"}]}</script>' % (txt(nom), slug))
 
+def formulaire():
+    """Demande de devis groupe. Sans prestataire configure, le formulaire
+    ouvre la messagerie du visiteur avec tout deja rempli : il fonctionne
+    des le premier jour, sans compte a creer nulle part."""
+    f = S.get("formulaire_groupe", {}) or {}
+    action = f.get("action") or ""
+    par_mail = not action
+    champs = [
+        ("nom",       "Votre nom",                "text",  True,  "", "name"),
+        ("email",     "Votre e-mail",             "email", True,  "", "email"),
+        ("tel",       "Votre téléphone",          "tel",   True,  "", "tel"),
+        ("date",      "Date souhaitée",           "date",  True,  "", ""),
+        ("personnes", "Nombre de personnes",      "number","True", "min=\"8\" max=\"400\"", ""),
+    ]
+    h = ['<section class="sect form" id="devis">',
+         '<h2>Demander un devis</h2>',
+         '<p>Répondez à ces quelques questions : nous revenons vers vous avec une '
+         'proposition chiffrée. Pour un besoin urgent, appelez le '
+         '<a class="lien" href="tel:%s">%s</a>.</p>' % (esc(S["tel_groupes"]["lien"]), esc(S["tel_groupes"]["affiche"])),
+         '<form class="devis" method="%s" action="%s"%s>' % (
+             "get" if par_mail else "post",
+             ("mailto:" + esc(S["email"])) if par_mail else esc(action),
+             ' enctype="text/plain"' if par_mail else '')]
+    for nom, lab, typ, requis, extra, auto in champs:
+        h.append('<p class="champ"><label for="c-%s">%s%s</label>'
+                 '<input id="c-%s" name="%s" type="%s"%s%s%s></p>' % (
+                     nom, lab, " *" if requis else "", nom, nom, typ,
+                     " required" if requis else "",
+                     (" autocomplete=\"%s\"" % auto) if auto else "",
+                     (" " + extra) if extra else ""))
+    h.append('<p class="champ"><label for="c-occasion">Type d\'occasion</label>'
+             '<select id="c-occasion" name="occasion">'
+             '<option>Repas d\'entreprise</option><option>Anniversaire</option>'
+             '<option>Mariage ou fiançailles</option><option>Cocktail dînatoire</option>'
+             '<option>Privatisation complète</option><option>Autre</option></select></p>')
+    h.append('<p class="champ"><label for="c-message">Votre message</label>'
+             '<textarea id="c-message" name="message" rows="4" '
+             'placeholder="Horaire, contraintes, budget…"></textarea></p>')
+    # piege a robots : un humain ne remplit jamais ce champ, il est cache
+    h.append('<p class="miel" aria-hidden="true"><label for="c-site">Ne pas remplir</label>'
+             '<input id="c-site" name="site" type="text" tabindex="-1" autocomplete="off"></p>')
+    h.append('<p class="envoi"><button type="submit" class="btn">Envoyer ma demande</button></p>')
+    h.append('<p class="tc">Les informations transmises servent uniquement à répondre à '
+             'votre demande. Voir la <a class="lien" href="confidentialite.html">politique de '
+             'confidentialité</a>.</p>')
+    h.append('</form></section>')
+    return "\n".join(h)
+
 # ----------------------------------------------------------------- une page
 def page(slug):
     m = P[slug]; f = slug + ".html"
@@ -150,7 +201,7 @@ def page(slug):
          '<a href="#contenu" class="skip">Aller au contenu</a>',
          '<div class="grain" aria-hidden="true"></div>',
          barre(f), tiroir(), fil(m["ariane"]),
-         '<main id="contenu">', corps, '</main>',
+         '<main id="contenu">', corps.replace("<!-- FORMULAIRE -->", formulaire()), '</main>',
          pied(), dock(),
          '<script src="assets/mesure.js" defer></script>',
          '<script src="assets/site.js" defer></script>',

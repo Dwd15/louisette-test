@@ -377,3 +377,30 @@ body.page .dock{transform:translateY(140%)}
 /* Les boutons secondaires de la barre d'action laissaient lire le texte
    de la page a travers eux : ils recoivent un fond. */
 .dock .btn.ghost{background:rgba(12,9,16,.93);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+
+/* --- liens vers les reseaux, dans le pied de page --- */
+.foot .soc{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:22px 0 6px}
+.foot .soc a{font-family:"Instrument Sans",sans-serif;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--or);text-decoration:none;border:1px solid var(--line);
+  border-radius:2px;padding:10px 16px;min-height:44px;display:inline-flex;align-items:center}
+.foot .soc a:hover{border-color:var(--or)}
+
+/* --- demande de devis groupe --- */
+.sect.form{max-width:760px}
+.sect.form .devis{margin-top:22px}
+.sect.form .champ{display:flex;flex-direction:column;gap:6px;margin:0 0 16px;max-width:520px}
+.sect.form label{font-family:"Instrument Sans",sans-serif;font-size:12px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted)}
+.sect.form input,.sect.form select,.sect.form textarea{
+  font-family:"Instrument Sans",sans-serif;font-size:16px;color:var(--paper);
+  background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:2px;
+  padding:13px 14px;min-height:48px;width:100%}
+.sect.form textarea{min-height:120px;resize:vertical}
+.sect.form input:focus,.sect.form select:focus,.sect.form textarea:focus{
+  outline:2px solid var(--or);outline-offset:1px;border-color:var(--or)}
+.sect.form .envoi{margin-top:24px}
+.sect.form .btn{cursor:pointer;font-family:"Instrument Sans",sans-serif;font-size:12px;
+  letter-spacing:.16em;text-transform:uppercase;background:var(--or);color:var(--ink);
+  border:0;border-radius:2px;padding:16px 30px;min-height:52px}
+.sect.form .tc{color:var(--muted);font-size:13px;margin-top:16px}
+.sect.form .miel{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
