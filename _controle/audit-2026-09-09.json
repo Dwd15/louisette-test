@@ -875,7 +875,8 @@
    "motifs": [
     "filigrane Le Moment Photography"
    ],
-   "action": "RETIRER"
+   "action": "RETIRER",
+   "suite": "droits acquis : demander au studio le fichier sans filigrane, puis remettre en ligne"
   },
   "142": {
    "cap": "À l'assiette",
@@ -1077,7 +1078,8 @@
    "motifs": [
     "filigrane Le Moment Photography"
    ],
-   "action": "RETIRER"
+   "action": "RETIRER",
+   "suite": "droits acquis : demander au studio le fichier sans filigrane, puis remettre en ligne"
   },
   "175": {
    "cap": "À l'assiette",
@@ -2071,7 +2073,8 @@
    "motifs": [
     "filigrane Le Moment Photography"
    ],
-   "action": "RETIRER"
+   "action": "RETIRER",
+   "suite": "droits acquis : demander au studio le fichier sans filigrane, puis remettre en ligne"
   },
   "332": {
    "cap": "La façade",
@@ -2091,7 +2094,8 @@
    "motifs": [
     "filigrane Le Moment Photography"
    ],
-   "action": "RETIRER"
+   "action": "RETIRER",
+   "suite": "droits acquis : demander au studio le fichier sans filigrane, puis remettre en ligne"
   },
   "335": {
    "cap": "La façade",
@@ -2111,7 +2115,8 @@
    "motifs": [
     "filigrane Le Moment Photography"
    ],
-   "action": "RETIRER"
+   "action": "RETIRER",
+   "suite": "droits acquis : demander au studio le fichier sans filigrane, puis remettre en ligne"
   },
   "338": {
    "cap": "En salle",
@@ -2119,7 +2124,8 @@
    "motifs": [
     "filigrane Le Moment Photography"
    ],
-   "action": "RETIRER"
+   "action": "RETIRER",
+   "suite": "droits acquis : demander au studio le fichier sans filigrane, puis remettre en ligne"
   },
   "339": {
    "cap": "En salle",
@@ -2127,7 +2133,8 @@
    "motifs": [
     "filigrane Le Moment Photography"
    ],
-   "action": "RETIRER"
+   "action": "RETIRER",
+   "suite": "droits acquis : demander au studio le fichier sans filigrane, puis remettre en ligne"
   },
   "340": {
    "cap": "En salle",
@@ -2135,7 +2142,8 @@
    "motifs": [
     "filigrane Le Moment Photography"
    ],
-   "action": "RETIRER"
+   "action": "RETIRER",
+   "suite": "droits acquis : demander au studio le fichier sans filigrane, puis remettre en ligne"
   },
   "341": {
    "cap": "En salle",
@@ -2143,7 +2151,8 @@
    "motifs": [
     "filigrane Le Moment Photography"
    ],
-   "action": "RETIRER"
+   "action": "RETIRER",
+   "suite": "droits acquis : demander au studio le fichier sans filigrane, puis remettre en ligne"
   },
   "342": {
    "cap": "En salle",
@@ -2151,7 +2160,8 @@
    "motifs": [
     "filigrane Le Moment Photography"
    ],
-   "action": "RETIRER"
+   "action": "RETIRER",
+   "suite": "droits acquis : demander au studio le fichier sans filigrane, puis remettre en ligne"
   },
   "343": {
    "cap": "L'enseigne",
@@ -3519,7 +3529,8 @@
    "motifs": [
     "filigrane Le Moment Photography"
    ],
-   "action": "RETIRER"
+   "action": "RETIRER",
+   "suite": "droits acquis : demander au studio le fichier sans filigrane, puis remettre en ligne"
   },
   "563": {
    "cap": "La terrasse",
@@ -3692,7 +3703,8 @@
    "motifs": [
     "filigrane Le Moment Photography"
    ],
-   "action": "RETIRER"
+   "action": "RETIRER",
+   "suite": "droits acquis : demander au studio le fichier sans filigrane, puis remettre en ligne"
   },
   "590": {
    "cap": "L'enseigne",
@@ -3715,7 +3727,8 @@
    "motifs": [
     "filigrane Le Moment Photography"
    ],
-   "action": "RETIRER"
+   "action": "RETIRER",
+   "suite": "droits acquis : demander au studio le fichier sans filigrane, puis remettre en ligne"
   },
   "593": {
    "cap": "La salle",
@@ -3837,7 +3850,8 @@
    "motifs": [
     "filigrane Le Moment Photography"
    ],
-   "action": "RETIRER"
+   "action": "RETIRER",
+   "suite": "droits acquis : demander au studio le fichier sans filigrane, puis remettre en ligne"
   },
   "611": {
    "cap": "Le décor",
@@ -3860,7 +3874,8 @@
    "motifs": [
     "filigrane Le Moment Photography"
    ],
-   "action": "RETIRER"
+   "action": "RETIRER",
+   "suite": "droits acquis : demander au studio le fichier sans filigrane, puis remettre en ligne"
   },
   "614": {
    "cap": "Le décor",
@@ -3868,7 +3883,8 @@
    "motifs": [
     "filigrane Le Moment Photography"
    ],
-   "action": "RETIRER"
+   "action": "RETIRER",
+   "suite": "droits acquis : demander au studio le fichier sans filigrane, puis remettre en ligne"
   },
   "615": {
    "cap": "La salle",
@@ -4092,5 +4108,11 @@
    "marque tierce identifiable",
    "oeuvre encadree d un tiers"
   ]
+ },
+ "droits": {
+  "declaration_dawoud": "2026-09-09 : Dawoud declare detenir tous les droits sur l'ensemble des photographies du fonds",
+  "portee": "couvre le droit a l'image des personnes et l'usage commercial des cliches",
+  "reserve": "la propriete d'une photo n'emporte pas cession des droits de l'auteur de l'oeuvre qui y figure (art. L.111-3 CPI) — point non tranche pour le portrait encadre",
+  "consequence_filigrane": "les 16 vues filigranees restent hors ligne non pour un motif de droits mais parce que le filigrane d'un studio tiers y est visible ; a remplacer par les fichiers sources sans filigrane"
  }
 }
