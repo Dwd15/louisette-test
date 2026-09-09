@@ -91,6 +91,10 @@
         [
           "infos-pratiques.html",
           "Infos pratiques"
+        ],
+        [
+          "infos-pratiques.html#newsletter",
+          "Nos actualités"
         ]
       ]
     ],
@@ -125,5 +129,10 @@
   "formulaire_groupe": {
     "action": "",
     "commentaire": "Laisser vide tant qu'aucun prestataire n'est choisi : le formulaire bascule alors sur l'envoi par la messagerie du visiteur, qui fonctionne sans rien installer."
+  },
+  "newsletter": {
+    "action": "",
+    "frequence": "une fois par mois",
+    "commentaire": "Tant que 'action' est vide, l'inscription passe par la messagerie du visiteur : le message qu'il envoie vaut preuve ecrite de son consentement, horodatee. Des qu'un prestataire est choisi, coller ici l'adresse de son formulaire."
   }
 }

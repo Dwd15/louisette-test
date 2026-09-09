@@ -176,6 +176,53 @@ def formulaire():
     h.append('</form></section>')
     return "\n".join(h)
 
+def newsletter():
+    """Inscription a la lettre d'actualites.
+
+    Le consentement doit etre libre, specifique, eclaire et univoque : la case
+    n'est jamais pre-cochee, la finalite est ecrite au-dessus, et le retrait
+    est annonce avant l'envoi. Sans prestataire configure, l'inscription part
+    par la messagerie du visiteur : le message qu'il envoie lui-meme, depuis
+    sa propre boite, vaut preuve de consentement — plus solide qu'une case."""
+    n = S.get("newsletter", {}) or {}
+    action = n.get("action") or ""
+    par_mail = not action
+    freq = esc(n.get("frequence") or "une fois par mois")
+    corps = ("Bonjour,%0D%0A%0D%0AJe souhaite recevoir la lettre d'actualites de "
+             "La Maison Louisette a cette adresse.%0D%0A%0D%0AJ'ai lu la politique "
+             "de confidentialite et je sais que je peux me desinscrire a tout "
+             "moment.%0D%0A%0D%0APrenom :%0D%0A")
+    h = ['<section class="sect news" id="newsletter">',
+         '<h2>Nos actualités</h2>',
+         '<p>Les soirées, les nouveautés de la carte, les dates à retenir. '
+         'Environ %s, jamais plus. Vous vous désinscrivez en un clic, '
+         'et nous ne transmettons votre adresse à personne.</p>' % freq]
+    if par_mail:
+        h.append('<p class="envoi"><a class="btn" href="mailto:%s'
+                 '?subject=Inscription%%20a%%20la%%20lettre%%20d%%27actualites&body=%s">'
+                 'M’inscrire par e-mail</a></p>' % (esc(S["email"]), corps))
+        h.append('<p class="tc">Votre message d’inscription nous sert de preuve de votre accord. '
+                 'Voir la <a class="lien" href="confidentialite.html">politique de '
+                 'confidentialité</a>.</p>')
+    else:
+        h += ['<form class="inscription" method="post" action="%s">' % esc(action),
+              '<p class="champ"><label for="n-email">Votre e-mail</label>'
+              '<input id="n-email" name="email" type="email" required autocomplete="email"></p>',
+              '<p class="champ"><label for="n-prenom">Votre prénom</label>'
+              '<input id="n-prenom" name="prenom" type="text" autocomplete="given-name"></p>',
+              '<p class="accord"><input id="n-ok" name="consentement" type="checkbox" required value="oui">'
+              '<label for="n-ok">J’accepte de recevoir la lettre d’actualités de '
+              'La Maison Louisette et je peux me désinscrire à tout moment.</label></p>',
+              '<p class="miel" aria-hidden="true"><label for="n-site">Ne pas remplir</label>'
+              '<input id="n-site" name="site" type="text" tabindex="-1" autocomplete="off"></p>',
+              '<p class="envoi"><button type="submit" class="btn">M’inscrire</button></p>',
+              '<p class="tc">Vos données servent uniquement à vous envoyer cette lettre. '
+              'Voir la <a class="lien" href="confidentialite.html">politique de '
+              'confidentialité</a>.</p>',
+              '</form>']
+    h.append('</section>')
+    return "\n".join(h)
+
 # ----------------------------------------------------------------- une page
 def page(slug):
     m = P[slug]; f = slug + ".html"
@@ -201,7 +248,7 @@ def page(slug):
          '<a href="#contenu" class="skip">Aller au contenu</a>',
          '<div class="grain" aria-hidden="true"></div>',
          barre(f), tiroir(), fil(m["ariane"]),
-         '<main id="contenu">', corps.replace("<!-- FORMULAIRE -->", formulaire()), '</main>',
+         '<main id="contenu">', corps.replace("<!-- FORMULAIRE -->", formulaire()).replace("<!-- NEWSLETTER -->", newsletter()), '</main>',
          pied(), dock(),
          '<script src="assets/mesure.js" defer></script>',
          '<script src="assets/site.js" defer></script>',

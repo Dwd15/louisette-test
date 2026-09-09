@@ -404,3 +404,11 @@ body.page .dock{transform:translateY(140%)}
   border:0;border-radius:2px;padding:16px 30px;min-height:52px}
 .sect.form .tc{color:var(--muted);font-size:13px;margin-top:16px}
 .sect.form .miel{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+/* --- inscription a la lettre d'actualites --- */
+.sect.news{max-width:760px}
+.sect.news .accord{display:flex;gap:12px;align-items:flex-start;margin:0 0 18px;max-width:520px}
+.sect.news .accord input{width:22px;height:22px;min-height:22px;flex:0 0 auto;margin-top:2px;accent-color:var(--or)}
+.sect.news .accord label{font-family:"Instrument Sans",sans-serif;font-size:14px;line-height:1.5;
+  letter-spacing:0;text-transform:none;color:#DCD3C6}
+.sect.news .btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
