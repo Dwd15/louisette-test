@@ -423,3 +423,8 @@ body.page .dock{transform:translateY(140%)}
 .sect.news .accord label{font-family:"Instrument Sans",sans-serif;font-size:14px;line-height:1.5;
   letter-spacing:0;text-transform:none;color:#DCD3C6}
 .sect.news .btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+
+/* Plan du quartier — image auto-hebergee, aucune requete tierce, aucun cookie. */
+.sect.plan .plan-fig{margin:26px 0 0;max-width:1000px}
+.sect.plan .plan-fig img{width:100%;height:auto;border-radius:14px;border:1px solid var(--line);display:block}
+.sect.plan .plan-fig figcaption{margin-top:10px;font-family:var(--txt);font-size:12.5px;color:var(--muted);line-height:1.5}
