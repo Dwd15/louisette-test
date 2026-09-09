@@ -1,0 +1,69 @@
+# Redirections de la bascule WordPress -> nouveau site.
+#
+# ETAT : PREPARE, PAS ACTIF. GitHub Pages ignore ce fichier ; il ne prendra
+# effet que le jour ou le site sera servi par Apache (IONOS, arbitrage du
+# 07/09, note 133). Le deposer maintenant evite de le reecrire sous pression
+# le jour J.
+#
+# Les cibles ont ete refaites le 09/09/2026 : le fichier _redirects herite
+# du site v25 pointait vers des pages qui n existent plus (carte.html,
+# acces.html), ce qui aurait envoye les visiteurs en 404 au lieu de les
+# rattraper. Deux lignes restent en attente d une decision, marquees ci-dessous.
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # --- pages d accueil de l ancien site
+  RewriteRule ^home/?$                    /                      [R=301,L]
+  RewriteRule ^accueil/?$                 /                      [R=301,L]
+
+  # --- groupes et privatisation
+  RewriteRule ^groupes/?$                 /groupes.html          [R=301,L]
+  RewriteRule ^privatisation/?$           /groupes.html          [R=301,L]
+  RewriteRule ^evenements/?$              /groupes.html          [R=301,L]
+  RewriteRule ^anniversaire/?$            /groupes.html          [R=301,L]
+  RewriteRule ^entreprise/?$              /groupes.html          [R=301,L]
+  RewriteRule ^evjf/?$                    /groupes.html          [R=301,L]
+  RewriteRule ^demande-en-mariage/?$      /groupes.html          [R=301,L]
+  RewriteRule ^repas-depart/?$            /groupes.html          [R=301,L]
+
+  # --- contact et acces : la page s appelle desormais infos-pratiques
+  RewriteRule ^contact/?$                 /infos-pratiques.html  [R=301,L]
+  RewriteRule ^acces/?$                   /infos-pratiques.html  [R=301,L]
+
+  # --- salle, bar, terrasse, brunch
+  RewriteRule ^brunch(/.*)?$              /brunch.html           [R=301,L]
+  RewriteRule ^terrasse/?$                /terrasse.html         [R=301,L]
+  RewriteRule ^bar/?$                     /bar-cocktails.html    [R=301,L]
+  RewriteRule ^cocktails/?$               /bar-cocktails.html    [R=301,L]
+  RewriteRule ^grand-rex/?$               /theatres.html         [R=301,L]
+  RewriteRule ^galerie/?$                 /                      [R=301,L]
+  RewriteRule ^avis/?$                    /la-maison.html        [R=301,L]
+
+  # --- reservation : vers la plateforme, pas vers une page morte
+  RewriteRule ^reservation/?$             https://bookings.zenchef.com/results?rid=364667&pid=1001 [R=301,L]
+
+  # --- pages legales
+  RewriteRule ^mentions-legales/?$        /mentions-legales.html [R=301,L]
+
+  # ================= EN ATTENTE DE DECISION =================
+  # 1. LA CARTE. /menu, /la-carte, /notre-carte sont indexes et n ont aucune
+  #    cible : le nouveau site n a pas de page carte (projet "Carte & Fiches").
+  #    Tant qu elle n existe pas, ces URLs renvoient vers l accueil, ce qui
+  #    decoit une intention tres precise. A rebrancher des que carte.html existe.
+  RewriteRule ^menu/?$                    /                      [R=302,L]
+  RewriteRule ^la-carte/?$                /                      [R=302,L]
+  RewriteRule ^notre-carte/?$             /                      [R=302,L]
+  #
+  # 2. L ANGLAIS. louisette-paris.com/en/home/ est en ligne et indexe
+  #    (environ 1 200 mots). Le nouveau site n a pas de version anglaise :
+  #    ces visiteurs atterriront sur du francais. A rebrancher le jour ou
+  #    /en/ existe.
+  RewriteRule ^en/home/?$                 /                      [R=302,L]
+  RewriteRule ^en/?$                      /                      [R=302,L]
+  # ==========================================================
+</IfModule>
+
+# Les URLs non prevues tombent sur la page 404 du nouveau site,
+# qui reste a ecrire.
+ErrorDocument 404 /404.html
