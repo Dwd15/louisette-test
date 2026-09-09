@@ -163,6 +163,14 @@ section{position:relative}
 .gmq::before{left:0;background:linear-gradient(90deg,var(--ink2),transparent)}.gmq::after{right:0;background:linear-gradient(270deg,var(--ink2),transparent)}
 .gtrack{display:flex;width:max-content;gap:14px;will-change:transform;animation:gmqk var(--gdur) linear infinite}
 .gmq.grev .gtrack{animation-direction:reverse}.gmq:hover .gtrack,.gmq:focus-within .gtrack{animation-play-state:paused}
+/* WCAG 2.2.2 : un defilement automatique doit pouvoir etre arrete. Le survol
+   ne suffit pas — au doigt il n existe pas. Bouton visible, clavier et tactile. */
+.gband.stop .gtrack{animation-play-state:paused}
+.gband .gpause{align-self:center;margin-top:6px;background:rgba(12,9,16,.86);color:var(--paper);
+ border:1px solid var(--line);border-radius:999px;padding:10px 18px;min-height:44px;
+ font-family:var(--txt);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.gband .gpause:hover{border-color:var(--rose)}
+.gband .gpause:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
 @keyframes gmqk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .gtile{flex:0 0 auto;height:190px;aspect-ratio:3/2;border-radius:3px;overflow:hidden;border:1px solid var(--line);cursor:zoom-in;position:relative;background:#000;margin:0}
 .gtile img{width:100%;height:100%;object-fit:cover;filter:saturate(.94)}
@@ -250,17 +258,17 @@ section{position:relative}
 .minihd .nav a:hover{opacity:1;border-bottom-color:var(--line)}
 .minihd .nav a[aria-current="page"]{opacity:1;border-bottom-color:var(--or)}
 .minihd .burger{display:none;background:none;border:0;color:var(--paper);font-size:20px;line-height:1;
-  padding:8px 10px;margin-left:auto;cursor:pointer}
+  padding:8px 10px;margin-left:auto;cursor:pointer;min-width:44px;min-height:44px}
 @media(max-width:900px){
   .minihd .nav{display:none}
-  .minihd .burger{display:block}
+  .minihd .burger{display:inline-flex;align-items:center;justify-content:center}
 }
 /* tiroir plein écran */
 .tiroir{position:fixed;inset:0;z-index:120;background:var(--ink);display:none;flex-direction:column;
   padding:26px 26px 40px;overflow-y:auto}
 .tiroir.open{display:flex}
 .tiroir .haut{display:flex;justify-content:space-between;align-items:center;margin-bottom:34px}
-.tiroir .x{background:none;border:0;color:var(--paper);font-size:26px;cursor:pointer;padding:6px 10px}
+.tiroir .x{background:none;border:0;color:var(--paper);font-size:26px;cursor:pointer;padding:6px 10px;min-width:44px;min-height:44px}
 .tiroir a.lien{font-family:"Bodoni Moda",Didot,serif;font-size:clamp(28px,8vw,38px);color:var(--paper);
   text-decoration:none;padding:14px 0;border-bottom:1px solid var(--line)}
 .tiroir a.lien:last-of-type{border-bottom:0}

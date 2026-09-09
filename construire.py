@@ -45,6 +45,11 @@ def charger(p):
         sys.exit(1)
 
 S = charger("_donnees/site.json")
+P_ = None
+SITE = "https://louisette-paris.com/"
+OG_IMAGE = "img/og-louisette.jpg"
+OG_ALT = "Le neon Louisette au-dessus des banquettes de la salle, brasserie parisienne des Grands Boulevards"
+
 P = charger("_donnees/pages.json")
 
 def esc(t):
@@ -168,7 +173,7 @@ def formulaire():
              'placeholder="Horaire, contraintes, budget…"></textarea></p>')
     # piege a robots : un humain ne remplit jamais ce champ, il est cache
     h.append('<p class="miel" aria-hidden="true"><label for="c-site">Ne pas remplir</label>'
-             '<input id="c-site" name="site" type="text" tabindex="-1" autocomplete="off"></p>')
+             '<input id="c-site" name="site" type="text" tabindex="-1" autocomplete="off" aria-hidden="true"></p>')
     h.append('<p class="envoi"><button type="submit" class="btn">Envoyer ma demande</button></p>')
     h.append('<p class="tc">Les informations transmises servent uniquement à répondre à '
              'votre demande. Voir la <a class="lien" href="confidentialite.html">politique de '
@@ -214,7 +219,7 @@ def newsletter():
               '<label for="n-ok">J’accepte de recevoir la lettre d’actualités de '
               'La Maison Louisette et je peux me désinscrire à tout moment.</label></p>',
               '<p class="miel" aria-hidden="true"><label for="n-site">Ne pas remplir</label>'
-              '<input id="n-site" name="site" type="text" tabindex="-1" autocomplete="off"></p>',
+              '<input id="n-site" name="site" type="text" tabindex="-1" autocomplete="off" aria-hidden="true"></p>',
               '<p class="envoi"><button type="submit" class="btn">M’inscrire</button></p>',
               '<p class="tc">Vos données servent uniquement à vous envoyer cette lettre. '
               'Voir la <a class="lien" href="confidentialite.html">politique de '
@@ -240,7 +245,16 @@ def page(slug):
          '<meta property="og:locale" content="fr_FR">',
          '<meta property="og:title" content="%s">' % esc(m["og_titre"]),
          '<meta property="og:description" content="%s">' % esc(m["description"]),
-         '<link rel="canonical" href="https://louisette-paris.com/%s">' % f,
+         '<meta property="og:url" content="%s%s">' % (SITE, f),
+         '<meta property="og:image" content="%s%s">' % (SITE, OG_IMAGE),
+         '<meta property="og:image:width" content="1200">',
+         '<meta property="og:image:height" content="630">',
+         '<meta property="og:image:alt" content="%s">' % esc(OG_ALT),
+         '<meta name="twitter:card" content="summary_large_image">',
+         '<meta name="twitter:title" content="%s">' % esc(m["og_titre"]),
+         '<meta name="twitter:description" content="%s">' % esc(m["description"]),
+         '<meta name="twitter:image" content="%s%s">' % (SITE, OG_IMAGE),
+         '<link rel="canonical" href="%s%s">' % (SITE, f),
          POLICES,
          '<link rel="stylesheet" href="assets/site.css">',
          ariane_ld(m["ariane"], f),
@@ -308,8 +322,13 @@ _SCRIPT_GALERIE = (
  # La charger des le chargement de la page repoussait le LCP a 6,3 s sur
  # 4 mesures sur 5 (essai du 9 septembre) : l insertion et la peinture des
  # 1 188 tuiles retombaient dans la fenetre de mesure.
+ '<button type="button" class="gpause" id="gpause" aria-pressed="false">Arrêter le défilement</button>'
  '<script>(function(){'
  'var b=document.querySelector(".gband");if(!b)return;'
+ 'var bt=document.getElementById("gpause");'
+ 'if(bt){bt.addEventListener("click",function(){var s=b.classList.toggle("stop");'
+ 'bt.setAttribute("aria-pressed",s?"true":"false");'
+ 'bt.textContent=s?"Reprendre le défilement":"Arrêter le défilement";});}'
  'var vis=1,file=[],k=0,tourne=0,pose=0;'
  'function empiler(){file=file.concat([].slice.call(b.querySelectorAll("img[data-src]")));if(!tourne){tourne=1;vague();}}'
  'function vague(){var g=document.getElementById("glb");'
@@ -353,7 +372,9 @@ def galerie():
 
 # ----------------------------------------------------------------- sitemap
 def sitemap(faites):
-    urls = [""] + faites + ["mentions-legales.html", "confidentialite.html"]
+    # faites contient deja les pages legales : les rajouter les dupliquait
+    # dans le sitemap (12 entrees pour 10 pages, constate le 9 septembre).
+    urls = [""] + [u for u in faites if u != "index.html"]
     from datetime import date
     d = date.today().isoformat()
     ecrire("sitemap.xml",
@@ -394,8 +415,18 @@ def controler(faites):
         if re.search(r'\d\s?€', t) and not prix_ok:
             pbs.append("%s : un prix apparait alors que les prix ne sont pas reconcilies" % f)
         if "8h30" in t or "8 h 30" in t: pbs.append("%s : horaire 8h30" % f)
-        for mot in ("100 % maison", "tout fait maison", "entièrement travaillée sur place"):
-            if mot in t: pbs.append('%s : formulation interdite "%s"' % (f, mot))
+        # La mention "fait maison" est reglementee (decret 2014-797, art. D.121-13-1
+        # du code de la consommation) : elle vise un plat elabore sur place a partir
+        # de produits crus. Le site achete viennoiseries, glaces et charcuteries.
+        # Toute formulation qui l etend a l ensemble de la carte est fausse.
+        # Le 9 septembre le garde-fou a rate "Tout est fait maison" parce qu il ne
+        # cherchait que "tout fait maison" : on cherche desormais la famille entiere.
+        for motif, quoi in (
+                (r"(?i)\b(tout|100\s*%|entièrement|intégralement)\b[^.]{0,40}\bfait[e]?s?\s+maison\b", "un « fait maison » etendu a toute la carte"),
+                (r"(?i)\bfait\s+maison\b[^.]{0,30}\b(partout|sans exception)\b", "un « fait maison » sans exception"),
+                (r"(?i)entièrement travaillée sur place", "« entièrement travaillée sur place »")):
+            m = re.search(motif, t)
+            if m: pbs.append('%s : formulation interdite — %s : "%s"' % (f, quoi, m.group(0)[:70]))
         if "abus d'alcool" not in t: pbs.append("%s : mention alcool absente" % f)
         for img in (re.findall(r'<img [^>]*>', t) if f != "index.html" else []):
             if not re.search(r'alt="[^"]+"', img):
