@@ -50,6 +50,47 @@ SITE = "https://louisette-paris.com/"
 OG_IMAGE = "img/og-louisette.jpg"
 OG_ALT = "Le neon Louisette au-dessus des banquettes de la salle, brasserie parisienne des Grands Boulevards"
 
+DISTANCES = "_controle/distances-2026-09-10.json"
+
+def itineraires(corps):
+    """Pose sur chaque fiche de salle un bouton d itineraire a pied.
+
+    C est un lien, pas une carte : rien n est charge tant que personne ne
+    clique. Une carte integree par salle aurait fait treize connexions a un
+    service tiers a l ouverture de la page, avec les traceurs qui vont avec.
+    Le point de depart est le restaurant, l arrivee les coordonnees mesurees
+    le 10/09/2026 et rangees dans le meme fichier que les distances."""
+    try:
+        ref = charger(DISTANCES)["salles"]
+    except SystemExit:
+        return corps
+    depart = "%s,%s" % (S["geo"]["lat"], S["geo"]["lon"]) if S.get("geo") else "48.8695081,2.3550087"
+
+    def pose(m):
+        nom = m.group(2)
+        d = ref.get(nom) or {}
+        if "lat" not in d: return m.group(0)
+        lien = ("https://www.google.com/maps/dir/?api=1&amp;origin=%s&amp;destination=%s,%s&amp;travelmode=walking"
+                % (depart, d["lat"], d["lon"]))
+        propre = nom.replace("&amp;", "et")
+        # Ce libelle est lu a voix haute par les lecteurs d ecran : "a Le Grand
+        # Rex" ou "a Theatre Antoine" ne se disent pas. On choisit la
+        # preposition sur le premier mot.
+        premier = propre.split(" ", 1)[0]
+        if premier in ("Le",):        cible = "au " + propre[3:]
+        elif premier in ("La",):      cible = "à la " + propre[3:]
+        elif premier in ("Les",):     cible = "aux " + propre[4:]
+        elif premier in ("Théâtre", "Palais-Royal", "Splendid", "Gymnase"):
+            cible = "au " + propre
+        elif premier in ("Folies",):  cible = "aux " + propre
+        else:                          cible = "à " + propre
+        btn = ('<a class="itin" href="%s" target="_blank" rel="noopener" '
+               'aria-label="Itinéraire à pied de Louisette %s, %d minutes">'
+               'Itinéraire à pied</a>' % (lien, esc(cible), d["minutes"]))
+        return m.group(0) + btn
+
+    return re.sub(r'<div class="carte"><div class="d">([^<]*)</div><b>([^<]*)</b>', pose, corps)
+
 def bouton_whatsapp():
     """Bouton WhatsApp de la page groupes, avec le message deja redige.
 
@@ -287,7 +328,7 @@ def page(slug):
          '<a href="#contenu" class="skip">Aller au contenu</a>',
          '<div class="grain" aria-hidden="true"></div>',
          barre(f), tiroir(), fil(m["ariane"]),
-         '<main id="contenu">', corps.replace("<!-- FORMULAIRE -->", formulaire()).replace("<!-- NEWSLETTER -->", newsletter()).replace("<!-- WHATSAPP -->", bouton_whatsapp()), '</main>',
+         '<main id="contenu">', (itineraires(corps) if slug == "theatres" else corps).replace("<!-- FORMULAIRE -->", formulaire()).replace("<!-- NEWSLETTER -->", newsletter()).replace("<!-- WHATSAPP -->", bouton_whatsapp()), '</main>',
          pied(), dock(),
          '<script src="assets/mesure.js" defer></script>',
          '<script src="assets/site.js" defer></script>',
@@ -411,6 +452,20 @@ def sitemap(faites):
 # ----------------------------------------------------------------- controles
 def controler(faites):
     pbs = []
+    # Une variable CSS jamais declaree rend la declaration entiere invalide,
+    # en silence : ni erreur, ni avertissement, la regle disparait simplement.
+    # Le 10/09 quatre regles etaient mortes ainsi — dont le contour de focus du
+    # bouton d arret du carrousel, pose le matin meme — parce qu elles
+    # appelaient --rose quand le theme declare --or.
+    # Exception : --gdur est pose en style en ligne sur chaque piste.
+    try:
+        css = lire("assets/site.css")
+        declarees = set(re.findall(r"(--[a-z0-9-]+)\s*:", css))
+        for v in sorted(set(re.findall(r"var\((--[a-z0-9-]+)\)", css)) - declarees - {"--gdur"}):
+            pbs.append("assets/site.css : la variable %s est utilisee mais jamais declaree — "
+                       "les regles qui l appellent sont mortes" % v)
+    except IOError:
+        pbs.append("assets/site.css introuvable")
     # Une page sortie du brouillon ne doit plus porter son marqueur de contenu
     # a venir : c est le seul garde-fou qui empeche de publier une coquille.
     for slug, m in P.items():
@@ -494,6 +549,11 @@ def controler(faites):
             for nom in ref:
                 if nom not in vues:
                     pbs.append("theatres.html : la salle mesuree %s n est affichee nulle part" % nom)
+            n_fiches = t.count('<div class="carte">')
+            n_itin = t.count('class="itin"')
+            if n_itin != n_fiches:
+                pbs.append("theatres.html : %d fiches mais %d boutons d itineraire"
+                           % (n_fiches, n_itin))
 
         # Le Grand Rex est a 543 m, soit sept minutes. Toute autre duree
         # accolee a son nom est une affirmation qu un client dement avec son

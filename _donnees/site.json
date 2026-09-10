@@ -144,5 +144,10 @@
   "affiche": "06 16 12 14 97",
   "message": "Bonjour Louisette, je souhaite un devis pour un groupe. Date : … / Nombre de personnes : … / Occasion : …",
   "commentaire": "Numero mobile personnel, rendu public sur le site le 09/09/2026 sur decision de Dawoud. Pour le retirer partout : supprimer cette cle et relancer construire.py."
+ },
+ "geo": {
+  "lat": 48.8695081,
+  "lon": 2.3550087,
+  "commentaire": "Coordonnees du restaurant, reprises du JSON-LD de l accueil. Elles servent de point de depart aux itineraires de la page theatres et aux distances mesurees."
  }
 }

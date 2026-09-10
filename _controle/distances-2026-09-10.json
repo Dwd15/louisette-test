@@ -11,74 +11,102 @@
   "geocodage": "Photon (OpenStreetMap), chaque salle verifiee par le nom retourne",
   "itineraire": "Valhalla, profil pieton, valhalla1.openstreetmap.de",
   "pourquoi_pas_osrm": "le serveur public OSRM ne sert que le profil voiture : il donnait 845 m pour un theatre situe a 132 m, en contournant des sens uniques",
-  "duree": "celle rendue par le calculateur pieton, arrondie a la minute"
+  "duree": "celle rendue par le calculateur pieton, arrondie a la minute",
+  "itineraire_bouton": "Chaque fiche porte un bouton qui ouvre l itineraire a pied depuis le 8 boulevard Saint-Denis. C est un lien : aucune requete n est faite tant que personne ne clique, donc aucun traceur au chargement de la page."
  },
  "salles": {
   "Le Grand Rex": {
    "metres": 590,
    "minutes": 7,
-   "adresse": "1 boulevard Poissonnière, 75002"
+   "adresse": "1 boulevard Poissonnière, 75002",
+   "lat": 48.870533,
+   "lon": 2.347649
   },
   "Théâtre de la Porte Saint-Martin": {
    "metres": 165,
    "minutes": 2,
-   "adresse": "18 boulevard Saint-Martin, 75010"
+   "adresse": "18 boulevard Saint-Martin, 75010",
+   "lat": 48.869075,
+   "lon": 2.356889
   },
   "Théâtre de la Renaissance": {
    "metres": 132,
    "minutes": 2,
-   "adresse": "20 boulevard Saint-Martin, 75010"
+   "adresse": "20 boulevard Saint-Martin, 75010",
+   "lat": 48.869091,
+   "lon": 2.356429
   },
   "Théâtre des Nouveautés": {
    "metres": 835,
    "minutes": 10,
-   "adresse": "24 boulevard Poissonnière, 75009"
+   "adresse": "24 boulevard Poissonnière, 75009",
+   "lat": 48.871371,
+   "lon": 2.344875
   },
   "Théâtre du Gymnase Marie-Bell": {
    "metres": 508,
    "minutes": 7,
-   "adresse": "38 boulevard de Bonne-Nouvelle, 75010"
+   "adresse": "38 boulevard de Bonne-Nouvelle, 75010",
+   "lat": 48.870918,
+   "lon": 2.348839
   },
   "Le Splendid": {
    "metres": 247,
    "minutes": 3,
-   "adresse": "48 rue du Faubourg Saint-Martin, 75010"
+   "adresse": "48 rue du Faubourg Saint-Martin, 75010",
+   "lat": 48.870706,
+   "lon": 2.356766
   },
   "Théâtre Antoine": {
    "metres": 172,
    "minutes": 2,
-   "adresse": "14 boulevard de Strasbourg, 75010"
+   "adresse": "14 boulevard de Strasbourg, 75010",
+   "lat": 48.870577,
+   "lon": 2.355284
   },
   "Théâtre des Variétés": {
    "metres": 1008,
    "minutes": 12,
-   "adresse": "7 boulevard Montmartre, 75002"
+   "adresse": "7 boulevard Montmartre, 75002",
+   "lat": 48.871433,
+   "lon": 2.342138
   },
   "Folies Bergère": {
    "metres": 1184,
    "minutes": 14,
-   "adresse": "32 rue Richer, 75009"
+   "adresse": "32 rue Richer, 75009",
+   "lat": 48.874489,
+   "lon": 2.344921
   },
   "La Scala Paris": {
    "metres": 151,
    "minutes": 2,
-   "adresse": "13 boulevard de Strasbourg, 75010"
+   "adresse": "13 boulevard de Strasbourg, 75010",
+   "lat": 48.870328,
+   "lon": 2.354577
   },
   "Palais-Royal &amp; Michodière": {
    "metres": 1461,
    "minutes": 18,
-   "adresse": "38 rue de Montpensier, 75001 (la Michodière est à 1 673 m, 20 min)"
+   "adresse": "38 rue de Montpensier, 75001 (la Michodière est à 1 673 m, 20 min)",
+   "lat": 48.866139,
+   "lon": 2.337633
   },
   "Théâtre du Châtelet": {
    "metres": 1550,
    "minutes": 19,
-   "adresse": "1 place du Châtelet, 75001"
+   "adresse": "1 place du Châtelet, 75001",
+   "lat": 48.857794,
+   "lon": 2.346264
   },
-  "Théâtre de la Ville &amp; République": {
+  "Théâtre de la Ville": {
    "metres": 1556,
    "minutes": 19,
-   "adresse": "quai de Gesvres, 75004"
+   "adresse": "place du Châtelet / quai de Gesvres, 75004",
+   "lat": 48.857285,
+   "lon": 2.34807
   }
  },
- "constat": "Le bareme publie jusqu au 09/09/2026 n avait jamais ete mesure. Il etait faux dans les deux sens : La Scala annoncee a 9 minutes en est a 2, le Theatre Antoine annonce a 6 en est a 2, tandis que les Folies Bergere annoncees a 8 en sont a 14 et le Chatelet annonce a 12 en est a 19. Les cinq salles les plus proches, sous-vendues, sont l argument le plus fort de la page."
+ "constat": "Le bareme publie jusqu au 09/09/2026 n avait jamais ete mesure. Il etait faux dans les deux sens : La Scala annoncee a 9 minutes en est a 2, le Theatre Antoine annonce a 6 en est a 2, tandis que les Folies Bergere annoncees a 8 en sont a 14 et le Chatelet annonce a 12 en est a 19. Les cinq salles les plus proches, sous-vendues, sont l argument le plus fort de la page.",
+ "a_verifier": "La fiche annoncait « Theatre de la Ville & Republique, place de la Republique ». Le Theatre de la Ville est place du Chatelet ; aucune de ses salles n est a Republique. La mention Republique a ete retiree faute de pouvoir identifier la salle visee. Place de la Republique elle-meme est a 720 m, 9 minutes : si une salle precise y etait visee, elle est bien plus proche que ce que la fiche annoncait."
 }
