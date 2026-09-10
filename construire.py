@@ -691,6 +691,30 @@ def controler(faites):
             if '"%s"' % mort in t:
                 pbs.append("%s : balisage %s, supprime des resultats Google depuis mai 2026" % (f, mort))
 
+        # --- un nombre de salles ecrit en toutes lettres dans une phrase echappait
+        # a tous les controles : le 10/09 la page 404 renvoyait encore vers "les
+        # treize salles" pendant que la page en affichait vingt-sept. On verifie
+        # desormais chaque occurrence contre les deux seuls comptages qui existent.
+        try:
+            _s = json.loads(lire(DISTANCES))["salles"]
+            _ok = {len(_s), sum(1 for v in _s.values() if v["minutes"] <= 3)}
+            _mots = {"une":1,"deux":2,"trois":3,"quatre":4,"cinq":5,"six":6,"sept":7,"huit":8,
+                     "neuf":9,"dix":10,"onze":11,"douze":12,"treize":13,"quatorze":14,"quinze":15,
+                     "seize":16,"vingt":20,"vingt-sept":27,"trente":30}
+            # « Deux salles et un gradin » decrit une salle voisine, pas notre
+            # quartier : on ne verifie que les tournures qui parlent de l ensemble.
+            _motif = (r"(?i)(?:\bles\s+([a-zà-ÿ-]+|\d+)\s+salles\b"
+                      r"|\b([a-zà-ÿ-]+|\d+)\s+salles\s+de\s+spectacle\b)")
+            for mm in re.finditer(_motif, plat):
+                brut0 = mm.group(1) or mm.group(2)
+                brut = brut0.lower()
+                n = _mots.get(brut, int(brut) if brut.isdigit() else None)
+                if n is not None and n not in _ok:
+                    pbs.append('%s : "%s salles" alors que les mesures en comptent %s'
+                               % (f, brut, " ou ".join(str(x) for x in sorted(_ok))))
+        except Exception as e:
+            pbs.append("%s : comptage des salles invérifiable (%s)" % (f, e))
+
         # Le Grand Rex est a 590 m, soit sept minutes. Toute autre duree
         # accolee a son nom est une affirmation qu un client dement avec son
         # telephone, debout sur le trottoir.
