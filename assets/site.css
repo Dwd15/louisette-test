@@ -334,6 +334,8 @@ body.page .minihd{transform:none;opacity:1;pointer-events:auto;position:fixed;
   text-transform:uppercase;color:var(--or);margin-bottom:8px}
 .carte b{display:block;font-family:"Bodoni Moda",Didot,serif;font-size:20px;font-weight:500;margin-bottom:8px}
 .carte p{font-size:14.5px;line-height:1.62;color:#C9C0B4;margin:0}
+.carte p.stat{font-family:"Instrument Sans",sans-serif;font-size:12px;line-height:1.55;
+  color:#8E8579;margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}
 /* bloc de rappel réservation */
 .presa{max-width:1080px;margin:10px auto 0;padding:44px 26px 60px;text-align:center}
 .presa h2{margin-bottom:14px}

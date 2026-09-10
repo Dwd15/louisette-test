@@ -1,6 +1,6 @@
 {
  "date": "2026-09-10",
- "objet": "distances a pied entre Louisette et les salles, les reperes du quartier et les parkings, plus l etat des transports",
+ "objet": "distances a pied entre Louisette et les salles, les monuments et lieux du quartier et les parkings, plus l etat des transports",
  "origine": {
   "adresse": "8 boulevard Saint-Denis, 75010 Paris",
   "lat": 48.8695081,
@@ -15,7 +15,8 @@
   "duree": "celle rendue par le calculateur pieton, arrondie a la minute",
   "verification": "identite, adresse et activite de chaque salle confirmees sur le site officiel du lieu ou sur la base Merimee du ministere de la Culture",
   "ecarte": "Le Globo, 8 boulevard de Strasbourg : nom de domaine mort, aucune programmation, fiche de privatisation desactivee. Aucune source ne confirme une activite en 2026, donc le lieu n est pas publie. Golden Comedy Club : n est pas boulevard de Bonne-Nouvelle mais 36 rue Dalayrac, a 1 668 m ; ecarte de la liste des salles proches. Parking des Recollets : reserve aux abonnes, ecarte.",
-  "itineraire_bouton": "Chaque fiche porte un bouton qui ouvre l itineraire a pied depuis le 8 boulevard Saint-Denis. C est un lien : aucune requete n est faite tant que personne ne clique, donc aucun traceur au chargement de la page."
+  "itineraire_bouton": "Chaque fiche porte un bouton qui ouvre l itineraire a pied depuis le 8 boulevard Saint-Denis. C est un lien : aucune requete n est faite tant que personne ne clique, donc aucun traceur au chargement de la page.",
+  "patrimoine": "statut, date d arrete et elements proteges verifies un par un dans la base Merimee du ministere de la Culture (pop.culture.gouv.fr). La distinction classe / inscrit est juridique : le decor du Grand Rex est inscrit, pas classe, et le site l avait ecrit a tort."
  },
  "salles": {
   "Théâtre Libre": {
@@ -225,75 +226,6 @@
    "lon": 2.34807
   }
  },
- "reperes": {
-  "Porte Saint-Martin": {
-   "metres": 61,
-   "minutes": 1,
-   "adresse": "boulevard Saint-Martin, 75010",
-   "lat": 48.8691459,
-   "lon": 2.3556515
-  },
-  "Porte Saint-Denis": {
-   "metres": 178,
-   "minutes": 2,
-   "adresse": "boulevard Saint-Denis, 75010",
-   "lat": 48.8697934,
-   "lon": 2.3526863
-  },
-  "Passage Brady": {
-   "metres": 245,
-   "minutes": 3,
-   "adresse": "46 rue du Faubourg-Saint-Denis, 75010",
-   "lat": 48.8708984,
-   "lon": 2.3564843
-  },
-  "Marché couvert Saint-Martin": {
-   "metres": 358,
-   "minutes": 5,
-   "adresse": "31-33 rue du Château-d'Eau, 75010",
-   "lat": 48.8707825,
-   "lon": 2.3581925,
-   "note": "Ferme le lundi ; mardi au samedi 9 h - 20 h, dimanche 9 h - 14 h."
-  },
-  "Musée des Arts et Métiers": {
-   "metres": 572,
-   "minutes": 8,
-   "adresse": "60 rue Réaumur, 75003",
-   "lat": 48.8660977,
-   "lon": 2.3554138,
-   "note": "Mardi au dimanche 10 h - 18 h, nocturne le vendredi jusqu a 21 h."
-  },
-  "Place de la République": {
-   "metres": 650,
-   "minutes": 9,
-   "adresse": "place de la République, 75003",
-   "lat": 48.867662,
-   "lon": 2.3627956
-  },
-  "Musée Grévin": {
-   "metres": 1045,
-   "minutes": 13,
-   "adresse": "10 boulevard Montmartre, 75009",
-   "lat": 48.8718365,
-   "lon": 2.3420974
-  },
-  "Gare de l'Est": {
-   "metres": 1036,
-   "minutes": 12,
-   "adresse": "place du 11-Novembre-1918, 75010",
-   "lat": 48.8770979,
-   "lon": 2.3594905,
-   "note": "Deux stations de metro par la ligne 4."
-  },
-  "Gare du Nord": {
-   "metres": 1394,
-   "minutes": 17,
-   "adresse": "18 rue de Dunkerque, 75010",
-   "lat": 48.8804003,
-   "lon": 2.3549733,
-   "note": "Trois stations de metro par la ligne 4."
-  }
- },
  "parkings": {
   "Indigo Saint-Martin": {
    "metres": 473,
@@ -446,5 +378,196 @@
   "rue_rene_boulanger": "Plus une seule place voiture : les cinq emprises relevees sont du stationnement velo (100 places).",
   "pmr_voirie": "Une place reservee au 31 rue du Faubourg-Saint-Martin, a 130 m. Une autre rue Meslay. C est tout.",
   "depose_minute": "Aucun emplacement Depose minute a moins d un kilometre ; Paris n en compte que douze."
+ },
+ "monuments": {
+  "Porte Saint-Martin": {
+   "metres": 61,
+   "minutes": 1,
+   "adresse": "boulevard Saint-Martin, 75010",
+   "lat": 48.8691459,
+   "lon": 2.3556515,
+   "statut": "Classé monument historique, liste de 1862 — notice Mérimée PA00086513",
+   "note": "Arc de triomphe de 1674, de Pierre Bullet, pour les victoires de Louis XIV. Il est devant la terrasse."
+  },
+  "Porte Saint-Denis": {
+   "metres": 178,
+   "minutes": 2,
+   "adresse": "boulevard Saint-Denis, 75010",
+   "lat": 48.8697934,
+   "lon": 2.3526863,
+   "statut": "Classé monument historique, liste de 1862 — notice Mérimée PA00086512",
+   "note": "Arc de 1672, de Francois Blondel, deux ans plus tot et vingt-cinq metres plus haut que sa voisine."
+  },
+  "Passage Brady": {
+   "metres": 245,
+   "minutes": 3,
+   "adresse": "46 rue du Faubourg-Saint-Denis, 75010",
+   "lat": 48.8708984,
+   "lon": 2.3564843,
+   "statut": "Inscrit monument historique le 7 mars 2002, pour sa partie couverte — notice Mérimée PA75100007",
+   "note": "Passage de 1828 devenu la petite Inde de Paris. Seule la partie sous verriere est protegee."
+  },
+  "Marché couvert Saint-Martin": {
+   "metres": 353,
+   "minutes": 5,
+   "adresse": "31-33 rue du Château-d'Eau, 75010",
+   "lat": 48.8707825,
+   "lon": 2.3581925,
+   "statut": "Non protégé au titre des monuments historiques",
+   "note": "Halle de 1854. Ferme le lundi ; du mardi au samedi de 9 h a 20 h, le dimanche de 9 h a 14 h."
+  },
+  "Musée des Arts et Métiers": {
+   "metres": 572,
+   "minutes": 8,
+   "adresse": "60 rue Réaumur, 75003",
+   "lat": 48.8660977,
+   "lon": 2.3554138,
+   "statut": "Ancienne abbaye Saint-Martin-des-Champs, classée monument historique le 15 mars 1993 — notice Mérimée PA00086100",
+   "note": "Prieure des XIe-XIIIe siecles devenu musee des techniques. Du mardi au dimanche de 10 h a 18 h, nocturne le vendredi jusqu a 21 h."
+  },
+  "Place de la République": {
+   "metres": 650,
+   "minutes": 9,
+   "adresse": "place de la République, 75003",
+   "lat": 48.867662,
+   "lon": 2.3627956,
+   "statut": "Monument à la République inscrit monument historique le 28 janvier 2021 — notice Mérimée PA75030005",
+   "note": "Le grand carrefour du nord-est parisien, a neuf minutes par le boulevard."
+  },
+  "Musée Grévin": {
+   "metres": 1045,
+   "minutes": 13,
+   "adresse": "10 boulevard Montmartre, 75009",
+   "lat": 48.8718365,
+   "lon": 2.3420974,
+   "statut": "Salle de théâtre inscrite monument historique le 23 novembre 1964 — notice Mérimée PA00088993. Le passage Jouffroy qui le dessert est inscrit depuis 1974.",
+   "note": "Musee de cire de 1882, au bout des Grands Boulevards, dans un passage couvert protege."
+  },
+  "Gare de l'Est": {
+   "metres": 1036,
+   "minutes": 12,
+   "adresse": "place du 11-Novembre-1918, 75010",
+   "lat": 48.8770979,
+   "lon": 2.3594905,
+   "statut": "Inscrite monument historique le 28 décembre 1984 — notice Mérimée PA00086491",
+   "note": "Douze minutes a pied, ou deux stations de la ligne 4."
+  },
+  "Gare du Nord": {
+   "metres": 1394,
+   "minutes": 17,
+   "adresse": "18 rue de Dunkerque, 75010",
+   "lat": 48.8804003,
+   "lon": 2.3549733,
+   "statut": "Non protégée au titre des monuments historiques",
+   "note": "Trois stations de la ligne 4, sans changement."
+  },
+  "Square Émile-Chautemps": {
+   "metres": 295,
+   "minutes": 4,
+   "adresse": "Square Emile Chautemps 75003",
+   "lat": 48.8671919,
+   "lon": 2.3538368,
+   "statut": "Non protégé au titre des monuments historiques",
+   "note": "Deux fontaines de Gabriel Davioud, 1858. Le seul vrai jardin du quartier, a quatre minutes."
+  },
+  "Église Notre-Dame-de-Bonne-Nouvelle": {
+   "metres": 360,
+   "minutes": 5,
+   "adresse": "19 rue de la Lune 75002",
+   "lat": 48.8697014,
+   "lon": 2.3504986,
+   "statut": "Classée monument historique le 21 mars 1983, en totalité — notice Mérimée PA00086016",
+   "note": "Eglise de 1823 qui a donne son nom au boulevard, cachee derriere la rue de la Lune."
+  },
+  "Mairie du 10e arrondissement": {
+   "metres": 377,
+   "minutes": 5,
+   "adresse": "72 rue du Faubourg Saint-Martin 75010",
+   "lat": 48.8717915,
+   "lon": 2.357372,
+   "statut": "Non protégée au titre des monuments historiques",
+   "note": "Neo-Renaissance de 1892. Les mariages en sortent le samedi."
+  },
+  "Métro Château d'Eau — édicules Guimard": {
+   "metres": 398,
+   "minutes": 5,
+   "adresse": "49 boulevard de Strasbourg 75010",
+   "lat": 48.8724486,
+   "lon": 2.3557969,
+   "statut": "Inscrits monument historique le 12 février 2016 — notice Mérimée PA00086508",
+   "note": "Les deux entourages Art nouveau d Hector Guimard, sur le boulevard de Strasbourg."
+  },
+  "Église Saint-Nicolas-des-Champs": {
+   "metres": 473,
+   "minutes": 6,
+   "adresse": "254 rue Saint-Martin 75003",
+   "lat": 48.8657951,
+   "lon": 2.3538058,
+   "statut": "Classée monument historique le 10 février 1887, en totalité — notice Mérimée PA00086111",
+   "note": "Nef flamboyante du XVe siecle, portail Renaissance, grand orgue Clicquot."
+  },
+  "Passage du Caire": {
+   "metres": 560,
+   "minutes": 7,
+   "adresse": "2 place du Caire 75002",
+   "lat": 48.8681417,
+   "lon": 2.3485674,
+   "statut": "Façades et toitures de l'immeuble du 2 place du Caire inscrites le 28 avril 1964 — notice Mérimée PA00086049. Le passage lui-même n'est pas protégé.",
+   "note": "Le plus long passage de Paris, 1799, sous une facade neo-egyptienne. Le passage lui-meme n est pas protege."
+  },
+  "Église Saint-Laurent": {
+   "metres": 702,
+   "minutes": 8,
+   "adresse": "68 boulevard de Magenta 75010",
+   "lat": 48.8745019,
+   "lon": 2.3582342,
+   "statut": "Classée monument historique le 16 décembre 2016, en totalité — notice Mérimée PA00086488",
+   "note": "Eglise des XVe-XVIIIe siecles, facade neogothique de 1863, face a la gare de l Est."
+  },
+  "Passage du Grand Cerf": {
+   "metres": 752,
+   "minutes": 9,
+   "adresse": "145 rue Saint-Denis 75002",
+   "lat": 48.8646674,
+   "lon": 2.3501215,
+   "statut": "Inscrit monument historique le 14 novembre 1985, en totalité — notice Mérimée PA00086089",
+   "note": "Douze metres sous verriere : le plus haut passage couvert de Paris, 1825."
+  },
+  "Tour Jean-sans-Peur": {
+   "metres": 883,
+   "minutes": 11,
+   "adresse": "20 rue Etienne Marcel 75002",
+   "lat": 48.8641261,
+   "lon": 2.3483354,
+   "statut": "Classée monument historique le 29 septembre 1884 — notice Mérimée PA00086026",
+   "note": "Donjon de 1411, seul vestige civil de l architecture feodale parisienne."
+  },
+  "Passage des Panoramas": {
+   "metres": 1025,
+   "minutes": 13,
+   "adresse": "11 boulevard Montmartre 75002",
+   "lat": 48.8715151,
+   "lon": 2.3419216,
+   "statut": "Inscrit monument historique le 7 juillet 1974 — notice Mérimée PA00086090",
+   "note": "Le plus ancien passage couvert de Paris encore en activite, 1799."
+  },
+  "Palais Brongniart": {
+   "metres": 1189,
+   "minutes": 14,
+   "adresse": "28 place de la Bourse 75002",
+   "lat": 48.8697847,
+   "lon": 2.3407069,
+   "statut": "Inscrit monument historique le 27 octobre 1987 — notice Mérimée PA00086010",
+   "note": "L ancienne Bourse de Paris, 1826, devenue centre de congres."
+  },
+  "Église Saint-Eustache": {
+   "metres": 1282,
+   "minutes": 15,
+   "adresse": "2 rue du Jour 75001",
+   "lat": 48.863696,
+   "lon": 2.344675,
+   "statut": "Classée monument historique, liste de 1862, en totalité — notice Mérimée PA00085795",
+   "note": "Cent ans de chantier, 1532-1632 : gothique par la structure, Renaissance par le decor."
+  }
  }
 }

@@ -65,7 +65,7 @@ def itineraires(corps):
     except SystemExit:
         return corps
     ref = {}
-    for section in ("salles", "reperes", "parkings"):
+    for section in ("salles", "monuments", "parkings"):
         ref.update(mesures.get(section) or {})
     depart = "%s,%s" % (S["geo"]["lat"], S["geo"]["lon"]) if S.get("geo") else "48.8695081,2.3550087"
 
@@ -336,7 +336,7 @@ def page(slug):
          '<a href="#contenu" class="skip">Aller au contenu</a>',
          '<div class="grain" aria-hidden="true"></div>',
          barre(f), tiroir(), fil(m["ariane"]),
-         '<main id="contenu">', (itineraires(corps) if slug in ("theatres", "infos-pratiques") else corps).replace("<!-- FORMULAIRE -->", formulaire()).replace("<!-- NEWSLETTER -->", newsletter()).replace("<!-- WHATSAPP -->", bouton_whatsapp()), '</main>',
+         '<main id="contenu">', (itineraires(corps) if slug in ("theatres", "infos-pratiques", "quartier") else corps).replace("<!-- FORMULAIRE -->", formulaire()).replace("<!-- NEWSLETTER -->", newsletter()).replace("<!-- WHATSAPP -->", bouton_whatsapp()), '</main>',
          pied(), dock(),
          '<script src="assets/mesure.js" defer></script>',
          '<script src="assets/site.js" defer></script>',
@@ -554,9 +554,10 @@ def controler(faites):
         # Le bareme precedent n avait jamais ete mesure et se trompait dans les
         # deux sens, jusqu a un facteur quatre. Toute fiche qui s ecarte de la
         # mesure arrete la construction.
-        if f in ("theatres.html", "infos-pratiques.html"):
+        if f in ("theatres.html", "infos-pratiques.html", "quartier.html"):
             attendu = {"theatres.html": ("salles",),
-                       "infos-pratiques.html": ("parkings", "reperes")}[f]
+                       "infos-pratiques.html": ("parkings",),
+                       "quartier.html": ("monuments",)}[f]
             try:
                 mes = json.loads(lire(DISTANCES))
                 ref = {}
@@ -640,6 +641,56 @@ def controler(faites):
                 pbs.append("infos-pratiques.html : le stationnement d aout est presente a tort "
                            "comme gratuit, ou la precision a disparu")
 
+        # --- le statut patrimonial est juridique, pas decoratif. Classe et
+        # inscrit ne sont pas synonymes : le 09/09 le site annonçait le decor du
+        # Grand Rex "classe" alors qu il est inscrit depuis 1981. Chaque fiche de
+        # la page quartier porte le statut releve dans la base Merimee, et il doit
+        # etre recopie mot pour mot depuis le fichier de mesures.
+        if f == "quartier.html":
+            try:
+                mons = json.loads(lire(DISTANCES))["monuments"]
+            except Exception as e:
+                pbs.append("quartier.html : statuts patrimoniaux illisibles (%s)" % e); mons = {}
+            def _pli(s):
+                s = re.sub(r"\s+", " ", s).strip().lower()
+                for a, b in (("é","e"),("è","e"),("ê","e"),("à","a"),("ç","c"),("ô","o"),("û","u"),("î","i"),("'","'")):
+                    s = s.replace(a, b)
+                return s
+            fiches = re.findall(r'<div class="carte"><div class="d">[^<]*</div><b>([^<]*)</b>'
+                                r'.*?(?:<p class="stat">(.*?)</p>)?</div>', t, re.S)
+            n_stat = t.count('<p class="stat">')
+            n_cartes = t.count('<div class="carte">')
+            if n_stat != n_cartes:
+                pbs.append("quartier.html : %d fiches mais %d statuts patrimoniaux"
+                           % (n_cartes, n_stat))
+            for nom, stat in fiches:
+                ref = (mons.get(nom) or {}).get("statut")
+                if ref is None:
+                    pbs.append("quartier.html : %s n a pas de statut releve" % nom); continue
+                if _pli(re.sub(r"<[^>]+>", "", stat or "")) != _pli(ref):
+                    pbs.append('quartier.html : %s affiche "%s" alors que la base Merimee dit "%s"'
+                               % (nom, re.sub(r"<[^>]+>", "", stat or "")[:60], ref[:60]))
+            # "classe" ecrit ailleurs que dans un statut releve : on refuse.
+            for m in re.finditer(r"(?i)class[ée]e?s?\s+(?:monument|au titre des monuments)", plat):
+                bout = plat[max(0, m.start()-90):m.start()+90]
+                if not any(_pli(v["statut"])[:24] in _pli(bout) for v in mons.values()):
+                    pbs.append('quartier.html : un "classe monument historique" sans notice Merimee — "%s"'
+                               % bout[-90:])
+
+        # --- un avis moyen que l on s attribue soi-meme dans le balisage est
+        # interdit par Google (self-serving review) et invérifiable par le
+        # lecteur. Il etait present depuis le debut : 4,6 sur 8 517 avis, sans
+        # source ni date. Il ne doit jamais revenir.
+        if "aggregateRating" in t or '"@type": "Review"' in t or '"@type":"Review"' in t:
+            pbs.append("%s : une note moyenne auto-attribuee est dans le balisage — "
+                       "interdit par Google et non sourcé sur la page" % f)
+        # --- Google a supprime les resultats enrichis FAQ le 7 mai 2026 et HowTo
+        # avant lui, et retire la documentation. Ce balisage ne sert plus a rien
+        # et donne l illusion d un acquis.
+        for mort in ("FAQPage", "HowTo"):
+            if '"%s"' % mort in t:
+                pbs.append("%s : balisage %s, supprime des resultats Google depuis mai 2026" % (f, mort))
+
         # Le Grand Rex est a 590 m, soit sept minutes. Toute autre duree
         # accolee a son nom est une affirmation qu un client dement avec son
         # telephone, debout sur le trottoir.
@@ -673,6 +724,36 @@ def controler(faites):
                 pbs.append("%s : une note de travail est restee dans le fichier publie" % f)
                 break
         if "&amp;amp;" in t: pbs.append("%s : double mise en forme (&amp;amp;), une donnee a ete traitee deux fois" % f)
+    # --- les titres et descriptions vivent dans _donnees/pages.json, hors des
+    # pages : le 10/09 la page theatres affichait vingt-sept salles pendant que
+    # sa propre description en annonçait treize. Rien ne l avait vu.
+    MOTS = {1:"une",2:"deux",3:"trois",4:"quatre",5:"cinq",6:"six",7:"sept",8:"huit",9:"neuf",
+            10:"dix",11:"onze",12:"douze",13:"treize",14:"quatorze",15:"quinze",16:"seize",
+            17:"dix-sept",18:"dix-huit",19:"dix-neuf",20:"vingt",21:"vingt et une",22:"vingt-deux",
+            23:"vingt-trois",24:"vingt-quatre",25:"vingt-cinq",26:"vingt-six",27:"vingt-sept",
+            28:"vingt-huit",29:"vingt-neuf",30:"trente",80:"quatre-vingts",11.5:"onze"}
+    try:
+        _m = json.loads(lire(DISTANCES))
+        _sal = _m["salles"]; _mon = _m["monuments"]
+        _att = {
+          "theatres": [(len(_sal), "le nombre de salles"),
+                       (sum(1 for v in _sal.values() if v["minutes"] <= 3), "les salles a trois minutes"),
+                       (min(v["metres"] for v in _sal.values()), "la distance de la salle la plus proche")],
+          "quartier": [(sum(1 for v in _mon.values()
+                            if v["minutes"] <= 10 and not v["statut"].lower().startswith("non prot")),
+                        "les monuments proteges a dix minutes")],
+        }
+        for _slug, _regles in _att.items():
+            _txt = (P.get(_slug, {}).get("titre", "") + " " + P.get(_slug, {}).get("description", "")).lower()
+            for _n, _quoi in _regles:
+                _mot = MOTS.get(_n)
+                if _mot is None:
+                    pbs.append("pages.json : %s vaut %d, aucun mot pour le verifier" % (_quoi, _n)); continue
+                if _mot not in _txt and str(_n) not in _txt:
+                    pbs.append('pages.json : la description de %s ne dit pas %s (%d, "%s")'
+                               % (_slug, _quoi, _n, _mot))
+    except Exception as e:
+        pbs.append("pages.json : coherence avec les mesures impossible (%s)" % e)
     return pbs
 
 if __name__ == "__main__":

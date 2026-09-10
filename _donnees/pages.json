@@ -13,7 +13,7 @@
  },
  "theatres": {
   "titre": "Dîner avant ou après le théâtre — Louisette, Paris 10",
-  "description": "Treize salles de spectacle à pied du 8 boulevard Saint-Denis, dont cinq à moins de trois minutes. Cuisine servie en continu de 8 h à 2 h, avant le lever de rideau comme après le rappel.",
+  "description": "Vingt-sept salles de spectacle mesurées à pied depuis le 8 boulevard Saint-Denis, dont sept à trois minutes ou moins et la plus proche à quatre-vingts mètres. Cuisine servie en continu de 8 h à 2 h, avant le lever de rideau comme après le rappel.",
   "og_titre": "Quartier des théâtres — La Maison Louisette",
   "ariane": "Quartier des théâtres"
  },
@@ -71,5 +71,11 @@
   "ariane": "Page introuvable",
   "hors_navigation": true,
   "commentaire": "Page d erreur 404. Construite comme les autres pour heriter de la charte et de la navigation, mais tenue hors du sitemap : une 404 indexee est une erreur. Le fichier livre s appelle 404.html, voir la fin de construire.py."
+ },
+ "quartier": {
+  "titre": "Le quartier : monuments, passages et musées — Louisette, Paris 10",
+  "description": "Deux arcs de triomphe classés en 1862 à moins de deux minutes, onze monuments historiques protégés à dix minutes ou moins, les passages couverts et les musées des Grands Boulevards, avec les distances mesurées depuis le 8 boulevard Saint-Denis.",
+  "og_titre": "Le quartier — La Maison Louisette",
+  "ariane": "Le quartier"
  }
 }
