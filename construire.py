@@ -221,11 +221,36 @@ def formulaire():
         ("date",      "Date souhaitée",           "date",  True,  "", ""),
         ("personnes", "Nombre de personnes",      "number","True", "min=\"8\" max=\"400\"", ""),
     ]
-    h = ['<section class="sect form" id="devis">',
-         '<h2>Demander un devis</h2>',
-         '<p>Répondez à ces quelques questions : nous revenons vers vous avec une '
-         'proposition chiffrée. Pour un besoin urgent, appelez le '
-         '<a class="lien" href="tel:%s">%s</a>.</p>' % (esc(S["tel_groupes"]["lien"]), esc(S["tel_groupes"]["affiche"])),
+    # L ordre compte. Un formulaire qui part par la messagerie du visiteur
+    # echoue en silence : la RFC 6068 autorise le logiciel de courrier a jeter
+    # les champs ranges en en-tetes, et sur Chrome Android sans application de
+    # courrier il ne se passe rien du tout. Tant qu aucun prestataire n est
+    # configure, les deux canaux qui fonctionnent vraiment passent devant.
+    tete = ""
+    if par_mail:
+        wa = whatsapp("Bonjour Louisette, je souhaite un devis pour un groupe. "
+                      "Date : … / Nombre de personnes : … / Occasion : …")
+        boutons = ['<a class="b2" href="tel:%s">%s</a>'
+                   % (esc(S["tel_groupes"]["lien"]), esc(S["tel_groupes"]["affiche"]))]
+        if wa: boutons.insert(0, '<a class="b1" href="%s" target="_blank" rel="noopener">'
+                                 'Demander par WhatsApp</a>' % esc(wa))
+        tete = ('<section class="sect direct" id="devis-direct">'
+                '<h2>Le plus rapide</h2>'
+                '<p>Pour un devis de groupe, WhatsApp et le téléphone sont les deux voies '
+                'les plus sûres&nbsp;: vous avez une réponse le jour même, souvent dans l\'heure.</p>'
+                '<div class="btns">%s</div></section>' % "".join(boutons))
+    h = [tete,
+         '<section class="sect form" id="devis">',
+         '<h2>Ou par formulaire</h2>',
+         ('<p>Ce formulaire ouvre votre logiciel de courrier avec le message déjà '
+          'rédigé. Si rien ne se passe — c\'est le cas sur beaucoup de téléphones — '
+          'écrivez-nous directement à <a class="lien" href="mailto:%s">%s</a>, ou '
+          'utilisez WhatsApp ci-dessus.</p>' % (esc(S["email"]), esc(S["email"])))
+         if par_mail else
+         ('<p>Répondez à ces quelques questions : nous revenons vers vous avec une '
+          'proposition chiffrée. Pour un besoin urgent, appelez le '
+          '<a class="lien" href="tel:%s">%s</a>.</p>'
+          % (esc(S["tel_groupes"]["lien"]), esc(S["tel_groupes"]["affiche"]))),
          '<form class="devis" method="%s" action="%s"%s>' % (
              "get" if par_mail else "post",
              ("mailto:" + esc(S["email"])) if par_mail else esc(action),
@@ -351,7 +376,11 @@ def accueil():
     vues = _meta()
     if meta_js(vues): print("meta.js : regenere depuis _donnees/photos.json")
     pistes, nb_vues = galerie()
-    for nom, contenu in (("NAV", barre() + "\n" + tiroir()), ("PIED", pied()), ("DOCK", dock()), ("GALERIE", pistes)):
+    # La lettre d actualites etait absente de la page la plus vue du site :
+    # l accueil ne connaissait pas le marqueur. Il le connait maintenant, et
+    # c est le meme bloc que sur les autres pages — une seule source.
+    for nom, contenu in (("NAV", barre() + "\n" + tiroir()), ("PIED", pied()), ("DOCK", dock()),
+                         ("GALERIE", pistes), ("NEWSLETTER", newsletter())):
         motif = re.compile(r'<!-- %s:debut -->.*?<!-- %s:fin -->' % (nom, nom), re.S)
         if motif.search(h):
             h = motif.sub(lambda _m, n=nom, c=contenu: '<!-- %s:debut -->%s<!-- %s:fin -->' % (n, c, n), h)
@@ -506,6 +535,21 @@ def controler(faites):
             pbs.append("phototheque : %d tuiles pour %d vues" % (len(gis), len(vues)))
     except Exception as e:
         pbs.append("phototheque : controle impossible (%s)" % e)
+    # --- une feuille de style ecrite avec des \\n litteraux au lieu de vrais
+    # retours a la ligne met toute la regle sur une ligne, prefixee d un
+    # caractere invalide : le navigateur jette le bloc entier, en silence.
+    # C est arrive le 10/09 au bloc du canal direct, dont les boutons sont
+    # restes des liens nus jusqu a la relecture visuelle.
+    try:
+        _css = lire("assets/site.css")
+        if "\\n" in _css:
+            pbs.append("assets/site.css : un \\n litteral casse la regle qui le suit")
+        _ouv, _fer = _css.count("{"), _css.count("}")
+        if _ouv != _fer:
+            pbs.append("assets/site.css : %d accolades ouvertes pour %d fermees" % (_ouv, _fer))
+    except Exception as e:
+        pbs.append("assets/site.css : illisible (%s)" % e)
+
     presentes = set(os.listdir(RACINE))
     for f in faites + ["index.html"]:
         t = lire(f)
@@ -744,6 +788,32 @@ def controler(faites):
             if _ref and _vus != t.count("<li class="):
                 pbs.append("%s : %d entrees de legende lues sur %d"
                            % (f, _vus, t.count("<li class=")))
+
+        # --- la lettre d actualites n etait sur qu une page sur neuf : huit pages
+        # sur neuf ne proposaient aucun moyen de rester en contact. C est le
+        # deuxieme objectif du site apres la reservation ; il doit etre partout.
+        LEGALES = ("mentions-legales.html", "confidentialite.html")
+        if f not in ("404.html",) + LEGALES and not P.get(f[:-5], {}).get("brouillon") \
+           and not P.get(f[:-5], {}).get("hors_navigation"):
+            if 'id="newsletter"' not in t:
+                pbs.append("%s : la lettre d actualites est absente de cette page" % f)
+
+        # --- sur la page groupes, le canal qui fonctionne doit passer avant celui
+        # qui peut echouer en silence.
+        # Ce controle a plante la premiere fois qu on l a casse, au lieu de
+        # signaler : il cherchait une position avec index(), qui leve. On lit
+        # les deux positions avec find(), et l absence est un echec comme un autre.
+        if f == "groupes.html":
+            # id="devis-direct" ne contient pas id="devis" — le guillemet les
+            # separe — donc les deux positions se cherchent independamment.
+            direct = t.find('id="devis-direct"')
+            form = t.find('id="devis"')
+            if direct < 0:
+                pbs.append("groupes.html : le bloc WhatsApp et telephone a disparu")
+            elif form < 0:
+                pbs.append("groupes.html : le formulaire de devis a disparu")
+            elif direct > form:
+                pbs.append("groupes.html : le formulaire passe avant WhatsApp et le telephone")
 
         # Le Grand Rex est a 590 m, soit sept minutes. Toute autre duree
         # accolee a son nom est une affirmation qu un client dement avec son

@@ -450,3 +450,12 @@ body.page .dock{transform:translateY(140%)}
   border-radius:50%;background:var(--or);color:#0C0910;font-size:11px;font-weight:700;flex:none}
 .plan-leg li.mon b{background:#F0E1C8}
 .plan-leg li.serv b{background:#BEB9B2}
+
+/* le canal direct, avant le formulaire */
+.sect.direct .btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.sect.direct .btns a{font-family:"Instrument Sans",sans-serif;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+  padding:15px 26px;border-radius:2px;text-decoration:none;display:inline-block}
+.sect.direct .b1{background:var(--or);color:#0C0910}
+.sect.direct .b2{border:1px solid var(--line);color:inherit}
+.sect.direct .b1:focus-visible,.sect.direct .b2:focus-visible{outline:2px solid var(--or);outline-offset:3px}
