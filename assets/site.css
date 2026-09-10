@@ -440,3 +440,13 @@ body.page .dock{transform:translateY(140%)}
 .carte .itin::before{content:"→";font-size:14px;opacity:.8}
 .carte .itin:hover{border-color:var(--or);background:rgba(255,95,196,.10)}
 .carte .itin:focus-visible{outline:2px solid var(--or);outline-offset:3px}
+
+/* legende du plan du quartier */
+.plan-leg{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));
+  gap:7px 20px;max-width:1080px;margin:16px 0 6px;padding:0;
+  font-family:"Instrument Sans",sans-serif;font-size:13px;line-height:1.5;color:#C9C0B4}
+.plan-leg li{display:flex;gap:9px;align-items:center}
+.plan-leg b{display:inline-flex;align-items:center;justify-content:center;min-width:23px;height:23px;
+  border-radius:50%;background:var(--or);color:#0C0910;font-size:11px;font-weight:700;flex:none}
+.plan-leg li.mon b{background:#F0E1C8}
+.plan-leg li.serv b{background:#BEB9B2}

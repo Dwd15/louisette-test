@@ -715,6 +715,36 @@ def controler(faites):
         except Exception as e:
             pbs.append("%s : comptage des salles invérifiable (%s)" % (f, e))
 
+        # --- une image declaree mais absente ne se voit pas a la relecture :
+        # le 09/09 og:image pointait vers un fichier qui n existait pas et
+        # chaque partage affichait une carte cassee. On verifie l existence.
+        for src in set(re.findall(r'src="((?:img|assets)/[^"]+)"', t)):
+            if not os.path.exists(os.path.join(RACINE, src)):
+                pbs.append("%s : l image %s est declaree mais absente" % (f, src))
+
+        # --- la legende du plan porte des distances qui ne sont dans aucune
+        # fiche : elles echappaient au controle des cartes. On les compare aux
+        # memes mesures.
+        if 'class="plan-leg"' in t:
+            try:
+                _m = json.loads(lire(DISTANCES))
+                _ref = {}
+                for _sec in ("salles", "monuments", "parkings"): _ref.update(_m[_sec])
+            except Exception as e:
+                _ref = {}; pbs.append("%s : legende du plan invérifiable (%s)" % (f, e))
+            _vus = 0
+            for mm in re.finditer(r"<li[^>]*><b>[^<]+</b><span>([^<]+?)\s+—\s+(\d[\d\s]*)\s*m</span>", t):
+                nom = mm.group(1).strip(); em = int(re.sub(r"\s", "", mm.group(2))); _vus += 1
+                if nom in _ref:
+                    if _ref[nom]["metres"] != em:
+                        pbs.append("%s : la legende du plan donne %s a %d m, mesure a %d m"
+                                   % (f, nom, em, _ref[nom]["metres"]))
+                elif nom != "Métro Strasbourg-Saint-Denis":
+                    pbs.append("%s : la legende du plan cite %s, qui n est pas mesure" % (f, nom))
+            if _ref and _vus != t.count("<li class="):
+                pbs.append("%s : %d entrees de legende lues sur %d"
+                           % (f, _vus, t.count("<li class=")))
+
         # Le Grand Rex est a 590 m, soit sept minutes. Toute autre duree
         # accolee a son nom est une affirmation qu un client dement avec son
         # telephone, debout sur le trottoir.
