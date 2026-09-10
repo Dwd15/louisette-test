@@ -470,6 +470,31 @@ def controler(faites):
         # On les fait donc travailler sur un texte a espaces normalises.
         plat = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", t))
 
+        # Les treize durees de la page theatres sont mesurees, pas estimees :
+        # _controle/distances-2026-09-10.json, calculateur pieton Valhalla.
+        # Le bareme precedent n avait jamais ete mesure et se trompait dans les
+        # deux sens, jusqu a un facteur quatre. Toute fiche qui s ecarte de la
+        # mesure arrete la construction.
+        if f == "theatres.html":
+            try:
+                ref = json.loads(lire("_controle/distances-2026-09-10.json"))["salles"]
+            except Exception as e:
+                pbs.append("theatres.html : mesures de distances illisibles (%s)" % e); ref = {}
+            vues = set()
+            for mm in re.finditer(r'<div class="carte"><div class="d">([^<]*)</div><b>([^<]*)</b>', t):
+                dit, nom = mm.group(1), mm.group(2); vues.add(nom)
+                if nom not in ref:
+                    pbs.append("theatres.html : la salle %s n a pas de distance mesuree" % nom); continue
+                a = re.search(r"(\d[\d\s]*)\s*m", dit); b = re.search(r"(\d+)\s*min", dit)
+                em = int(re.sub(r"\s", "", a.group(1))) if a else None
+                emn = int(b.group(1)) if b else None
+                if em != ref[nom]["metres"] or emn != ref[nom]["minutes"]:
+                    pbs.append('theatres.html : %s affiche "%s" au lieu de %d m et %d min mesures'
+                               % (nom, dit, ref[nom]["metres"], ref[nom]["minutes"]))
+            for nom in ref:
+                if nom not in vues:
+                    pbs.append("theatres.html : la salle mesuree %s n est affichee nulle part" % nom)
+
         # Le Grand Rex est a 543 m, soit sept minutes. Toute autre duree
         # accolee a son nom est une affirmation qu un client dement avec son
         # telephone, debout sur le trottoir.
