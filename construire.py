@@ -50,7 +50,7 @@ SITE = "https://louisette-paris.com/"
 OG_IMAGE = "img/og-louisette.jpg"
 OG_ALT = "Le neon Louisette au-dessus des banquettes de la salle, brasserie parisienne des Grands Boulevards"
 
-DISTANCES = "_controle/distances-2026-09-10.json"
+DISTANCES = "_controle/quartier-2026-09-10.json"
 
 def itineraires(corps):
     """Pose sur chaque fiche de salle un bouton d itineraire a pied.
@@ -61,9 +61,12 @@ def itineraires(corps):
     Le point de depart est le restaurant, l arrivee les coordonnees mesurees
     le 10/09/2026 et rangees dans le meme fichier que les distances."""
     try:
-        ref = charger(DISTANCES)["salles"]
+        mesures = charger(DISTANCES)
     except SystemExit:
         return corps
+    ref = {}
+    for section in ("salles", "reperes", "parkings"):
+        ref.update(mesures.get(section) or {})
     depart = "%s,%s" % (S["geo"]["lat"], S["geo"]["lon"]) if S.get("geo") else "48.8695081,2.3550087"
 
     def pose(m):
@@ -80,8 +83,13 @@ def itineraires(corps):
         if premier in ("Le",):        cible = "au " + propre[3:]
         elif premier in ("La",):      cible = "à la " + propre[3:]
         elif premier in ("Les",):     cible = "aux " + propre[4:]
-        elif premier in ("Théâtre", "Palais-Royal", "Splendid", "Gymnase"):
+        elif premier in ("Indigo", "Interparking"):
+            cible = "au parking " + propre
+        elif premier in ("Théâtre", "Palais-Royal", "Splendid", "Gymnase",
+                         "Passage", "Marché", "Musée", "Rex", "Jamel", "Max"):
             cible = "au " + propre
+        elif premier in ("Porte", "Place", "Gare"):
+            cible = "à la " + propre
         elif premier in ("Folies",):  cible = "aux " + propre
         else:                          cible = "à " + propre
         btn = ('<a class="itin" href="%s" target="_blank" rel="noopener" '
@@ -328,7 +336,7 @@ def page(slug):
          '<a href="#contenu" class="skip">Aller au contenu</a>',
          '<div class="grain" aria-hidden="true"></div>',
          barre(f), tiroir(), fil(m["ariane"]),
-         '<main id="contenu">', (itineraires(corps) if slug == "theatres" else corps).replace("<!-- FORMULAIRE -->", formulaire()).replace("<!-- NEWSLETTER -->", newsletter()).replace("<!-- WHATSAPP -->", bouton_whatsapp()), '</main>',
+         '<main id="contenu">', (itineraires(corps) if slug in ("theatres", "infos-pratiques") else corps).replace("<!-- FORMULAIRE -->", formulaire()).replace("<!-- NEWSLETTER -->", newsletter()).replace("<!-- WHATSAPP -->", bouton_whatsapp()), '</main>',
          pied(), dock(),
          '<script src="assets/mesure.js" defer></script>',
          '<script src="assets/site.js" defer></script>',
@@ -516,8 +524,24 @@ def controler(faites):
             if l not in presentes: pbs.append("%s : lien mort vers %s" % (f, l))
         slug = f[:-5]
         prix_ok = f == "index.html" or P.get(slug, {}).get("prix_autorises")
-        if re.search(r'\d\s?€', t) and not prix_ok:
-            pbs.append("%s : un prix apparait alors que les prix ne sont pas reconcilies" % f)
+        # Un tarif de parking n est pas un prix de la carte : c est le prix d un
+        # tiers, releve et range dans le fichier de mesures. On l autorise, mais
+        # seulement lui : tout montant qui ne figure pas dans ce fichier arrete
+        # la construction, sinon la page devient une porte d entree pour un prix
+        # de plat non reconcilie.
+        if not prix_ok:
+            try:
+                tarifs = set()
+                for v in (json.loads(lire(DISTANCES)).get("parkings") or {}).values():
+                    for cle in ("tarif_1h", "tarif_24h"):
+                        if v.get(cle): tarifs.add(v[cle].replace("\u00a0", " ").strip())
+            except Exception as e:
+                tarifs = set(); pbs.append("%s : tarifs de reference illisibles (%s)" % (f, e))
+            for m in re.finditer(r'\d[\d ,\.]*\s?€', t):
+                montant = re.sub(r"\s+", " ", m.group(0)).strip()
+                if montant not in tarifs:
+                    pbs.append("%s : le montant %s apparait alors que les prix ne sont pas reconcilies"
+                               % (f, montant))
         if "8h30" in t or "8 h 30" in t: pbs.append("%s : horaire 8h30" % f)
         # Un retour a la ligne au milieu d une phrase suffisait a faire passer
         # ces controles a cote : le 09/09, une septieme mention du Grand Rex
@@ -525,44 +549,105 @@ def controler(faites):
         # On les fait donc travailler sur un texte a espaces normalises.
         plat = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", t))
 
-        # Les treize durees de la page theatres sont mesurees, pas estimees :
-        # _controle/distances-2026-09-10.json, calculateur pieton Valhalla.
+        # Les durees affichees sur les fiches sont mesurees, pas estimees :
+        # _controle/quartier-2026-09-10.json, calculateur pieton Valhalla.
         # Le bareme precedent n avait jamais ete mesure et se trompait dans les
         # deux sens, jusqu a un facteur quatre. Toute fiche qui s ecarte de la
         # mesure arrete la construction.
-        if f == "theatres.html":
+        if f in ("theatres.html", "infos-pratiques.html"):
+            attendu = {"theatres.html": ("salles",),
+                       "infos-pratiques.html": ("parkings", "reperes")}[f]
             try:
-                ref = json.loads(lire("_controle/distances-2026-09-10.json"))["salles"]
+                mes = json.loads(lire(DISTANCES))
+                ref = {}
+                for section in attendu: ref.update(mes[section])
             except Exception as e:
-                pbs.append("theatres.html : mesures de distances illisibles (%s)" % e); ref = {}
+                pbs.append("%s : mesures de distances illisibles (%s)" % (f, e)); ref = {}
             vues = set()
             for mm in re.finditer(r'<div class="carte"><div class="d">([^<]*)</div><b>([^<]*)</b>', t):
                 dit, nom = mm.group(1), mm.group(2); vues.add(nom)
                 if nom not in ref:
-                    pbs.append("theatres.html : la salle %s n a pas de distance mesuree" % nom); continue
+                    pbs.append("%s : la fiche %s n a pas de distance mesuree" % (f, nom)); continue
                 a = re.search(r"(\d[\d\s]*)\s*m", dit); b = re.search(r"(\d+)\s*min", dit)
                 em = int(re.sub(r"\s", "", a.group(1))) if a else None
                 emn = int(b.group(1)) if b else None
                 if em != ref[nom]["metres"] or emn != ref[nom]["minutes"]:
-                    pbs.append('theatres.html : %s affiche "%s" au lieu de %d m et %d min mesures'
-                               % (nom, dit, ref[nom]["metres"], ref[nom]["minutes"]))
+                    pbs.append('%s : %s affiche "%s" au lieu de %d m et %d min mesures'
+                               % (f, nom, dit, ref[nom]["metres"], ref[nom]["minutes"]))
             for nom in ref:
                 if nom not in vues:
-                    pbs.append("theatres.html : la salle mesuree %s n est affichee nulle part" % nom)
+                    pbs.append("%s : le point mesure %s n est affiche nulle part" % (f, nom))
             n_fiches = t.count('<div class="carte">')
             n_itin = t.count('class="itin"')
             if n_itin != n_fiches:
-                pbs.append("theatres.html : %d fiches mais %d boutons d itineraire"
-                           % (n_fiches, n_itin))
+                pbs.append("%s : %d fiches mais %d boutons d itineraire"
+                           % (f, n_fiches, n_itin))
 
-        # Le Grand Rex est a 543 m, soit sept minutes. Toute autre duree
+        # --- les deux comptages annonces en gros sur la page theatres sont
+        # deduits des mesures, pas ecrits a la main. Le 10/09 la page annoncait
+        # encore "5 salles a moins de trois minutes" alors qu il y en a sept :
+        # une sous-estimation, mais fausse quand meme.
+        if f == "theatres.html":
+            try:
+                sal = json.loads(lire(DISTANCES))["salles"]
+                courtes = sum(1 for v in sal.values() if v["minutes"] <= 3)
+                quart = sum(1 for v in sal.values() if v["minutes"] <= 15)
+            except Exception as e:
+                pbs.append("theatres.html : comptages impossibles (%s)" % e); courtes = quart = None
+            if courtes is not None:
+                m = re.search(r"<b>(\d+) salles</b>", t)
+                if not m or int(m.group(1)) != courtes:
+                    pbs.append("theatres.html : le bandeau annonce %s salles a trois minutes, il y en a %d"
+                               % (m.group(1) if m else "?", courtes))
+                m = re.search(r"<b>(\d+) lieux</b>", t)
+                if not m or int(m.group(1)) != quart:
+                    pbs.append("theatres.html : le bandeau annonce %s lieux a un quart d heure, il y en a %d"
+                               % (m.group(1) if m else "?", quart))
+
+        # --- deux lieux ont ete ecartes faute de preuve d activite ou parce qu ils
+        # ne sont pas ou l on croyait. Ils ne doivent jamais revenir par un
+        # copier-coller : le controle les cherche dans toutes les pages.
+        for interdit, pourquoi in (
+                ("Le Globo", "aucune source ne confirme une activite en 2026 : domaine mort, aucune programmation"),
+                ("Golden Comedy", "n est pas boulevard de Bonne-Nouvelle mais 36 rue Dalayrac, a 1 668 m"),
+                ("Parking des Récollets", "reserve aux abonnes, inutilisable pour un client")):
+            if interdit in plat:
+                pbs.append("%s : %s est cite alors qu il a ete ecarte — %s" % (f, interdit, pourquoi))
+
+        # --- la salle est de plain-pied, mais la station de metro ne l est pas.
+        # Publier l un sans l autre envoie un client en fauteuil dans un couloir
+        # sans ascenseur. Les deux phrases partent ensemble ou pas du tout.
+        if f == "infos-pratiques.html":
+            if "mobilité réduite" in plat:
+                # Le premier jet ne cherchait qu une phrase : la seconde pouvait
+                # disparaitre sans rien declencher. On exige les trois elements
+                # de l avertissement — le fait, la solution, et la station de
+                # repli — sinon la page ment par omission a un client en fauteuil.
+                nie = len(re.findall(r"ne l['\u2019]est pas", plat))
+                if nie < 2:
+                    pbs.append("infos-pratiques.html : la page annonce l accessibilite de la salle "
+                               "sans dire deux fois, tableau et texte, que la station "
+                               "Strasbourg-Saint-Denis n est pas accessible")
+                if "20, 32, 38 et 39" not in plat:
+                    pbs.append("infos-pratiques.html : l avertissement d accessibilite ne propose "
+                               "plus les bus accessibles en solution de remplacement")
+                if "ligne 14" not in plat:
+                    pbs.append("infos-pratiques.html : la station accessible la plus proche "
+                               "(Chatelet, ligne 14) n est plus citee")
+            if "du lundi au samedi de 9 h à 20 h" not in plat:
+                pbs.append("infos-pratiques.html : la regle du stationnement de surface a disparu")
+            if "y compris au mois d" not in plat:
+                pbs.append("infos-pratiques.html : le stationnement d aout est presente a tort "
+                           "comme gratuit, ou la precision a disparu")
+
+        # Le Grand Rex est a 590 m, soit sept minutes. Toute autre duree
         # accolee a son nom est une affirmation qu un client dement avec son
         # telephone, debout sur le trottoir.
         for m in re.finditer(r"Grand Rex[^.]{0,80}", plat):
             bout = m.group(0)
             d = re.search(r"\b(une|deux|trois|quatre|cinq|six|huit|neuf|dix|\d+)\s*(minutes?|min)\b", bout)
             if d and "sept" not in bout:
-                pbs.append('%s : le Grand Rex annonce a "%s" — il est a 543 m, soit sept minutes'
+                pbs.append('%s : le Grand Rex annonce a "%s" — il est a 590 m, soit sept minutes'
                            % (f, d.group(0)))
 
         # La mention "fait maison" est reglementee (decret 2014-797, art. D.121-13-1

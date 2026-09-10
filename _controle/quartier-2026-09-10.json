@@ -1,0 +1,450 @@
+{
+ "date": "2026-09-10",
+ "objet": "distances a pied entre Louisette et les salles, les reperes du quartier et les parkings, plus l etat des transports",
+ "origine": {
+  "adresse": "8 boulevard Saint-Denis, 75010 Paris",
+  "lat": 48.8695081,
+  "lon": 2.3550087,
+  "source": "coordonnees declarees par le site dans son JSON-LD"
+ },
+ "methode": {
+  "geocodage": "Photon (OpenStreetMap) et geometries OpenStreetMap, chaque point verifie par le nom ou l adresse retournee",
+  "enumeration": "Overpass : toutes les salles, cinemas, musees, marches et parkings dans un rayon de 1,1 km, pour ne dependre d aucune liste ecrite de memoire",
+  "itineraire": "Valhalla, profil pieton, valhalla1.openstreetmap.de",
+  "pourquoi_pas_osrm": "le serveur public OSRM ne sert que le profil voiture : il donnait 845 m pour un theatre situe a 132 m, en contournant des sens uniques",
+  "duree": "celle rendue par le calculateur pieton, arrondie a la minute",
+  "verification": "identite, adresse et activite de chaque salle confirmees sur le site officiel du lieu ou sur la base Merimee du ministere de la Culture",
+  "ecarte": "Le Globo, 8 boulevard de Strasbourg : nom de domaine mort, aucune programmation, fiche de privatisation desactivee. Aucune source ne confirme une activite en 2026, donc le lieu n est pas publie. Golden Comedy Club : n est pas boulevard de Bonne-Nouvelle mais 36 rue Dalayrac, a 1 668 m ; ecarte de la liste des salles proches. Parking des Recollets : reserve aux abonnes, ecarte.",
+  "itineraire_bouton": "Chaque fiche porte un bouton qui ouvre l itineraire a pied depuis le 8 boulevard Saint-Denis. C est un lien : aucune requete n est faite tant que personne ne clique, donc aucun traceur au chargement de la page."
+ },
+ "salles": {
+  "Théâtre Libre": {
+   "metres": 80,
+   "minutes": 1,
+   "adresse": "4 boulevard de Strasbourg, 75010",
+   "lat": 48.8698296,
+   "lon": 2.3547612,
+   "note": "934 places, plus la Scène Libre (154). Exploite : Jean-Marc Dumontet Production."
+  },
+  "Théâtre de la Renaissance": {
+   "metres": 132,
+   "minutes": 2,
+   "adresse": "20 boulevard Saint-Martin, 75010",
+   "lat": 48.869091,
+   "lon": 2.356429,
+   "note": "600 places."
+  },
+  "La Scala Paris": {
+   "metres": 151,
+   "minutes": 2,
+   "adresse": "13 boulevard de Strasbourg, 75010",
+   "lat": 48.870328,
+   "lon": 2.354577,
+   "note": "Deux salles ; la grande de 560 a 750 places selon la configuration."
+  },
+  "Théâtre de la Porte Saint-Martin": {
+   "metres": 165,
+   "minutes": 2,
+   "adresse": "18 boulevard Saint-Martin, 75010",
+   "lat": 48.869075,
+   "lon": 2.356889,
+   "note": "1 050 places, monument historique depuis 1992."
+  },
+  "L'Archipel": {
+   "metres": 167,
+   "minutes": 2,
+   "adresse": "17 boulevard de Strasbourg, 75010",
+   "lat": 48.8704786,
+   "lon": 2.3546023,
+   "note": "Cinema Art et Essai et salle de spectacle, deux salles."
+  },
+  "Théâtre Antoine": {
+   "metres": 172,
+   "minutes": 2,
+   "adresse": "14 boulevard de Strasbourg, 75010",
+   "lat": 48.870577,
+   "lon": 2.355284,
+   "note": "Salle a l italienne, inscrite monument historique en 1989."
+  },
+  "Le Splendid": {
+   "metres": 247,
+   "minutes": 3,
+   "adresse": "48 rue du Faubourg-Saint-Martin, 75010",
+   "lat": 48.8707058,
+   "lon": 2.3567665
+  },
+  "Happy Comédie Saint-Martin": {
+   "metres": 278,
+   "minutes": 4,
+   "adresse": "33 boulevard Saint-Martin, 75003",
+   "lat": 48.868435,
+   "lon": 2.3580892
+  },
+  "Le Brady": {
+   "metres": 325,
+   "minutes": 4,
+   "adresse": "39 boulevard de Strasbourg, 75010",
+   "lat": 48.8717765,
+   "lon": 2.355416,
+   "note": "Cinema Art et Essai."
+  },
+  "La Gaîté Lyrique": {
+   "metres": 359,
+   "minutes": 4,
+   "adresse": "3 bis rue Papin, 75003",
+   "lat": 48.8668392,
+   "lon": 2.3535919,
+   "note": "Musiques actuelles, arts numeriques et expositions ; tous les espaces rouverts le 13 janvier 2026."
+  },
+  "Théâtre BO Saint-Martin": {
+   "metres": 411,
+   "minutes": 6,
+   "adresse": "19 boulevard Saint-Martin, 75003",
+   "lat": 48.8681731,
+   "lon": 2.3598552,
+   "note": "Humour et stand-up, environ 70 places."
+  },
+  "Les Étoiles": {
+   "metres": 431,
+   "minutes": 5,
+   "adresse": "61 rue du Château-d'Eau, 75010",
+   "lat": 48.8725058,
+   "lon": 2.35516,
+   "note": "Salle de concert et club, cafe-concert de 1876."
+  },
+  "Théâtre du Gymnase Marie-Bell": {
+   "metres": 508,
+   "minutes": 7,
+   "adresse": "38 boulevard de Bonne-Nouvelle, 75010",
+   "lat": 48.870918,
+   "lon": 2.348839,
+   "note": "Trois salles ; la grande de 800 places."
+  },
+  "Jamel Comedy Club": {
+   "metres": 531,
+   "minutes": 7,
+   "adresse": "42 boulevard de Bonne-Nouvelle, 75010",
+   "lat": 48.8707599,
+   "lon": 2.3484725,
+   "note": "160 places assises, 250 debout."
+  },
+  "Le République": {
+   "metres": 563,
+   "minutes": 8,
+   "adresse": "1 boulevard Saint-Martin, 75003",
+   "lat": 48.8678714,
+   "lon": 2.3618777
+  },
+  "New Morning": {
+   "metres": 572,
+   "minutes": 7,
+   "adresse": "7-9 rue des Petites-Écuries, 75010",
+   "lat": 48.8730035,
+   "lon": 2.3534809,
+   "note": "Jazz et musiques du monde depuis 1981."
+  },
+  "Le Grand Rex": {
+   "metres": 590,
+   "minutes": 7,
+   "adresse": "1 boulevard Poissonnière, 75002",
+   "lat": 48.870533,
+   "lon": 2.347649,
+   "note": "2 702 places ; facades, toitures et decor de la salle inscrits monument historique en 1981."
+  },
+  "Rex Club": {
+   "metres": 614,
+   "minutes": 8,
+   "adresse": "5 boulevard Poissonnière, 75002",
+   "lat": 48.8705803,
+   "lon": 2.3473378,
+   "note": "Club de musiques electroniques."
+  },
+  "Théâtre des Nouveautés": {
+   "metres": 835,
+   "minutes": 10,
+   "adresse": "24 boulevard Poissonnière, 75009",
+   "lat": 48.871371,
+   "lon": 2.344875
+  },
+  "Max Linder Panorama": {
+   "metres": 840,
+   "minutes": 10,
+   "adresse": "24 boulevard Poissonnière, 75009",
+   "lat": 48.8713796,
+   "lon": 2.3448127,
+   "note": "Cinema a grand ecran."
+  },
+  "Théâtre Déjazet": {
+   "metres": 870,
+   "minutes": 12,
+   "adresse": "41 boulevard du Temple, 75003",
+   "lat": 48.8661243,
+   "lon": 2.3641777
+  },
+  "Le Carreau du Temple": {
+   "metres": 950,
+   "minutes": 12,
+   "adresse": "2 rue Perrée, 75003",
+   "lat": 48.8646921,
+   "lon": 2.3615048,
+   "note": "Halle de 1863 ; plus de 230 evenements par an."
+  },
+  "Théâtre des Variétés": {
+   "metres": 1008,
+   "minutes": 12,
+   "adresse": "7 boulevard Montmartre, 75002",
+   "lat": 48.871433,
+   "lon": 2.342138
+  },
+  "Folies Bergère": {
+   "metres": 1184,
+   "minutes": 14,
+   "adresse": "32 rue Richer, 75009",
+   "lat": 48.874489,
+   "lon": 2.344921
+  },
+  "Palais-Royal &amp; Michodière": {
+   "metres": 1461,
+   "minutes": 18,
+   "adresse": "38 rue de Montpensier, 75001 (la Michodière est à 1 673 m, 20 min)",
+   "lat": 48.866139,
+   "lon": 2.337633
+  },
+  "Théâtre du Châtelet": {
+   "metres": 1550,
+   "minutes": 19,
+   "adresse": "1 place du Châtelet, 75001",
+   "lat": 48.857794,
+   "lon": 2.346264
+  },
+  "Théâtre de la Ville": {
+   "metres": 1556,
+   "minutes": 19,
+   "adresse": "place du Châtelet / quai de Gesvres, 75004",
+   "lat": 48.857285,
+   "lon": 2.34807
+  }
+ },
+ "reperes": {
+  "Porte Saint-Martin": {
+   "metres": 61,
+   "minutes": 1,
+   "adresse": "boulevard Saint-Martin, 75010",
+   "lat": 48.8691459,
+   "lon": 2.3556515
+  },
+  "Porte Saint-Denis": {
+   "metres": 178,
+   "minutes": 2,
+   "adresse": "boulevard Saint-Denis, 75010",
+   "lat": 48.8697934,
+   "lon": 2.3526863
+  },
+  "Passage Brady": {
+   "metres": 245,
+   "minutes": 3,
+   "adresse": "46 rue du Faubourg-Saint-Denis, 75010",
+   "lat": 48.8708984,
+   "lon": 2.3564843
+  },
+  "Marché couvert Saint-Martin": {
+   "metres": 358,
+   "minutes": 5,
+   "adresse": "31-33 rue du Château-d'Eau, 75010",
+   "lat": 48.8707825,
+   "lon": 2.3581925,
+   "note": "Ferme le lundi ; mardi au samedi 9 h - 20 h, dimanche 9 h - 14 h."
+  },
+  "Musée des Arts et Métiers": {
+   "metres": 572,
+   "minutes": 8,
+   "adresse": "60 rue Réaumur, 75003",
+   "lat": 48.8660977,
+   "lon": 2.3554138,
+   "note": "Mardi au dimanche 10 h - 18 h, nocturne le vendredi jusqu a 21 h."
+  },
+  "Place de la République": {
+   "metres": 650,
+   "minutes": 9,
+   "adresse": "place de la République, 75003",
+   "lat": 48.867662,
+   "lon": 2.3627956
+  },
+  "Musée Grévin": {
+   "metres": 1045,
+   "minutes": 13,
+   "adresse": "10 boulevard Montmartre, 75009",
+   "lat": 48.8718365,
+   "lon": 2.3420974
+  },
+  "Gare de l'Est": {
+   "metres": 1036,
+   "minutes": 12,
+   "adresse": "place du 11-Novembre-1918, 75010",
+   "lat": 48.8770979,
+   "lon": 2.3594905,
+   "note": "Deux stations de metro par la ligne 4."
+  },
+  "Gare du Nord": {
+   "metres": 1394,
+   "minutes": 17,
+   "adresse": "18 rue de Dunkerque, 75010",
+   "lat": 48.8804003,
+   "lon": 2.3549733,
+   "note": "Trois stations de metro par la ligne 4."
+  }
+ },
+ "parkings": {
+  "Indigo Saint-Martin": {
+   "metres": 473,
+   "minutes": 6,
+   "adresse": "254 rue Saint-Martin, 75003",
+   "lat": 48.8657951,
+   "lon": 2.3538058,
+   "ouverture": "24 h/24",
+   "hauteur": "1,90 m",
+   "places": 537,
+   "pmr": 4,
+   "tarif_1h": "5,40 €",
+   "tarif_24h": "48,60 €",
+   "note": "Le parking public en ouvrage le plus proche. Quatre places reservees aux personnes a mobilite reduite."
+  },
+  "Indigo Réaumur Saint-Denis": {
+   "metres": 651,
+   "minutes": 8,
+   "adresse": "40 rue Dussoubs, 75002",
+   "lat": 48.867057,
+   "lon": 2.3496315,
+   "ouverture": "24 h/24",
+   "hauteur": "1,90 m",
+   "tarif_1h": "5,80 €",
+   "tarif_24h": "48,80 €"
+  },
+  "Interparking Rex Grands Boulevards": {
+   "metres": 612,
+   "minutes": 8,
+   "adresse": "5-7 rue du Faubourg-Poissonnière, 75009",
+   "lat": 48.8712073,
+   "lon": 2.3478027,
+   "hauteur": "1,90 m",
+   "places": 306,
+   "note": "Sous le Grand Rex. L exploitant ne publie pas de grille horaire."
+  },
+  "Indigo Magenta – Gare de l'Est": {
+   "metres": 912,
+   "minutes": 11,
+   "adresse": "8 ter square Alban-Satragne, 75010",
+   "lat": 48.8755516,
+   "lon": 2.3552661,
+   "ouverture": "24 h/24",
+   "places": 685,
+   "pmr": 16,
+   "tarif_1h": "5,00 €",
+   "tarif_24h": "45,00 €",
+   "note": "Seize places reservees aux personnes a mobilite reduite : le meilleur choix en fauteuil, mais onze minutes de marche."
+  }
+ },
+ "transports": {
+  "metro": {
+   "station": "Strasbourg-Saint-Denis",
+   "lignes": [
+    4,
+    8,
+    9
+   ],
+   "metres": 56,
+   "minutes": 1,
+   "acces_le_plus_proche": "Porte Saint-Martin, a 29 m du 8 boulevard Saint-Denis (referentiel des acces, Ile-de-France Mobilites)",
+   "acces_sortie_seule": [
+    "boulevard de Strasbourg",
+    "passage du Prado"
+   ],
+   "dernier_passage_ligne_4": {
+    "semaine": "01:06",
+    "vendredi_samedi": "02:06"
+   },
+   "dernier_passage_lignes_8_9": {
+    "semaine": "00:56",
+    "vendredi_samedi": "01:56"
+   },
+   "fin_de_service_reseau": {
+    "semaine": "01:15",
+    "vendredi_samedi": "02:15"
+   },
+   "premier_passage": "05:34 - 05:49",
+   "accessible_fauteuil": false,
+   "station_accessible_la_plus_proche": "Chatelet, ligne 14, environ 1,3 km"
+  },
+  "bus_jour": {
+   "lignes": [
+    20,
+    32,
+    38,
+    39
+   ],
+   "arret_le_plus_proche": "Porte Saint-Denis, ligne 32, a 55 m",
+   "accessible_fauteuil": true
+  },
+  "noctilien": {
+   "lignes": [
+    "N13",
+    "N14"
+   ],
+   "arrets": [
+    "Strasbourg - Saint-Denis, 130 m",
+    "Porte Saint-Martin, 106 m"
+   ],
+   "amplitude": "0 h 30 - 5 h 30",
+   "accessible_fauteuil": "non ; seules N01, N02 et N71 le sont sur le reseau"
+  },
+  "velib": [
+   {
+    "nom": "Strasbourg - Saint-Denis",
+    "numero": 10166,
+    "bornettes": 16,
+    "metres": 67,
+    "minutes": 1
+   },
+   {
+    "nom": "Porte Saint-Martin",
+    "numero": 3101,
+    "bornettes": 34,
+    "metres": 138,
+    "minutes": 2
+   }
+  ],
+  "taxi": {
+   "station": "Strasbourg Saint-Denis",
+   "metres": 62,
+   "minutes": 1
+  },
+  "gares_en_metro": {
+   "Gare de l'Est": "ligne 4, 2 stations",
+   "Gare du Nord": "ligne 4, 3 stations",
+   "Chatelet - Les Halles": "ligne 4, 3 stations",
+   "Saint-Lazare": "ligne 9, 5 stations",
+   "Gare de Lyon": "ligne 4 puis ligne 14, 5 stations",
+   "Montparnasse": "ligne 4, 11 stations"
+  }
+ },
+ "voirie": {
+  "regle": "Le stationnement de surface est payant du lundi au samedi de 9 h a 20 h, hors dimanches et jours feries, y compris au mois d aout.",
+  "source": "paris.fr, Payer son stationnement",
+  "consequence": "Il est donc gratuit apres 20 h, toute la nuit, le dimanche et les jours feries : le service du soir est la seule plage ou se garer dans la rue ne coute rien.",
+  "duree_maximale": "6 heures consecutives sur le meme emplacement",
+  "tarif_visiteur_zone_1": "[A CONFIRMER] : deux sources publiques de la Ville donnent des grilles differentes (4 EUR/h sur la page, 6 EUR/h dans le jeu de donnees). Rien n est publie sur le site tant que ce n est pas tranche.",
+  "rue_meslay": {
+   "places_voitures": 76,
+   "regime": "mixte, residents et visiteurs",
+   "pmr": 1,
+   "reserve": "76 places relevees, mais un regime mixte : la rotation y est faible en journee. Releves Ville de Paris de 2020 a novembre 2024.",
+   "metres_ouest": 228,
+   "minutes_ouest": 3,
+   "metres_milieu": 393,
+   "minutes_milieu": 5
+  },
+  "rue_rene_boulanger": "Plus une seule place voiture : les cinq emprises relevees sont du stationnement velo (100 places).",
+  "pmr_voirie": "Une place reservee au 31 rue du Faubourg-Saint-Martin, a 130 m. Une autre rue Meslay. C est tout.",
+  "depose_minute": "Aucun emplacement Depose minute a moins d un kilometre ; Paris n en compte que douze."
+ }
+}
