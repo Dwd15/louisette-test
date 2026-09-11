@@ -297,17 +297,23 @@ def newsletter():
              "de confidentialite et je sais que je peux me desinscrire a tout "
              "moment.%0D%0A%0D%0APrenom :%0D%0A")
     h = ['<section class="sect news" id="newsletter">',
-         '<h2>Nos actualités</h2>',
-         '<p>Les soirées, les nouveautés de la carte, les dates à retenir. '
-         'Environ %s, jamais plus. Vous vous désinscrivez en un clic, '
-         'et nous ne transmettons votre adresse à personne.</p>' % freq]
+         '<h2>Les dates qui valent le déplacement.</h2>',
+         '<p>Vingt-sept salles de spectacle sont à un quart d\'heure de la maison, et '
+         'le comptoir a ses soirées. Une fois par mois, nous envoyons les dates à '
+         'retenir&nbsp;: les DJ, les soirées, ce qui change à la carte. %s</p>'
+         % ("Rien d\'autre." if freq == "une fois par mois"
+            else "Environ %s, jamais plus." % freq),
+         '<p class="tc">Vous vous désinscrivez en un clic. Votre adresse ne part chez '
+         'personne, et ne sert qu\'à ça.</p>']
     if par_mail:
         h.append('<p class="envoi"><a class="btn" href="mailto:%s'
                  '?subject=Inscription%%20a%%20la%%20lettre%%20d%%27actualites&body=%s">'
-                 'M’inscrire par e-mail</a></p>' % (esc(S["email"]), corps))
-        h.append('<p class="tc">Votre message d’inscription nous sert de preuve de votre accord. '
+                 'M’inscrire — ouvre votre messagerie</a></p>' % (esc(S["email"]), corps))
+        h.append('<p class="tc">Le message est déjà rédigé&nbsp;: il ne reste qu’à l’envoyer, '
+                 'et il vaut preuve de votre accord. Si votre téléphone n’ouvre rien, '
+                 'écrivez-nous à <a class="lien" href="mailto:%s">%s</a>. '
                  'Voir la <a class="lien" href="confidentialite.html">politique de '
-                 'confidentialité</a>.</p>')
+                 'confidentialité</a>.</p>' % (esc(S["email"]), esc(S["email"])))
     else:
         h += ['<form class="inscription" method="post" action="%s">' % esc(action),
               '<p class="champ"><label for="n-email">Votre e-mail</label>'
@@ -549,6 +555,49 @@ def controler(faites):
             pbs.append("assets/site.css : %d accolades ouvertes pour %d fermees" % (_ouv, _fer))
     except Exception as e:
         pbs.append("assets/site.css : illisible (%s)" % e)
+
+    # --- tout hote tiers appele au chargement d une page transmet l adresse IP
+    # du visiteur a ce tiers. Le 11/09, la mesure du site en ligne en a trouve
+    # un seul : fonts.googleapis.com. C est peu, mais c est un traitement de
+    # donnee personnelle que le site ne declare pas, et la legende de la carte
+    # affirme le contraire. La liste est explicite : tout ajout doit etre decide.
+    # Trois hotes seulement, et chacun pour une raison ecrite :
+    #  - fonts.googleapis.com et fonts.gstatic.com : les deux polices du site.
+    #    Elles sont sous licence libre et pourraient etre hebergees ici meme ;
+    #    tant qu elles ne le sont pas, le navigateur du visiteur les demande a
+    #    Google, qui voit son adresse IP. C est le seul vrai point RGPD du site.
+    #  - bookings.zenchef.com : une resolution DNS anticipee, pas une connexion.
+    #    Elle fait gagner le temps de resolution au moment du clic sur Reserver.
+    #    Aucune donnee du visiteur n atteint Zenchef tant qu il ne clique pas.
+    # Toute autre adresse arrete la construction : un tiers ne s ajoute pas par
+    # inadvertance.
+    TIERS_ADMIS = {"fonts.googleapis.com", "fonts.gstatic.com", "bookings.zenchef.com"}
+    # Seul ce qui se telecharge au chargement compte : un <a href> demande un
+    # clic, un <link rel="canonical"> ne charge rien. Premiere version de ce
+    # controle : elle signalait notre propre domaine canonique et le lien de
+    # reservation. On ne regarde donc que les balises qui vont chercher un
+    # fichier, et l attribut qui le designe.
+    CHARGE = (("script", "src"), ("img", "src"), ("iframe", "src"),
+              ("video", "src"), ("audio", "src"), ("source", "src"),
+              ("embed", "src"), ("object", "data"))
+    for f in faites + ["index.html"]:
+        t0 = lire(f)
+        vus = []
+        for balise, attr in CHARGE:
+            for m in re.finditer(r'<%s\b[^>]*?\b%s="https?://([^/"]+)' % (balise, attr), t0, re.I):
+                vus.append((balise, m.group(1).lower()))
+        # <link> ne charge que pour certains rel
+        for m in re.finditer(r'<link\b([^>]*)>', t0, re.I):
+            att = m.group(1)
+            rel = (re.search(r'rel="([^"]*)"', att) or [None, ""])[1].lower()
+            if not any(r in rel for r in ("stylesheet", "preload", "icon", "prefetch", "preconnect")):
+                continue
+            h2 = re.search(r'href="https?://([^/"]+)', att)
+            if h2: vus.append(("link " + rel, h2.group(1).lower()))
+        for balise, hote in vus:
+            if hote not in TIERS_ADMIS:
+                pbs.append("%s : chargement depuis un hote tiers non declare — %s (%s)"
+                           % (f, hote, balise))
 
     presentes = set(os.listdir(RACINE))
     for f in faites + ["index.html"]:

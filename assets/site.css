@@ -459,3 +459,15 @@ body.page .dock{transform:translateY(140%)}
 .sect.direct .b1{background:var(--or);color:#0C0910}
 .sect.direct .b2{border:1px solid var(--line);color:inherit}
 .sect.direct .b1:focus-visible,.sect.direct .b2:focus-visible{outline:2px solid var(--or);outline-offset:3px}
+
+/* cibles tactiles : plancher WCAG 2.5.8 (AA), 24x24 px CSS.
+   Les liens telephone et les liens du pied de page mesuraient 17 a 20 px.
+   On les remonte sans toucher a la mise en page : le padding vertical est
+   compense par une marge negative, la ligne ne bouge pas. */
+a[href^="tel:"],a[href^="mailto:"]{display:inline-block;min-height:24px;
+  padding-block:3px;margin-block:-3px}
+.foot .plan a{display:block;min-height:24px;padding-block:2px;line-height:20px}
+.foot .soc a{display:inline-block;min-height:24px;padding-block:3px;margin-block:-3px}
+@media (pointer:coarse){
+  a[href^="tel:"]{min-height:28px;padding-block:5px;margin-block:-5px}
+}
