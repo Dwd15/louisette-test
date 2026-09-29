@@ -471,3 +471,34 @@ a[href^="tel:"],a[href^="mailto:"]{display:inline-block;min-height:24px;
 @media (pointer:coarse){
   a[href^="tel:"]{min-height:28px;padding-block:5px;margin-block:-5px}
 }
+
+/* ===== la carte =====
+   Le balisage est produit par _outils/carte-depuis-livraison.py depuis la sortie
+   du moteur de cartes imprimees. .plats etant deja pris par le hero de l accueil,
+   les listes de plats portent .mliste. Le selecteur de service n est collant qu au
+   dela de 900 px : en dessous, .minihd (fixe, z-index 55) passerait devant lui. */
+nav.serv{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+  max-width:1080px;margin:14px auto 0;padding:14px 20px;border-bottom:1px solid var(--line)}
+nav.serv a{font-family:"Instrument Sans",sans-serif;font-size:12px;letter-spacing:.12em;
+  text-transform:uppercase;font-weight:600;text-decoration:none;color:var(--paper);
+  border:1px solid var(--line);border-radius:2px;padding:10px 15px;min-height:24px}
+nav.serv a:hover{background:var(--or);color:#0C0910;border-color:var(--or)}
+nav.serv a:focus-visible{outline:2px solid var(--or);outline-offset:3px}
+.sect.mets{scroll-margin-top:136px}
+.sect.mets .hserv{font-family:"Instrument Sans",sans-serif;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);margin:-10px 0 4px}
+.sect.mets .mnote{font-size:15px;font-style:italic;color:var(--muted);max-width:680px;margin:6px 0 0}
+ul.mliste{list-style:none;padding:0;margin:4px 0 8px;max-width:none}
+ul.mliste li{display:grid;grid-template-columns:1fr auto;column-gap:18px;align-items:baseline;
+  padding:13px 0;border-bottom:1px solid rgba(255,95,196,.14);break-inside:avoid}
+ul.mliste li:last-child{border-bottom:0}
+.mn{font-family:"Bodoni Moda",Didot,serif;font-size:19px;line-height:1.26;color:var(--paper)}
+.mp{font-family:"Instrument Sans",sans-serif;font-size:15px;font-weight:600;color:var(--or);
+  white-space:nowrap;font-variant-numeric:lining-nums tabular-nums}
+.md{grid-column:1/-1;margin:5px 0 0;font-size:15px;line-height:1.6;color:var(--muted);max-width:58ch}
+@media (min-width:900px){
+  nav.serv{position:sticky;top:62px;z-index:45;background:#0D0A11;margin-top:0}
+  ul.mliste{columns:2;column-gap:54px}
+  ul.mliste li{break-inside:avoid-column}
+}
+@media print{nav.serv{position:static}}

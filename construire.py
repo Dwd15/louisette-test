@@ -927,6 +927,129 @@ def controler(faites):
                                % (_slug, _quoi, _n, _mot))
     except Exception as e:
         pbs.append("pages.json : coherence avec les mesures impossible (%s)" % e)
+    # --- la carte : le pont avec le moteur de cartes imprimees.
+    # carte.html n est pas ecrite a la main. _outils/carte-depuis-livraison.py
+    # extrait les plats de la sortie du moteur (LIVRAISON_vNNN/site/*.html) et
+    # depose son compte dans _controle/carte-source.json. Une page qui perd des
+    # lignes en silence ne se voit pas a l oeil : ces controles la comptent.
+    if "carte.html" in faites:
+        t = lire("carte.html")
+        plat = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", t))
+        try:
+            src = json.loads(lire("_controle/carte-source-fr.json"))
+        except (IOError, ValueError) as e:
+            src = None
+            pbs.append("carte.html : manifeste _controle/carte-source-fr.json illisible (%s) ; "
+                       "relancer _outils/carte-depuis-livraison.py" % e)
+        if src:
+            n = len(re.findall(r'<li><span class="mn">', t))
+            if n != src["articles"]:
+                pbs.append("carte.html : %d plats publies pour %d extraits de %s — "
+                           "la page a perdu des lignes"
+                           % (n, src["articles"], src["chemin_source"]))
+            r = t.count('<h3 class="mrub">')
+            if r != src["rubriques"]:
+                pbs.append("carte.html : %d rubriques publiees pour %d extraites"
+                           % (r, src["rubriques"]))
+            vus = set(m.group(1).strip()
+                      for m in re.finditer(r'<span class="mp">([^<]+)</span>', t))
+            trop = vus - set(src["prix"])
+            if trop:
+                pbs.append("carte.html : prix publies absents du manifeste des prix "
+                           "extraits : %s" % ", ".join(sorted(trop)))
+            # Aucune donnee allergene ni allegation de regime ne se publie tant
+            # que la cuisine ne les a pas revalidees : neuf questions de recette
+            # restent ouvertes (sauce Cesar aux anchois, allegation sans gluten
+            # de douze plats, code P de la planche de tapas). Les mots ci-dessous
+            # n existent que dans une legende de codes ; le texte courant ecrit
+            # gluten et sulfites en minuscules, il ne les declenche pas.
+            if not src.get("allergenes"):
+                for motif, dans_html, quoi in (
+                        ("Crustaces", False, "legende des codes allergenes"),
+                        ("Crustac\u00e9s", False, "legende des codes allergenes"),
+                        ("Mollusques", False, "legende des codes allergenes"),
+                        ("Fruits \u00e0 coque", False, "legende des codes allergenes"),
+                        ('class="al"', True, "codes allergenes plat par plat"),
+                        ('class="bg"', True, "badges de regime V / VG / SG"),
+                        ("\u2731", True, "symbole de composition variable"),
+                ):
+                    if motif in (t if dans_html else plat):
+                        pbs.append("carte.html : %s publiee alors que la cuisine n a pas "
+                                   "revalide les donnees allergenes (ALLERGENES=1 pour "
+                                   "les faire sortir)" % quoi)
+        # Le moteur de cartes ecrit un numero de telephone de remplissage et un
+        # bouton de reservation mort. Les deux sont partis en ligne une fois
+        # ailleurs ; ils ne repartiront pas.
+        if 'href="#"' in t:
+            pbs.append("carte.html : un lien pointe encore vers #")
+        # Le selecteur de service doit mener quelque part.
+        for cible in re.findall(r'<a href="#([a-z]+)">', t):
+            if 'id="%s"' % cible not in t:
+                pbs.append("carte.html : le selecteur de service renvoie a #%s, "
+                           "qui n existe pas dans la page" % cible)
+    for f2 in faites:
+        c = lire(f2)
+        if "+33142000000" in c:
+            pbs.append("%s : numero de telephone de remplissage du moteur de cartes "
+                       "(+33142000000) au lieu du 01 40 34 20 57" % f2)
+        # Origine des viandes : affichette en salle, jamais un engagement ecrit
+        # sur la carte. La page dit ou l information se trouve, pas ce qu elle dit.
+        if re.search(r"Origine des viandes bovines", c):
+            pbs.append("%s : l origine des viandes est annoncee en clair ; "
+                       "elle va sur l affichette en salle" % f2)
+    # hasMenu ne vaut que s il pointe vers une carte reellement publiee.
+    if "index.html" in faites:
+        a = lire("index.html")
+        if "hasMenu" in a and P.get("carte", {}).get("brouillon"):
+            pbs.append("index.html : hasMenu annonce la carte alors que carte.html "
+                       "est encore en brouillon, donc hors navigation et hors sitemap")
+        if "hasMenu" in a and "carte.html" not in a:
+            pbs.append("index.html : hasMenu ne pointe pas vers carte.html")
+
+    # Une page peut etre construite, publiee, repondre 200 — et n etre liee
+    # depuis nulle part. carte.html a vecu vingt jours ainsi : dans le depot,
+    # dans la construction, en ligne, et injoignable. Un controle de contenu ne
+    # voit pas ca : il regarde ce qu une page contient, jamais si on y arrive.
+    ORPHELINES_ADMISES = {"introuvable.html", "404.html", "index.html"}
+    liens = {}
+    for src in faites:
+        for cible in re.findall(r'href="([a-z0-9-]+\.html)(?:#[^"]*)?"', lire(src)):
+            if cible != src:
+                liens.setdefault(cible, set()).add(src)
+    for f3 in sorted(set(faites) - ORPHELINES_ADMISES):
+        if not liens.get(f3):
+            pbs.append("%s : la page est publiee mais aucune autre page du site n y mene — "
+                       "elle est injoignable autrement qu au clavier" % f3)
+
+    # --- une langue par page, et pas de lien alterne vers une page absente.
+    # Le francais vit dans carte.html, l anglais vivra dans carte-en.html. Tant
+    # que la seconde n existe pas, aucun hreflang : un lien alterne vers une 404
+    # est pire que pas de lien du tout.
+    if "carte.html" in faites:
+        c = lire("carte.html")
+        try:
+            langue = json.loads(lire("_controle/carte-source-fr.json")).get("langue")
+        except (IOError, ValueError):
+            langue = None
+        if langue and langue != "fr":
+            pbs.append("carte.html : construite depuis un manifeste en langue %s" % langue)
+        for temoin in ("Every day", "Monday to Friday", "Saturday and Sunday",
+                       "Please tell your server"):
+            if temoin in c:
+                pbs.append("carte.html : texte anglais sur la page francaise (%s) — "
+                           "une langue par page" % temoin)
+        en_existe = "carte-en.html" in faites
+        for f4, autre in (("carte.html", "carte-en.html"), ("carte-en.html", "carte.html")):
+            if f4 not in faites:
+                continue
+            a = 'hreflang' in lire(f4)
+            if en_existe and not a:
+                pbs.append("%s : les deux langues existent mais la page ne declare "
+                           "aucun lien alterne hreflang vers %s" % (f4, autre))
+            if not en_existe and a:
+                pbs.append("%s : la page declare un hreflang alors que la version "
+                           "anglaise n est pas construite" % f4)
+
     return pbs
 
 if __name__ == "__main__":

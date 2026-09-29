@@ -3,3 +3,4 @@ _to_delete/
 .maj/
 .maj2/
 .m3/
+__pycache__/

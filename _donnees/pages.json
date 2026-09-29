@@ -61,8 +61,8 @@
   "og_titre": "La carte — La Maison Louisette",
   "ariane": "La carte",
   "prix_autorises": true,
-  "brouillon": true,
-  "commentaire_brouillon": "Coquille creee le 09/09/2026. Le contenu vient du projet « 1-LOU Carte & Fiches » et n est pas encore arrete. Tant que brouillon vaut true, la page est construite mais tenue hors de la navigation et hors du sitemap. Passer a false quand la carte est arretee : la construction refusera de le faire tant que le marqueur CARTE-A-VENIR est encore dans _contenu/carte.html."
+  "brouillon": false,
+  "commentaire_brouillon": "Sortie du brouillon le 29/09/2026. Le contenu est extrait de LIVRAISON_v114/site par _outils/carte-depuis-livraison.py, une langue par page : le francais dans carte.html, l anglais dans carte-en.html quand le moteur fournira des titres de rubrique anglais. Les codes allergenes et les badges de regime restent a la porte tant que la cuisine ne les a pas revalides ; ALLERGENES=1 les fait sortir."
  },
  "introuvable": {
   "titre": "Page introuvable — Louisette, Paris 10",
