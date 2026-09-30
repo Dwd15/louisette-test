@@ -1,7 +1,7 @@
 {
  "langue": "fr",
  "chemin_source": "../LIVRAISON_v114/site",
- "allergenes": false,
+ "allergenes": true,
  "articles": 240,
  "rubriques": 51,
  "prix": [
@@ -69,6 +69,23 @@
   "9,90 €",
   "sur devis €"
  ],
+ "articles_avec_code": 92,
+ "separateurs_codes": 163,
+ "articles_sans_code": 148,
+ "codes_vus": [
+  "Cé",
+  "F",
+  "G",
+  "L",
+  "M",
+  "MOU",
+  "P",
+  "S",
+  "SUL",
+  "SÉ",
+  "Œ"
+ ],
+ "codes_inconnus": [],
  "corrections": [
   {
    "avant": "Renaissance, BO Saint-Martin, Splendid, Gymnase Marie Bell et Grand Rex à moins de six minutes à pied.",
@@ -76,6 +93,5 @@
    "raison": "mesure Valhalla du 10/09 : Gymnase Marie-Bell 508 m / 7 min et Grand Rex 590 m / 7 min. « moins de six minutes » est faux pour deux des cinq salles."
   }
  ],
- "descriptions_manquantes": [],
- "methode": "Extraction bs4 des <article> de chaque section de LIVRAISON/site/*.html. Une langue par page. Sans ALLERGENES=1, les spans .al et .bg et le symbole U+2731 sont supprimes."
+ "methode": "Extraction bs4. Titre de rubrique = span du h2 (em = anglais, ecarte). Codes allergenes rendus en abbr + mot en clair pour lecteur d ecran et recherche navigateur, plus data-al pour le filtre d exclusion. Toute rubrique sans aucun code porte l avertissement."
 }

@@ -942,7 +942,7 @@ def controler(faites):
             pbs.append("carte.html : manifeste _controle/carte-source-fr.json illisible (%s) ; "
                        "relancer _outils/carte-depuis-livraison.py" % e)
         if src:
-            n = len(re.findall(r'<li><span class="mn">', t))
+            n = t.count('<span class="mn">')
             if n != src["articles"]:
                 pbs.append("carte.html : %d plats publies pour %d extraits de %s — "
                            "la page a perdu des lignes"
@@ -997,14 +997,17 @@ def controler(faites):
         if re.search(r"Origine des viandes bovines", c):
             pbs.append("%s : l origine des viandes est annoncee en clair ; "
                        "elle va sur l affichette en salle" % f2)
-    # hasMenu ne vaut que s il pointe vers une carte reellement publiee.
+    # Google ne documente aucun resultat enrichi pour Menu ni pour hasMenu.
+    # La seule forme documentee sur une fiche d etablissement est la propriete
+    # "menu" en URL simple. Le JSON-LD Menu de la page carte sert aux assistants,
+    # pas a Google Search : verifie sur developers.google.com le 30/09/2026.
     if "index.html" in faites:
         a = lire("index.html")
-        if "hasMenu" in a and P.get("carte", {}).get("brouillon"):
-            pbs.append("index.html : hasMenu annonce la carte alors que carte.html "
+        if '"menu":' in a and P.get("carte", {}).get("brouillon"):
+            pbs.append("index.html : la propriete menu annonce la carte alors que carte.html "
                        "est encore en brouillon, donc hors navigation et hors sitemap")
-        if "hasMenu" in a and "carte.html" not in a:
-            pbs.append("index.html : hasMenu ne pointe pas vers carte.html")
+        if '"menu":' in a and "carte.html" not in a:
+            pbs.append("index.html : la propriete menu ne pointe pas vers carte.html")
 
     # Une page peut etre construite, publiee, repondre 200 — et n etre liee
     # depuis nulle part. carte.html a vecu vingt jours ainsi : dans le depot,
@@ -1049,6 +1052,65 @@ def controler(faites):
             if not en_existe and a:
                 pbs.append("%s : la page declare un hreflang alors que la version "
                            "anglaise n est pas construite" % f4)
+
+    # --- la carte, donnees allergenes et filtre d exclusion.
+    if "carte.html" in faites:
+        c = lire("carte.html")
+        try:
+            m = json.loads(lire("_controle/carte-source-fr.json"))
+        except (IOError, ValueError):
+            m = None
+        if m:
+            # Le silence est une affirmation : toute rubrique sans aucun code
+            # doit porter son avertissement. On le verifie en comptant.
+            rub = re.findall(r'<h3 class="mrub">.*?(?=<h3 class="mrub">|</section>)', c, re.S)
+            muettes = [r for r in rub if 'class="mal"' not in r]
+            sans_avert = [r for r in muettes if 'class="mavert"' not in r]
+            if sans_avert:
+                pbs.append("carte.html : %d rubrique(s) sans aucun code allergene ne portent "
+                           "pas l avertissement — le silence se lit comme rien a declarer"
+                           % len(sans_avert))
+            # Un code de filtre qui ne figure pas dans la legende est un piege.
+            for code in sorted(set(x for v in re.findall(r'data-al="([^"]+)"', c)
+                                   for x in v.split("|"))):
+                if '<b>%s</b>' % code not in c:
+                    pbs.append("carte.html : le code %s est pose sur un plat mais absent "
+                               "de la legende" % code)
+            if m.get("codes_inconnus"):
+                pbs.append("carte.html : codes allergenes inconnus dans la source : %s"
+                           % " ".join(m["codes_inconnus"]))
+            # Les codes doivent etre separes : « G Œ L » colle en « GŒL » se lit
+            # comme un seul code inconnu. Un separateur par code au-dela du premier.
+            n_sep = c.count('class="msep"')
+            if n_sep != m.get("separateurs_codes"):
+                pbs.append("carte.html : %d separateurs entre codes allergenes pour %d "
+                           "attendus — des codes sortent colles"
+                           % (n_sep, m.get("separateurs_codes")))
+            n_al = c.count('class="mal"')
+            if n_al != m.get("articles_avec_code"):
+                pbs.append("carte.html : %d blocs d allergenes publies pour %d extraits"
+                           % (n_al, m.get("articles_avec_code")))
+        # « Sans gluten » est une mention reglementee (regl. UE 828/2014, seuil
+        # 20 mg/kg). Le badge du moteur est conserve, mais jamais sous ce libelle.
+        if re.search(r'title="Sans gluten"', c) or "Sans gluten</b>" in c:
+            pbs.append("carte.html : la mention reglementee « sans gluten » est employee "
+                       "telle quelle (regl. (UE) 828/2014, seuil 20 mg/kg) — dire ce que "
+                       "le badge veut dire, pas la mention protegee")
+        # Reflow : columns CSS impose un defilement bidirectionnel a 320 px.
+        css = lire("assets/site.css")
+        bloc = css[css.find("/* ===== la carte ====="):]
+        # minmax(21rem,...) impose une colonne de 336 px : a 320 px de large,
+        # la page deborde de 42 px. Mesure du 30/09. min(...,100%) le borne.
+        for m in re.finditer(r"minmax\((\d+(?:\.\d+)?)rem\s*,", bloc):
+            pbs.append("assets/site.css : minmax(%srem) sans min(...,100%%) — la grille "
+                       "impose %d px de large et deborde sous 320 px (WCAG 1.4.10)"
+                       % (m.group(1), float(m.group(1)) * 16))
+        if re.search(r"(?<![-\w])columns\s*:", bloc):
+            pbs.append("assets/site.css : la carte utilise columns — defilement "
+                       "bidirectionnel a 320 px et a 400 % de zoom (WCAG 1.4.10)")
+        if ".sr{" not in css:
+            pbs.append("assets/site.css : la classe .sr (texte pour lecteur d ecran) manque, "
+                       "les mots d allergene en clair deviennent visibles")
 
     return pbs
 
