@@ -1151,9 +1151,36 @@ def controler(faites):
         pbs.append("index.html : le titre fait %d signes, Google le coupe vers 60" % len(t0))
     if not d0 or len(d0) > 165:
         pbs.append("index.html : description absente ou trop longue (%d signes)" % len(d0))
+    _n = lambda x: re.sub(r"[\s\-\u2011\u2010]+", " ", _sa(x))
     for req in ("restaurant", "strasbourg-saint-denis"):
-        if req not in _sa(t0):
+        if _n(req) not in _n(t0):
             pbs.append("index.html : le titre ne contient pas la requete « %s »" % req)
+    if '"@type":"WebSite"' not in a0.replace(" ", ""):
+        pbs.append("index.html : donnees WebSite absentes (nom du site dans Google)")
+    # --- horaires : le dimanche, la maison ouvre a 9 h (fiche Google, carte du
+    # Matin, decision de Dawoud du 31/08). Toute phrase qui annonce 8 h sans
+    # dire dimanche, toute ligne « Dimanche 8 h », tout balisage qui ouvre le
+    # dimanche a 8 h est bloquant.
+    import html as _html
+    for f9 in faites + ["index.html"]:
+        if f9 == "carte.html": continue
+        t9 = lire(f9)
+        t9b = re.sub(r"(?s)<(script|style|head)\b.*?</\1>", " ", t9)
+        t9b = re.sub(r"(?i)</(td|tr|p|li|div|h[1-6]|dd|figcaption|summary)>|<br\s*/?>", ". ", t9b)
+        vis = _html.unescape(re.sub(r"<[^>]+>", " ", t9b))
+        vis = re.sub(r"\s+", " ", vis)
+        for ph in re.split(r"(?<=[.!?])\s", vis):
+            if (re.search(r"\b(?:de |dès |des )?8 ?h\b[^.]{0,30}\b2 ?h\b", ph)
+                or re.search(r"(?i)\b8 ?h\b.{0,40}(sept jours sur sept|tous les jours|7 ?j ?/ ?7)|(sept jours sur sept|tous les jours|7 ?j ?/ ?7).{0,40}\b8 ?h\b", ph)) \
+                    and not re.search(r"(?i)dimanche|dim\.", ph) \
+                    and not re.match(r"(?i)\s*(lundi|mardi|mercredi|jeudi|vendredi|samedi)\b", ph):
+                pbs.append("%s : horaire 8 h–2 h annonce sans le dimanche 9 h : « %s »" % (f9, ph.strip()[:90]))
+        if "nbsp;" in vis or "&amp;" in vis:
+            pbs.append("%s : entite HTML cassee visible dans le texte (nbsp; ou &amp;)" % f9)
+        if re.search(r"Dimanche\s*</(?:em|th)>\s*<(?:span|td)>\s*8 ?h", t9):
+            pbs.append("%s : la ligne Dimanche indique 8 h (9 h en realite)" % f9)
+        if re.search(r'"Sunday"[^}]*"opens"\s*:\s*"08:00"', t9, re.S):
+            pbs.append("%s : donnees structurees : ouverture le dimanche a 8 h" % f9)
     # --- les prix du brunch viennent de la carte, jamais d ailleurs.
     if "brunch.html" in faites:
         try:

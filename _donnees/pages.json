@@ -7,7 +7,7 @@
   "mot_cle": "brasserie"
  },
  "groupes": {
-  "titre": "Privatisation et groupes, Paris 10 — Louisette",
+  "titre": "Privatisation et groupes, restaurant Paris 10 — Louisette",
   "description": "Anniversaires, EVJF, séminaires et privatisation à Paris 10 : jusqu'à 260 convives assis ou 400 en cocktail, au pied du métro Strasbourg-Saint-Denis.",
   "og_titre": "Groupes et privatisation — La Maison Louisette",
   "ariane": "Groupes",
@@ -29,7 +29,7 @@
  },
  "terrasse": {
   "titre": "Terrasse fleurie, Paris 10 — Louisette, boulevard Saint-Denis",
-  "description": "La terrasse fleurie de La Maison Louisette sur le boulevard Saint-Denis, ouverte de 8 h à 2 h. Ce que nous pouvons garantir, et ce que nous ne pouvons pas.",
+  "description": "La terrasse fleurie de La Maison Louisette sur le boulevard Saint-Denis, ouverte jusqu’à 2 h. Ce que nous pouvons garantir, et ce que nous ne pouvons pas.",
   "og_titre": "La terrasse — La Maison Louisette",
   "ariane": "La terrasse",
   "mot_cle": "terrasse"
@@ -44,7 +44,7 @@
  },
  "infos-pratiques": {
   "titre": "Infos pratiques — Louisette, 8 bd Saint-Denis, Paris 10",
-  "description": "Adresse, horaires et accès de La Maison Louisette : 8 boulevard Saint-Denis, Paris 10, métro Strasbourg-Saint-Denis, ouvert tous les jours de 8 h à 2 h.",
+  "description": "Adresse, horaires et accès de La Maison Louisette : 8 boulevard Saint-Denis, Paris 10, métro Strasbourg-Saint-Denis, ouvert de 8 h à 2 h, 9 h le dimanche.",
   "og_titre": "Infos pratiques — La Maison Louisette",
   "ariane": "Infos pratiques",
   "mot_cle": "Saint-Denis"
@@ -65,7 +65,7 @@
  },
  "carte": {
   "titre": "Menu et carte — Louisette, brasserie Paris 10",
-  "description": "Le menu de la brasserie Louisette à Paris 10 : cuisine française et italienne, pizzas, burgers, brunch, happy hour et bar. Prix et allergènes plat par plat.",
+  "description": "Le menu de la brasserie Louisette à Paris 10 : cuisine française et italienne, pizzas, burgers, brunch, happy hour softs compris. Prix et allergènes plat par plat.",
   "og_titre": "Menu et carte — La Maison Louisette",
   "ariane": "La carte",
   "prix_autorises": true,
@@ -82,10 +82,17 @@
   "commentaire": "Page d erreur 404. Construite comme les autres pour heriter de la charte et de la navigation, mais tenue hors du sitemap : une 404 indexee est une erreur. Le fichier livre s appelle 404.html, voir la fin de construire.py."
  },
  "quartier": {
-  "titre": "Quartier Saint-Denis : monuments et passages — Louisette",
+  "titre": "Porte Saint-Denis et passages couverts — Louisette",
   "description": "Les portes Saint-Denis et Saint-Martin à moins de deux minutes, onze monuments protégés à dix minutes ou moins, les passages couverts : distances mesurées à pied.",
   "og_titre": "Le quartier — La Maison Louisette",
   "ariane": "Le quartier",
-  "mot_cle": "quartier Saint-Denis"
+  "mot_cle": "Porte Saint-Denis"
+ },
+ "petit-dejeuner-dejeuner": {
+  "titre": "Petit-déjeuner et déjeuner, Strasbourg-Saint-Denis — Louisette",
+  "description": "Petit-déjeuner dès 8 h (9 h le dimanche) et déjeuner du lundi au vendredi, 11 h – 17 h : formules, plat du jour, burgers, salades. 8 bd Saint-Denis, Paris 10.",
+  "og_titre": "Le matin et le midi — La Maison Louisette",
+  "ariane": "Petit-déjeuner et déjeuner",
+  "mot_cle": "petit-déjeuner"
  }
 }
