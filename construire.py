@@ -1140,6 +1140,20 @@ def controler(faites):
         mc = m.get("mot_cle")
         if mc and _sa(mc) not in _sa(ti):
             pbs.append("pages.json : le titre de %s ne contient pas sa requete cible « %s »" % (slug, mc))
+    # --- l accueil vise la premiere requete de decouverte hors brunch mesuree
+    # sur la fiche Google : « restaurant strasbourg saint denis » (Malou,
+    # juillet-aout 2026, periode sans surcomptage). Le titre la porte, entier.
+    a0 = lire("index.html")
+    t0 = re.search(r"<title>([^<]*)</title>", a0)
+    d0 = re.search(r'<meta name="description" content="([^"]*)"', a0)
+    t0 = t0.group(1) if t0 else ""; d0 = d0.group(1) if d0 else ""
+    if len(t0) > 62:
+        pbs.append("index.html : le titre fait %d signes, Google le coupe vers 60" % len(t0))
+    if not d0 or len(d0) > 165:
+        pbs.append("index.html : description absente ou trop longue (%d signes)" % len(d0))
+    for req in ("restaurant", "strasbourg-saint-denis"):
+        if req not in _sa(t0):
+            pbs.append("index.html : le titre ne contient pas la requete « %s »" % req)
     # --- les prix du brunch viennent de la carte, jamais d ailleurs.
     if "brunch.html" in faites:
         try:
