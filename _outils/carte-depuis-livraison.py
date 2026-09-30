@@ -144,9 +144,9 @@ service_ld = None
 corps = ['<section class="phero">',
          '  <div class="k">La table</div>',
          '  <h1>La carte.</h1>',
-         '  <p class="pchap">Une cuisine française et italienne, servie sans interruption de '
-         '8 h à 2 h, sept jours sur sept. Le café du matin, le déjeuner, le goûter et le '
-         'dernier plat du soir sortent de la même cuisine, au même comptoir. Les prix sont '
+         '  <p class="pchap">Une cuisine française et italienne, du petit-déjeuner, dès 8 h (9 h le dimanche), '
+         'au dîner&nbsp;; la maison reste ouverte jusqu’à 2 h, sept jours sur sept. Le café du matin, '
+         'le déjeuner, le goûter et le dernier plat du soir sortent de la même cuisine. Les prix sont '
          'nets, service compris&nbsp;: <b>ils changent selon le service, et chaque prix est '
          'affiché sous l’horaire du service qui l’applique.</b></p>',
          '</section>',
@@ -299,7 +299,7 @@ corps += ['<section class="sect">',
           '<section class="presa">',
           '  <h2>Une table&nbsp;?</h2>',
           '  <p style="margin:0 auto;max-width:560px">8 boulevard Saint-Denis, 75010 Paris, '
-          'métro Strasbourg&#8209;Saint&#8209;Denis. Ouvert sept jours sur sept, de 8 h à 2 h.</p>',
+          'métro Strasbourg&#8209;Saint&#8209;Denis. Ouvert sept jours sur sept, de 8 h (9 h le dimanche) à 2 h.</p>',
           '  <div class="btns">',
           '    <a class="b1" href="https://bookings.zenchef.com/results?rid=364667&amp;pid=1001"'
           ' target="_blank" rel="noopener">Réserver une table</a>',

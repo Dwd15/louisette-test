@@ -1163,7 +1163,6 @@ def controler(faites):
     # dimanche a 8 h est bloquant.
     import html as _html
     for f9 in faites + ["index.html"]:
-        if f9 == "carte.html": continue
         t9 = lire(f9)
         t9b = re.sub(r"(?s)<(script|style|head)\b.*?</\1>", " ", t9)
         t9b = re.sub(r"(?i)</(td|tr|p|li|div|h[1-6]|dd|figcaption|summary)>|<br\s*/?>", ". ", t9b)
