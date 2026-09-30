@@ -630,6 +630,10 @@ def controler(faites):
                         if v.get(cle): tarifs.add(v[cle].replace("\u00a0", " ").strip())
             except Exception as e:
                 tarifs = set(); pbs.append("%s : tarifs de reference illisibles (%s)" % (f, e))
+            # Tarifs de prestation decides par Dawoud (hors carte) : seuls ceux
+            # declares dans site.json passent, avec leur source ecrite a cote.
+            tarifs |= {v.replace("\u00a0", " ").strip() for k, v in (S.get("tarifs_prestations") or {}).items()
+                       if not k.startswith("_")}
             for m in re.finditer(r'\d[\d ,\.]*\s?€', t):
                 montant = re.sub(r"\s+", " ", m.group(0)).strip()
                 if montant not in tarifs:
@@ -1113,10 +1117,10 @@ def controler(faites):
                        "les mots d allergene en clair deviennent visibles")
 
     # --- interdits de regression du projet : jamais ecrits, meme en rappel.
-    INTERDITS = ((r"\b2[25]0 (?:couverts|convives|assis|places)\b", "capacite 220/250"),
+    INTERDITS = ((r"\b2[25]0(?:\s|&nbsp;| )*(?:/(?:\s|&nbsp;)*400|personnes|couverts|convives|assis|places)\b", "capacite 220/250"),
                  (r"\b8 ?h ?30\b", "ouverture a 8h30"),
                  (r"m[ée]diterran", "« mediterraneen »"))
-    for f5 in faites:
+    for f5 in list(faites) + ["index.html"]:
         brut5 = lire(f5)
         # texte visible ET attributs (meta description, alt, og:) : un interdit
         # glisse dans une balise meta est lu par Google autant qu un paragraphe.

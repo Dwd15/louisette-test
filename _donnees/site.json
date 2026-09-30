@@ -169,5 +169,9 @@
   "lat": 48.8695081,
   "lon": 2.3550087,
   "commentaire": "Coordonnees du restaurant, reprises du JSON-LD de l accueil. Elles servent de point de depart aux itineraires de la page theatres et aux distances mesurees."
+ },
+ "tarifs_prestations": {
+  "_source": "Decision de Dawoud du 30/09/2026 : gateau d'anniversaire commande au moins 3 jours avant, 10 EUR la part ; gateau apporte par le client sans frais ; cocktail dinatoire sur devis avec minimum de depense par personne, montant non publie.",
+  "gateau_part": "10 €"
  }
 }
