@@ -1112,6 +1112,48 @@ def controler(faites):
             pbs.append("assets/site.css : la classe .sr (texte pour lecteur d ecran) manque, "
                        "les mots d allergene en clair deviennent visibles")
 
+    # --- interdits de regression du projet : jamais ecrits, meme en rappel.
+    INTERDITS = ((r"\b2[25]0 (?:couverts|convives|assis|places)\b", "capacite 220/250"),
+                 (r"\b8 ?h ?30\b", "ouverture a 8h30"),
+                 (r"m[ée]diterran", "« mediterraneen »"))
+    for f5 in faites:
+        brut5 = lire(f5)
+        # texte visible ET attributs (meta description, alt, og:) : un interdit
+        # glisse dans une balise meta est lu par Google autant qu un paragraphe.
+        plat5 = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", brut5)) + " " + brut5
+        for motif, quoi in INTERDITS:
+            if re.search(motif, plat5, re.I):
+                pbs.append("%s : interdit de regression du projet (%s)" % (f5, quoi))
+    # --- referencement : chaque page porte la requete qu elle vise, et le moteur
+    # de recherche doit pouvoir afficher son titre sans le couper.
+    import unicodedata
+    def _sa(s):
+        s = unicodedata.normalize("NFD", s.lower())
+        return "".join(c for c in s if unicodedata.category(c) != "Mn")
+    for slug, m in P.items():
+        if (slug + ".html") not in faites or m.get("brouillon"): continue
+        ti, de = m.get("titre", ""), m.get("description", "")
+        if len(ti) > 62:
+            pbs.append("pages.json : le titre de %s fait %d signes, Google le coupe vers 60" % (slug, len(ti)))
+        if len(de) > 165:
+            pbs.append("pages.json : la description de %s fait %d signes (165 au plus)" % (slug, len(de)))
+        mc = m.get("mot_cle")
+        if mc and _sa(mc) not in _sa(ti):
+            pbs.append("pages.json : le titre de %s ne contient pas sa requete cible « %s »" % (slug, mc))
+    # --- les prix du brunch viennent de la carte, jamais d ailleurs.
+    if "brunch.html" in faites:
+        try:
+            src = set(json.loads(lire("_controle/carte-source-fr.json"))["prix"])
+            vus = set(re.sub(r"\s", " ", x).replace("&nbsp;", " ").strip()
+                      for x in re.findall(r"(\d+(?:,\d+)?(?:&nbsp;|\s)?€)", lire("brunch.html")))
+            norm = lambda s: s.replace(" ", " ").replace("&nbsp;", " ").replace(" €", " €")
+            prix_carte = set(norm(x) for x in src)
+            for v in sorted(vus):
+                if norm(v) not in prix_carte and norm(v).replace(" ", "") not in {x.replace(" ", "") for x in prix_carte}:
+                    pbs.append("brunch.html : le prix %s n existe pas sur la carte" % v)
+        except (IOError, ValueError, KeyError) as e:
+            pbs.append("brunch.html : manifeste de la carte illisible (%s)" % e)
+
     return pbs
 
 if __name__ == "__main__":

@@ -3,43 +3,51 @@
   "titre": "La Maison — Louisette, brasserie des Grands Boulevards",
   "description": "Une brasserie parisienne au 8 boulevard Saint-Denis, au pied de la Porte Saint-Denis : le lieu, le quartier, la cuisine française et italienne, la façon de recevoir.",
   "og_titre": "La Maison — Louisette",
-  "ariane": "La Maison"
+  "ariane": "La Maison",
+  "mot_cle": "brasserie"
  },
  "groupes": {
-  "titre": "Groupes, privatisation et événements — Louisette, Paris 10",
-  "description": "Anniversaires, EVJF, séminaires et privatisation à Paris 10 : jusqu'à 250 convives assis ou 400 en cocktail, au pied du métro Strasbourg-Saint-Denis.",
+  "titre": "Privatisation et groupes, Paris 10 — Louisette",
+  "description": "Anniversaires, EVJF, séminaires et privatisation à Paris 10 : jusqu'à 260 convives assis ou 400 en cocktail, au pied du métro Strasbourg-Saint-Denis.",
   "og_titre": "Groupes et privatisation — La Maison Louisette",
-  "ariane": "Groupes"
+  "ariane": "Groupes",
+  "mot_cle": "privatisation"
  },
  "theatres": {
   "titre": "Dîner avant ou après le théâtre — Louisette, Paris 10",
-  "description": "Vingt-sept salles de spectacle mesurées à pied depuis le 8 boulevard Saint-Denis, dont sept à trois minutes ou moins et la plus proche à quatre-vingts mètres. Cuisine servie en continu de 8 h à 2 h, avant le lever de rideau comme après le rappel.",
+  "description": "Vingt-sept salles de spectacle mesurées à pied depuis Louisette, 8 bd Saint-Denis : la plus proche à quatre-vingts mètres, sept à trois minutes ou moins.",
   "og_titre": "Quartier des théâtres — La Maison Louisette",
-  "ariane": "Quartier des théâtres"
+  "ariane": "Quartier des théâtres",
+  "mot_cle": "théâtre"
  },
  "bar-cocktails": {
-  "titre": "Bar à cocktails et soirées — Louisette, Paris 10",
+  "titre": "Bar à cocktails Paris 10 — Louisette, Strasbourg-Saint-Denis",
   "description": "Le comptoir de La Maison Louisette, 8 boulevard Saint-Denis : cocktails signature, vins au verre et soirées DJ du jeudi au samedi, jusqu'à 2 h du matin.",
   "og_titre": "Le bar et les cocktails — La Maison Louisette",
-  "ariane": "Bar & cocktails"
+  "ariane": "Bar & cocktails",
+  "mot_cle": "bar"
  },
  "terrasse": {
-  "titre": "La terrasse fleurie — Louisette, Paris 10",
+  "titre": "Terrasse fleurie, Paris 10 — Louisette, boulevard Saint-Denis",
   "description": "La terrasse fleurie de La Maison Louisette sur le boulevard Saint-Denis, ouverte de 8 h à 2 h. Ce que nous pouvons garantir, et ce que nous ne pouvons pas.",
   "og_titre": "La terrasse — La Maison Louisette",
-  "ariane": "La terrasse"
+  "ariane": "La terrasse",
+  "mot_cle": "terrasse"
  },
  "brunch": {
-  "titre": "Le brunch — Louisette, Grands Boulevards, Paris 10",
-  "description": "Le brunch de La Maison Louisette, 8 boulevard Saint-Denis, Paris 10. Service continu de 8 h à 2 h, sept jours sur sept.",
-  "og_titre": "Le brunch — La Maison Louisette",
-  "ariane": "Le brunch"
+  "titre": "Brunch Paris 10, samedi et dimanche — Louisette",
+  "description": "Le brunch de Louisette à Paris 10 : samedi et dimanche de 11 h à 18 h, formule à 29 € sans supplément, brunch enfant à 14 €. Métro Strasbourg-Saint-Denis.",
+  "og_titre": "Le brunch du week-end — La Maison Louisette",
+  "ariane": "Le brunch",
+  "mot_cle": "brunch",
+  "prix_autorises": true
  },
  "infos-pratiques": {
   "titre": "Infos pratiques — Louisette, 8 bd Saint-Denis, Paris 10",
   "description": "Adresse, horaires et accès de La Maison Louisette : 8 boulevard Saint-Denis, Paris 10, métro Strasbourg-Saint-Denis, ouvert tous les jours de 8 h à 2 h.",
   "og_titre": "Infos pratiques — La Maison Louisette",
-  "ariane": "Infos pratiques"
+  "ariane": "Infos pratiques",
+  "mot_cle": "Saint-Denis"
  },
  "mentions-legales": {
   "titre": "Mentions légales — La Maison Louisette",
@@ -56,13 +64,14 @@
   "prix_autorises": true
  },
  "carte": {
-  "titre": "La carte — Louisette, brasserie des Grands Boulevards, Paris 10",
-  "description": "La carte de La Maison Louisette, 8 boulevard Saint-Denis, Paris 10. Cuisine française et italienne, service continu de 8 h à 2 h, sept jours sur sept.",
-  "og_titre": "La carte — La Maison Louisette",
+  "titre": "Menu et carte — Louisette, brasserie Paris 10",
+  "description": "Le menu de la brasserie Louisette à Paris 10 : cuisine française et italienne, pizzas, brunch, happy hour et bar. Prix et allergènes plat par plat, de 8 h à 2 h.",
+  "og_titre": "Menu et carte — La Maison Louisette",
   "ariane": "La carte",
   "prix_autorises": true,
   "brouillon": false,
-  "commentaire_brouillon": "Sortie du brouillon le 29/09/2026. Le contenu est extrait de LIVRAISON_v114/site par _outils/carte-depuis-livraison.py, une langue par page : le francais dans carte.html, l anglais dans carte-en.html quand le moteur fournira des titres de rubrique anglais. Les codes allergenes et les badges de regime restent a la porte tant que la cuisine ne les a pas revalides ; ALLERGENES=1 les fait sortir."
+  "commentaire_brouillon": "Sortie du brouillon le 29/09/2026. Le contenu est extrait de LIVRAISON_v114/site par _outils/carte-depuis-livraison.py, une langue par page : le francais dans carte.html, l anglais dans carte-en.html quand le moteur fournira des titres de rubrique anglais. Les codes allergenes et les badges de regime restent a la porte tant que la cuisine ne les a pas revalides ; ALLERGENES=1 les fait sortir.",
+  "mot_cle": "menu"
  },
  "introuvable": {
   "titre": "Page introuvable — Louisette, Paris 10",
@@ -73,9 +82,10 @@
   "commentaire": "Page d erreur 404. Construite comme les autres pour heriter de la charte et de la navigation, mais tenue hors du sitemap : une 404 indexee est une erreur. Le fichier livre s appelle 404.html, voir la fin de construire.py."
  },
  "quartier": {
-  "titre": "Le quartier : monuments, passages et musées — Louisette, Paris 10",
-  "description": "Deux arcs de triomphe classés en 1862 à moins de deux minutes, onze monuments historiques protégés à dix minutes ou moins, les passages couverts et les musées des Grands Boulevards, avec les distances mesurées depuis le 8 boulevard Saint-Denis.",
+  "titre": "Le quartier : monuments et passages — Louisette, Paris 10",
+  "description": "Les portes Saint-Denis et Saint-Martin à moins de deux minutes, onze monuments protégés à dix minutes ou moins, les passages couverts : distances mesurées à pied.",
   "og_titre": "Le quartier — La Maison Louisette",
-  "ariane": "Le quartier"
+  "ariane": "Le quartier",
+  "mot_cle": "quartier"
  }
 }
