@@ -1147,14 +1147,27 @@ def controler(faites):
     t0 = re.search(r"<title>([^<]*)</title>", a0)
     d0 = re.search(r'<meta name="description" content="([^"]*)"', a0)
     t0 = t0.group(1) if t0 else ""; d0 = d0.group(1) if d0 else ""
+    # Regle arbitree le 30/09 (red team titre, choix de Dawoud : chic et local)
     if len(t0) > 62:
         pbs.append("index.html : le titre fait %d signes, Google le coupe vers 60" % len(t0))
-    if not d0 or len(d0) > 165:
-        pbs.append("index.html : description absente ou trop longue (%d signes)" % len(d0))
+    if not d0 or not (130 <= len(d0) <= 165):
+        pbs.append("index.html : description absente ou hors 130-165 signes (%d)" % len(d0))
     _n = lambda x: re.sub(r"[\s\-\u2011\u2010]+", " ", _sa(x))
-    for req in ("restaurant", "strasbourg-saint-denis"):
-        if _n(req) not in _n(t0):
-            pbs.append("index.html : le titre ne contient pas la requete « %s »" % req)
+    if not (_n(t0).startswith("louisette") or _n(t0).endswith("louisette")):
+        pbs.append("index.html : le titre doit commencer ou finir par Louisette")
+    if "brasserie" not in _n(t0):
+        pbs.append("index.html : le titre doit contenir « brasserie » (categorie principale de la fiche)")
+    if not any(r in _n(t0) for r in ("strasbourg saint denis", "grands boulevards", "porte saint denis", "paris 10")):
+        pbs.append("index.html : le titre n a aucun repere local")
+    if re.search(r"\d{1,2}\s?h\b", t0):
+        pbs.append("index.html : aucune heure dans le titre (elle devient fausse un jour sur sept)")
+    for mot in (r"m[ée]diterran", r"8 ?h ?30", r"fait maison", r"\b250\b", r"halal", r"meilleur", r"incontournable", r"!"):
+        if re.search(mot, t0 + " " + d0, re.I):
+            pbs.append("index.html : titre ou description contient un interdit (%s)" % mot)
+    if re.search(r"\d{1,2}\s?h\b", re.sub(r"jusqu.\s?à 2\s?h", "", d0)):
+        pbs.append("index.html : la description cite une heure autre que « jusqu'à 2 h »")
+    if not re.search(r'"@type":\s*"WebSite"[^}]*"name":\s*"Louisette"', a0, re.S):
+        pbs.append("index.html : WebSite name doit etre « Louisette » (ce que les gens cherchent)")
     if '"@type":"WebSite"' not in a0.replace(" ", ""):
         pbs.append("index.html : donnees WebSite absentes (nom du site dans Google)")
     # --- horaires : le dimanche, la maison ouvre a 9 h (fiche Google, carte du
