@@ -24,7 +24,7 @@ On ecrit "Bar & cocktails", pas "Bar &amp; cocktails" : le generateur
 s'occupe seul de la mise en forme HTML. Les deux ecritures fonctionnent,
 mais le texte ordinaire est celui qu'il faut utiliser.
 """
-import io, os, json, re, sys
+import glob, io, os, json, re, sys
 
 RACINE = os.path.dirname(os.path.abspath(__file__))
 def lire(p):  return io.open(os.path.join(RACINE, p), encoding="utf-8").read()
@@ -334,6 +334,52 @@ def newsletter():
     return "\n".join(h)
 
 # ----------------------------------------------------------------- une page
+# --- images responsives : chaque image affichee dans une page recoit ses
+# variantes AVIF et WebP (r/, produites par _outils/images-responsives.py).
+# Le navigateur choisit la taille selon l ecran ; un telephone ne telecharge
+# plus une image de 1200 px pour une case de 175 px.
+def _tailles(contexte, premier):
+    if contexte == "bande":
+        return "(max-width:760px) %s, 360px" % ("92vw" if premier else "46vw")
+    if contexte == "pfig":
+        return "(max-width:600px) 92vw, 520px"
+    return "100vw"
+def responsive(html):
+    # idempotent : on deballe d abord ce qu une passe precedente a produit,
+    # pour que de nouvelles variantes (nouvelle largeur, nouvelle photo) soient prises.
+    html = re.sub(r'<picture><source type="image/avif" srcset="r/[^"]*" sizes="[^"]*">(<img\b[^>]*?) srcset="[^"]*" sizes="[^"]*">\s*</picture>', r'\1>', html)
+    def rempl(m, contexte="", premier=False):
+        tag = m.group(0)
+        src = re.search(r'\bsrc="([^"]+)"', tag).group(1)
+        base = os.path.splitext(os.path.basename(src))[0]
+        if "srcset=" in tag:
+            return tag
+        larg = sorted(int(x.rsplit("-", 1)[1][:-5]) for x in glob.glob("r/%s-*.avif" % base)
+                      if x.rsplit("-", 1)[1][:-5].isdigit())
+        if not larg:
+            return tag
+        wsrc = re.search(r'\bwidth="(\d+)"', tag)
+        wsrc = int(wsrc.group(1)) if wsrc else 0
+        av = ", ".join("r/%s-%d.avif %dw" % (base, w, w) for w in larg)
+        wb = ", ".join("r/%s-%d.webp %dw" % (base, w, w) for w in larg)
+        if wsrc > max(larg) and not os.path.exists("r/%s-%d.webp" % (base, wsrc)):
+            wb += ", %s %dw" % (src, wsrc)
+        s = _tailles(contexte, premier)
+        img = tag[:-1].rstrip("/").rstrip() + ' srcset="%s" sizes="%s">' % (wb, s)
+        return '<picture><source type="image/avif" srcset="%s" sizes="%s">%s</picture>' % (av, s, img)
+    motif = re.compile(r'<img\b[^>]*?\bsrc="(?:p/\d+|feature-[a-z]+|hero-poster|plats-poster)\.webp"[^>]*>')
+    def bande(mb):
+        bloc = mb.group(0); k = [0]
+        def r2(m):
+            k[0] += 1
+            return rempl(m, "bande", k[0] == 1)
+        return motif.sub(r2, bloc)
+    html = re.sub(r'<div class="bande">.*?</div>', bande, html, flags=re.S)
+    html = re.sub(r'<figure class="pfig">.*?</figure>', lambda mf: motif.sub(lambda m: rempl(m, "pfig"), mf.group(0)), html, flags=re.S)
+    # le reste (accueil : grandes images pleine largeur), hors <picture> deja faits
+    morceaux = re.split(r'(<picture>.*?</picture>)', html, flags=re.S)
+    return "".join(x if x.startswith("<picture>") else motif.sub(rempl, x) for x in morceaux)
+
 def page(slug):
     m = P[slug]; f = slug + ".html"
     corps = lire("_contenu/%s.html" % slug)
@@ -372,13 +418,13 @@ def page(slug):
          '<script src="assets/mesure.js" defer></script>',
          '<script src="assets/site.js" defer></script>',
          '</body>', '</html>']
-    ecrire(f, "\n".join(h))
+    ecrire(f, responsive("\n".join(h)))
     return f
 
 # ----------------------------------------------------------------- l'accueil
 def accueil():
     """Ne remplace que les blocs marques. Tout le reste d'index.html est intact."""
-    h = lire("index.html"); avant = h
+    h = responsive(lire("index.html")); avant = lire("index.html")
     vues = _meta()
     if meta_js(vues): print("meta.js : regenere depuis _donnees/photos.json")
     pistes, nb_vues = galerie()
@@ -1116,6 +1162,16 @@ def controler(faites):
             pbs.append("assets/site.css : la classe .sr (texte pour lecteur d ecran) manque, "
                        "les mots d allergene en clair deviennent visibles")
 
+    # --- toute image de contenu (p/, feature, poster) est responsive, et
+    # chaque fichier annonce dans un srcset existe sur le disque.
+    for f7 in list(faites) + ["index.html"]:
+        b7 = lire(f7)
+        for m7 in re.finditer(r'<img\b[^>]*?\bsrc="((?:p/\d+|feature-[a-z]+|hero-poster|plats-poster)\.webp)"[^>]*>', b7):
+            if "srcset=" not in m7.group(0):
+                pbs.append("%s : image sans variantes responsives (%s) : lancer _outils/images-responsives.py" % (f7, m7.group(1)))
+        for u7 in set(re.findall(r'(r/[\w-]+\.(?:avif|webp)) \d+w', b7)):
+            if not os.path.exists(u7):
+                pbs.append("%s : %s annonce dans un srcset mais absent" % (f7, u7))
     # --- interdits de regression du projet : jamais ecrits, meme en rappel.
     INTERDITS = ((r"\b2[25]0(?:\s|&nbsp;| )*(?:/(?:\s|&nbsp;)*400|personnes|couverts|convives|assis|places)\b", "capacite 220/250"),
                  (r"\b8 ?h ?30\b", "ouverture a 8h30"),

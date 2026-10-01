@@ -179,7 +179,7 @@
 <header class="hero">
   <video class="bg" id="herovid" autoplay muted loop playsinline preload="auto" poster="hero-poster.webp" aria-hidden="true"></video>
   <script>(function(){var h=document.querySelector('.hero');if(h&&window.matchMedia('(pointer:fine)').matches&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches){var raf=0,mx=50,my=50;h.addEventListener('pointermove',function(e){var r=h.getBoundingClientRect();mx=((e.clientX-r.left)/r.width)*100;my=((e.clientY-r.top)/r.height)*100;if(!raf)raf=requestAnimationFrame(function(){raf=0;h.style.setProperty('--mx',mx+'%');h.style.setProperty('--my',my+'%');});});}})();(function(){var v=document.getElementById('herovid');v.src=window.matchMedia('(max-width:820px)').matches?'hero-mobile.mp4':'hero.mp4';v.load();var pr=v.play();if(pr&&pr.catch)pr.catch(function(){});})();</script>
-  <img class="poster-img" fetchpriority="high" src="hero-poster.webp" width="1600" height="900" alt="La salle de Louisette au néon rose, brasserie parisienne des Grands Boulevards">
+  <picture><source type="image/avif" srcset="r/hero-poster-480.avif 480w, r/hero-poster-800.avif 800w, r/hero-poster-1200.avif 1200w, r/hero-poster-1600.avif 1600w" sizes="100vw"><img class="poster-img" fetchpriority="high" src="hero-poster.webp" width="1600" height="900" alt="La salle de Louisette au néon rose, brasserie parisienne des Grands Boulevards" srcset="r/hero-poster-480.webp 480w, r/hero-poster-800.webp 800w, r/hero-poster-1200.webp 1200w, r/hero-poster-1600.webp 1600w" sizes="100vw"></picture>
   <div class="veil"></div>
   <div class="glow" aria-hidden="true"></div>
   <div class="wrap in">
@@ -224,7 +224,7 @@
 </section>
 
 <!-- 02 feature plat -->
-<section class="feature"><img src="feature-plat.webp" width="1201" height="1800" loading="lazy" decoding="async" alt="Poulpe grillé aux fleurs comestibles, dressé à Louisette">
+<section class="feature"><picture><source type="image/avif" srcset="r/feature-plat-480.avif 480w, r/feature-plat-800.avif 800w, r/feature-plat-1200.avif 1200w, r/feature-plat-1201.avif 1201w" sizes="100vw"><img src="feature-plat.webp" width="1201" height="1800" loading="lazy" decoding="async" alt="Poulpe grillé aux fleurs comestibles, dressé à Louisette" srcset="r/feature-plat-480.webp 480w, r/feature-plat-800.webp 800w, r/feature-plat-1200.webp 1200w, r/feature-plat-1201.webp 1201w" sizes="100vw"></picture>
   <div class="veil2"></div>
   <div class="wrap cap">
     <span class="cnum">À table</span>
@@ -235,7 +235,7 @@
 </section>
 
 <!-- 03 feature bar -->
-<section class="feature"><img src="feature-bar.webp" width="1200" height="1800" loading="lazy" decoding="async" alt="Service du champagne à Louisette, banquettes roses en arrière-plan">
+<section class="feature"><picture><source type="image/avif" srcset="r/feature-bar-480.avif 480w, r/feature-bar-800.avif 800w, r/feature-bar-1200.avif 1200w" sizes="100vw"><img src="feature-bar.webp" width="1200" height="1800" loading="lazy" decoding="async" alt="Service du champagne à Louisette, banquettes roses en arrière-plan" srcset="r/feature-bar-480.webp 480w, r/feature-bar-800.webp 800w, r/feature-bar-1200.webp 1200w" sizes="100vw"></picture>
   <div class="veil2"></div>
   <div class="wrap cap">
     <span class="cnum">Le bar</span>
@@ -245,7 +245,7 @@
 </section>
 
 <!-- 04 feature lieu -->
-<section class="feature"><img src="feature-lieu.webp" width="1500" height="2250" loading="lazy" decoding="async" alt="Le cerisier en fleurs dans la salle de Louisette, banquettes roses et tables de marbre dressées">
+<section class="feature"><picture><source type="image/avif" srcset="r/feature-lieu-480.avif 480w, r/feature-lieu-800.avif 800w, r/feature-lieu-1200.avif 1200w, r/feature-lieu-1500.avif 1500w" sizes="100vw"><img src="feature-lieu.webp" width="1500" height="2250" loading="lazy" decoding="async" alt="Le cerisier en fleurs dans la salle de Louisette, banquettes roses et tables de marbre dressées" srcset="r/feature-lieu-480.webp 480w, r/feature-lieu-800.webp 800w, r/feature-lieu-1200.webp 1200w, r/feature-lieu-1500.webp 1500w" sizes="100vw"></picture>
   <div class="veil2"></div>
   <div class="wrap cap">
     <span class="cnum">Le lieu</span>
@@ -261,7 +261,7 @@
   <p class="sub rv d2">Huit secondes, sans commentaire. Le film complet plus bas.</p>
   <div class="pbox rv d2">
     <video id="pv" muted loop playsinline preload="none" poster="plats-poster.webp" aria-label="Plats et desserts de Louisette, plans rapprochés"></video>
-    <img class="pp" src="plats-poster.webp" width="1500" height="844" loading="lazy" decoding="async" alt="Plats et desserts de Louisette, plans rapprochés">
+    <picture><source type="image/avif" srcset="r/plats-poster-480.avif 480w, r/plats-poster-800.avif 800w, r/plats-poster-1200.avif 1200w, r/plats-poster-1500.avif 1500w" sizes="100vw"><img class="pp" src="plats-poster.webp" width="1500" height="844" loading="lazy" decoding="async" alt="Plats et desserts de Louisette, plans rapprochés" srcset="r/plats-poster-480.webp 480w, r/plats-poster-800.webp 800w, r/plats-poster-1200.webp 1200w, r/plats-poster-1500.webp 1500w" sizes="100vw"></picture>
     <span class="tagp" aria-hidden="true">Sans le son</span>
   </div>
 </div>

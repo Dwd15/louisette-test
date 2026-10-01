@@ -1,3 +1,5 @@
+/* <picture> sans boite : les regles de mise en page visent l image. */
+picture{display:contents}
 :root{--ink:#0C0910;--ink2:#141019;--paper:#F0E9DE;--muted:#A89D91;--line:rgba(255,95,196,.26);--or:#FF5FC4;--neon:#FF5FC4;--ambre:#CC8551;
 --dsp:'Bodoni Moda',Didot,'Times New Roman',serif;--acc:'Bodoni Moda',Didot,serif;--txt:'Instrument Sans',system-ui,-apple-system,sans-serif}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -110,7 +112,7 @@ a{color:inherit}
 /* profondeur : l'image de section respire au defilement, sans librairie */
 @supports (animation-timeline: view()){
   @media (prefers-reduced-motion:no-preference){
-    .feature>img{animation:respire linear both;animation-timeline:view();animation-range:entry 0% exit 100%}
+    .feature>img,.feature>picture>img{animation:respire linear both;animation-timeline:view();animation-range:entry 0% exit 100%}
     @keyframes respire{from{transform:scale(1.12) translateY(-1.4%)}to{transform:scale(1.02) translateY(1.4%)}}
   }
 }
@@ -145,8 +147,8 @@ section{position:relative}
 .rule{height:1px;background:var(--line);border:0}
 /* feature full-bleed */
 .feature{position:relative;height:96vh;min-height:560px;display:flex;align-items:flex-end;overflow:hidden}
-.feature>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;filter:saturate(.94) brightness(.9);transform:scale(1.06);transition:transform 1.4s ease}
-.feature.in>img{transform:scale(1)}
+.feature>img,.feature>picture>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;filter:saturate(.94) brightness(.9);transform:scale(1.06);transition:transform 1.4s ease}
+.feature.in>img,.feature.in>picture>img{transform:scale(1)}
 .feature .veil2{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(12,9,16,.15),rgba(12,9,16,.2) 45%,rgba(12,9,16,.94))}
 .feature .cap{position:relative;z-index:2;width:100%}
 .feature .cap .cnum{color:var(--or)}
@@ -246,7 +248,7 @@ section{position:relative}
 .glb .cnt{font-family:var(--acc);letter-spacing:.2em;font-size:10px;color:var(--muted);margin-top:12px}
 .glb button{position:absolute;background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--paper);width:48px;height:48px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .glb .x{top:calc(14px + env(safe-area-inset-top));right:14px}.glb .prev{left:12px;top:50%;transform:translateY(-50%)}.glb .next{right:12px;top:50%;transform:translateY(-50%)}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hero .in>*,.hero .bg,.hero .veil,.scrollcue{opacity:1!important;transform:none!important;filter:none!important}.rv{opacity:1!important;transform:none!important}.hero .bg{display:none}.hero .poster-img{display:block!important}.gtrack{animation:none!important;transform:none!important}.gmq{overflow-x:auto}.feature>img{transform:none!important}.film .tease{transform:none!important;filter:none!important}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.hero .in>*,.hero .bg,.hero .veil,.scrollcue{opacity:1!important;transform:none!important;filter:none!important}.rv{opacity:1!important;transform:none!important}.hero .bg{display:none}.hero .poster-img{display:block!important}.gtrack{animation:none!important;transform:none!important}.gmq{overflow-x:auto}.feature>img,.feature>picture>img{transform:none!important}.film .tease{transform:none!important;filter:none!important}}
 
 /* ============================================================
    NAVIGATION ET PIED DE PAGE — ajoutés le 07/09/2026
@@ -367,7 +369,7 @@ body.page .minihd{transform:none;opacity:1;pointer-events:auto;position:fixed;
   border-radius:3px;border:1px solid rgba(255,95,196,.16);background:#141019}
 @media(max-width:760px){
   .sect.gal .bande{grid-template-columns:1fr 1fr;gap:10px}
-  .sect.gal .bande img:first-child{grid-column:1/-1;aspect-ratio:16/10}
+  .sect.gal .bande>img:first-child,.sect.gal .bande>picture:first-child>img{grid-column:1/-1;aspect-ratio:16/10}
 }
 
 /* --- bandeau photo : le navigateur ne calcule que les vignettes visibles --- */
