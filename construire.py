@@ -191,13 +191,13 @@ FAVICON = ("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F200
 # La feuille de Google bloquait l'affichage pendant 400 ms : on la charge
 # sans bloquer, et le navigateur affiche le texte avec la police de secours
 # en attendant (display=swap).
-_GF = ("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;"
-       "0,6..96,600;1,6..96,400;1,6..96,500&family=Instrument+Sans:wght@400;500;600&display=swap")
-POLICES = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
-           '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-           '<link rel="preload" as="style" href="%s">'
-           '<link rel="stylesheet" href="%s" media="print" onload="this.media=\'all\'">'
-           '<noscript><link rel="stylesheet" href="%s"></noscript>' % (_GF, _GF, _GF))
+# Les polices sont hebergees ici (assets/fonts, licence SIL OFL, sous-ensemble
+# latin) : plus aucun appel a Google au chargement, donc plus de transfert de
+# l adresse IP du visiteur, et deux connexions de moins avant le premier texte.
+# Chargees sans bloquer (media=print puis all) : mesure Lighthouse du 01/10,
+# un prechargement ou des @font-face dans site.css retardaient le premier texte.
+POLICES = ('<link rel="stylesheet" href="assets/polices.css" media="print" onload="this.media=\'all\'">'
+           '<noscript><link rel="stylesheet" href="assets/polices.css"></noscript>')
 
 def fil(nom):
     return '<nav class="ariane" aria-label="Fil d\'Ariane"><a href="./">Accueil</a> · %s</nav>' % esc(nom)
@@ -571,7 +571,7 @@ def controler(faites):
     #    Aucune donnee du visiteur n atteint Zenchef tant qu il ne clique pas.
     # Toute autre adresse arrete la construction : un tiers ne s ajoute pas par
     # inadvertance.
-    TIERS_ADMIS = {"fonts.googleapis.com", "fonts.gstatic.com", "bookings.zenchef.com"}
+    TIERS_ADMIS = {"bookings.zenchef.com"}  # polices auto-hebergees depuis le 01/10/2026
     # Seul ce qui se telecharge au chargement compte : un <a href> demande un
     # clic, un <link rel="canonical"> ne charge rien. Premiere version de ce
     # controle : elle signalait notre propre domaine canonique et le lien de

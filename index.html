@@ -22,9 +22,9 @@
 <meta name="twitter:description" content="Ouverte 7j/7 jusqu’à 2 h. Cuisine française et italienne préparée sur place. Paris 10.">
 <meta name="twitter:image" content="https://louisette-paris.com/img/og-louisette.jpg">
 <link rel="canonical" href="https://louisette-paris.com/">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="dns-prefetch" href="https://bookings.zenchef.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400;1,6..96,500&family=Instrument+Sans:wght@400;500;600&display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400;1,6..96,500&family=Instrument+Sans:wght@400;500;600&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400;1,6..96,500&family=Instrument+Sans:wght@400;500;600&display=swap"></noscript>
-<link rel="stylesheet" href="assets/site.css">
+<link rel="dns-prefetch" href="https://bookings.zenchef.com">
+
+<link rel="stylesheet" href="assets/polices.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="assets/polices.css"></noscript><link rel="stylesheet" href="assets/site.css">
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -179,12 +179,12 @@
 <header class="hero">
   <video class="bg" id="herovid" autoplay muted loop playsinline preload="auto" poster="hero-poster.webp" aria-hidden="true"></video>
   <script>(function(){var h=document.querySelector('.hero');if(h&&window.matchMedia('(pointer:fine)').matches&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches){var raf=0,mx=50,my=50;h.addEventListener('pointermove',function(e){var r=h.getBoundingClientRect();mx=((e.clientX-r.left)/r.width)*100;my=((e.clientY-r.top)/r.height)*100;if(!raf)raf=requestAnimationFrame(function(){raf=0;h.style.setProperty('--mx',mx+'%');h.style.setProperty('--my',my+'%');});});}})();(function(){var v=document.getElementById('herovid');v.src=window.matchMedia('(max-width:820px)').matches?'hero-mobile.mp4':'hero.mp4';v.load();var pr=v.play();if(pr&&pr.catch)pr.catch(function(){});})();</script>
-  <img class="poster-img" fetchpriority="high" src="hero-poster.webp" alt="La salle de Louisette au néon rose, brasserie parisienne des Grands Boulevards">
+  <img class="poster-img" fetchpriority="high" src="hero-poster.webp" width="1600" height="900" alt="La salle de Louisette au néon rose, brasserie parisienne des Grands Boulevards">
   <div class="veil"></div>
   <div class="glow" aria-hidden="true"></div>
   <div class="wrap in">
     <p class="k">Grands Boulevards, Paris 10</p>
-    <h1>Louisette<span class="h1s">brasserie parisienne · Strasbourg-Saint-Denis</span></h1>
+    <h1>Louisette<span class="h1s">brasserie parisienne, Strasbourg-Saint-Denis</span></h1>
     <p class="sig">La table des Grands Boulevards.</p>
     <p class="meta"><span id="live" class="dot">●</span> <span id="livetxt">Ouvert jusqu'à 2 h</span></p>
     <p class="meta2">Brasserie française et italienne préparée sur place. Ouverte tous les jours de 8 h à 2 h (9 h le dimanche).</p>
@@ -224,7 +224,7 @@
 </section>
 
 <!-- 02 feature plat -->
-<section class="feature"><img src="feature-plat.webp" alt="Poulpe grillé aux fleurs comestibles, dressé à Louisette">
+<section class="feature"><img src="feature-plat.webp" width="1201" height="1800" loading="lazy" decoding="async" alt="Poulpe grillé aux fleurs comestibles, dressé à Louisette">
   <div class="veil2"></div>
   <div class="wrap cap">
     <span class="cnum">À table</span>
@@ -235,7 +235,7 @@
 </section>
 
 <!-- 03 feature bar -->
-<section class="feature"><img src="feature-bar.webp" alt="Service du champagne à Louisette, banquettes roses en arrière-plan">
+<section class="feature"><img src="feature-bar.webp" width="1200" height="1800" loading="lazy" decoding="async" alt="Service du champagne à Louisette, banquettes roses en arrière-plan">
   <div class="veil2"></div>
   <div class="wrap cap">
     <span class="cnum">Le bar</span>
@@ -245,7 +245,7 @@
 </section>
 
 <!-- 04 feature lieu -->
-<section class="feature"><img src="feature-lieu.webp" alt="Le cerisier en fleurs dans la salle de Louisette, banquettes roses et tables de marbre dressées">
+<section class="feature"><img src="feature-lieu.webp" width="1500" height="2250" loading="lazy" decoding="async" alt="Le cerisier en fleurs dans la salle de Louisette, banquettes roses et tables de marbre dressées">
   <div class="veil2"></div>
   <div class="wrap cap">
     <span class="cnum">Le lieu</span>
@@ -261,7 +261,7 @@
   <p class="sub rv d2">Huit secondes, sans commentaire. Le film complet plus bas.</p>
   <div class="pbox rv d2">
     <video id="pv" muted loop playsinline preload="none" poster="plats-poster.webp" aria-label="Plats et desserts de Louisette, plans rapprochés"></video>
-    <img class="pp" src="plats-poster.webp" alt="Plats et desserts de Louisette, plans rapprochés">
+    <img class="pp" src="plats-poster.webp" width="1500" height="844" loading="lazy" decoding="async" alt="Plats et desserts de Louisette, plans rapprochés">
     <span class="tagp" aria-hidden="true">Sans le son</span>
   </div>
 </div>
