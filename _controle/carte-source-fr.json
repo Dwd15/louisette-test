@@ -2,7 +2,7 @@
  "langue": "fr",
  "chemin_source": "../LIVRAISON_v114/site",
  "allergenes": true,
- "articles": 240,
+ "articles": 239,
  "rubriques": 51,
  "prix": [
   "10 · 40 €",
@@ -69,9 +69,9 @@
   "9,90 €",
   "sur devis €"
  ],
- "articles_avec_code": 92,
- "separateurs_codes": 163,
- "articles_sans_code": 148,
+ "articles_avec_code": 95,
+ "separateurs_codes": 165,
+ "articles_sans_code": 144,
  "codes_vus": [
   "Cé",
   "F",
@@ -93,5 +93,7 @@
    "raison": "mesure Valhalla du 10/09 : Gymnase Marie-Bell 508 m / 7 min et Grand Rex 590 m / 7 min. « moins de six minutes » est faux pour deux des cinq salles."
   }
  ],
- "methode": "Extraction bs4. Titre de rubrique = span du h2 (em = anglais, ecarte). Codes allergenes rendus en abbr + mot en clair pour lecteur d ecran et recherche navigateur, plus data-al pour le filtre d exclusion. Toute rubrique sans aucun code porte l avertissement."
+ "methode": "Extraction bs4. Titre de rubrique = span du h2 (em = anglais, ecarte). Codes allergenes rendus en abbr + mot en clair pour lecteur d ecran et recherche navigateur, plus data-al pour le filtre d exclusion. Toute rubrique sans aucun code porte l avertissement.",
+ "source_allergenes": "v120",
+ "sha256_source_allergenes": "60c16a5985e0a4f5febad96ac47434b460e6a5661ff18c708ef9b93746de759f"
 }

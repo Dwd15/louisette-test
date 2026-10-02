@@ -24,7 +24,7 @@ On ecrit "Bar & cocktails", pas "Bar &amp; cocktails" : le generateur
 s'occupe seul de la mise en forme HTML. Les deux ecritures fonctionnent,
 mais le texte ordinaire est celui qu'il faut utiliser.
 """
-import glob, io, os, json, re, sys
+import glob, io, os, json, re, sys, subprocess
 
 RACINE = os.path.dirname(os.path.abspath(__file__))
 def lire(p):  return io.open(os.path.join(RACINE, p), encoding="utf-8").read()
@@ -541,6 +541,9 @@ def sitemap(faites):
 # ----------------------------------------------------------------- controles
 def controler(faites):
     pbs = []
+    verification = subprocess.run([sys.executable, "_outils/controler-allergenes.py"], capture_output=True, text=True)
+    if verification.returncode:
+        pbs.append("Allergenes v120 : " + verification.stdout + verification.stderr)
     # Une variable CSS jamais declaree rend la declaration entiere invalide,
     # en silence : ni erreur, ni avertissement, la regle disparait simplement.
     # Le 10/09 quatre regles etaient mortes ainsi — dont le contour de focus du
