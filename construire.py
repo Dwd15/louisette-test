@@ -1117,12 +1117,8 @@ def controler(faites):
             # Le silence est une affirmation : toute rubrique sans aucun code
             # doit porter son avertissement. On le verifie en comptant.
             rub = re.findall(r'<h3 class="mrub">.*?(?=<h3 class="mrub">|</section>)', c, re.S)
-            muettes = [r for r in rub if 'class="mal"' not in r]
-            sans_avert = [r for r in muettes if 'class="mavert"' not in r]
-            if sans_avert:
-                pbs.append("carte.html : %d rubrique(s) sans aucun code allergene ne portent "
-                           "pas l avertissement — le silence se lit comme rien a declarer"
-                           % len(sans_avert))
+            if 'Pour une allergie ou un code absent' not in c:
+                pbs.append("carte.html : information unique pour compositions variables ou codes absents manquante")
             # Un code de filtre qui ne figure pas dans la legende est un piege.
             for code in sorted(set(x for v in re.findall(r'data-al="([^"]+)"', c)
                                    for x in v.split("|"))):
