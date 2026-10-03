@@ -1,0 +1,65 @@
+/* Louisette C — palette proposée, 03/10/2026. */
+:root{--brand:#E82B67;--ink:#21141F;--ink2:#2B1B29;--paper:#F7EFE6;--muted:#C4B3BC;--accent:#FF8DB1;--or:var(--accent);--neon:var(--accent);--ambre:var(--muted);--line:#725A68;--cta-bg:#FF8DB1;--cta-text:#21141F}
+body{background:var(--ink);background-attachment:initial}
+.grain{display:none}
+.btn,.btn:hover{background:var(--cta-bg);color:var(--cta-text);box-shadow:none;border:1px solid var(--cta-bg);border-radius:4px;transform:none}
+.btn:hover{background:#FFA9C4;border-color:#FFA9C4}
+.btn.ghost,.btn.ghost:hover{background:transparent;color:var(--paper);border:1px solid #AA8C9D;box-shadow:none}
+:focus-visible{outline:3px solid var(--or);outline-offset:4px}
+.minihd,body.page .minihd{background:#21141F!important;border-bottom:1px solid var(--line);backdrop-filter:none;height:80px;padding:10px 26px}
+body.page{padding-top:80px}
+@media(min-width:900px){body.page main nav.serv{top:80px}}
+.minihd .n{flex-shrink:0}.minihd .n a{padding:0!important;border:0!important;background:none!important}
+.logo-c{display:block;width:170px;height:auto}.tiroir .logo-c{width:190px}
+.logo-c-hero{width:560px;max-width:100%;height:auto;display:block;margin:0 0 20px}
+.minihd>a:last-child,.tiroir .resa{background:var(--cta-bg);color:var(--cta-text);border-color:var(--cta-bg);font-family:var(--txt);font-weight:600}
+.minihd .nav a{opacity:1;border:0;border-bottom:2px solid transparent;color:var(--paper)}
+.minihd .nav a:hover,.minihd .nav a[aria-current=page]{border-bottom-color:var(--accent)}
+.dock{background:linear-gradient(transparent,#21141F 24%)}.dock .btn.ghost{background:#21141F}
+.acces,.journey,.newsletter,.reserve{background:var(--ink2)}
+.hero .veil{background:linear-gradient(180deg,rgba(33,20,31,.45),rgba(33,20,31,.35) 30%,rgba(33,20,31,.85) 66%,#21141F),linear-gradient(100deg,rgba(33,20,31,.6),transparent 85%)}
+.hero .meta2{color:var(--paper)}
+.foot .plan a{opacity:1}.foot .soc a{border-color:#AA8C9D}
+.foot,.tiroir{background:var(--ink)}
+/* Contextes de lecture clairs : variables locales, pas d'inversion globale. */
+body.page:not(.brand-night) main,.trust,.reserve{
+ --ink:#FFF9F3;--ink2:#F6E9EC;--paper:#25151F;--muted:#6F5A62;--or:#A52250;--accent:#A52250;--ambre:#6F5A62;--line:#C8ADB8;--cta-bg:#25151F;--cta-text:#FFF9F3;
+ background:var(--ink);color:var(--paper)
+}
+.trust{border-color:#E4CFD7}.trust div+div{border-color:#E4CFD7}
+body.page:not(.brand-night) .ariane{background:#FFF9F3;color:#6F5A62}
+body.page:not(.brand-night) .ariane a{color:#6F5A62}
+body.page:not(.brand-night) main .phero .pchap,
+body.page:not(.brand-night) main .sect p,
+body.page:not(.brand-night) main .sect ul,
+body.page:not(.brand-night) main .faits td,
+body.page:not(.brand-night) main .carte p{color:var(--paper)}
+body.page:not(.brand-night) main .sect p.md,
+body.page:not(.brand-night) main .sect p.mal,
+body.page:not(.brand-night) main .sect p.mnote,
+body.page:not(.brand-night) main .sect p.hserv{color:var(--muted)}
+body.page:not(.brand-night) main .btn:hover,.reserve .btn:hover{background:#492B3C;color:#FFF9F3;border-color:#492B3C}
+body.page:not(.brand-night) main .btn.ghost,.reserve .btn.ghost{background:transparent;color:var(--paper);border-color:#8C6D7C}
+body.page:not(.brand-night) main nav.serv{background:#FFF9F3}
+body.page:not(.brand-night) main nav.serv a{border-color:#8C6D7C}
+body.page:not(.brand-night) main nav.serv a:hover{background:#25151F;color:#FFF9F3;border-color:#25151F}
+body.page:not(.brand-night) main .sect.form input,
+body.page:not(.brand-night) main .sect.form select,
+body.page:not(.brand-night) main .sect.form textarea{background:#FFF;color:#25151F;border-color:#8C6D7C}
+body.page:not(.brand-night) main .sect.form input::placeholder,
+body.page:not(.brand-night) main .sect.form textarea::placeholder{color:#6F5A62;opacity:1}
+body.page:not(.brand-night) main .sect.form .btn,
+body.page:not(.brand-night) main .sect.direct .b1{background:#25151F;color:#FFF9F3}
+body.page:not(.brand-night) main .sect.direct .b2{border-color:#8C6D7C}
+body.page:not(.brand-night) main .presa .b1,
+body.page:not(.brand-night) main .presa .b1:hover{background:#25151F;color:#FFF9F3;border:1px solid #25151F;box-shadow:none}
+body.page:not(.brand-night) main .presa .b2{color:#25151F;border-color:#8C6D7C}
+body.page:not(.brand-night) main .plan-leg b{color:#FFF9F3}
+body.page:not(.brand-night) main .plan-leg li.mon b,
+body.page:not(.brand-night) main .plan-leg li.serv b{color:#25151F}
+body.page:not(.brand-night) main ul.mliste li{border-bottom-color:#E4CFD7}
+body.page:not(.brand-night) main .mal abbr{text-decoration-color:#8C6D7C}
+.carte{background:transparent}.ov .ring,.film .chip,.film .mute{box-shadow:none}
+@media(max-width:600px){.minihd .logo-c{width:150px}.minihd{padding-inline:20px}}
+@media(max-width:360px){.minihd{padding-inline:12px;gap:8px}.minihd .logo-c{width:115px}}
+@media(prefers-reduced-motion:reduce){.btn,.minihd{transition:none}}

@@ -142,14 +142,14 @@ def navigation(courante):
 def tiroir():
     liens = S["navigation"] + S["tiroir_extra"]
     return ('<div class="tiroir" id="tiroir" role="dialog" aria-modal="true" aria-label="Menu">'
-            '<div class="haut"><span class="n"><b>L</b>ouisette</span>'
+            '<div class="haut"><span class="n"><img class="logo-c" src="assets/louisette-logo-c.png" alt="Louisette" width="2172" height="724"></span>'
             '<button class="x" id="tiroirX" aria-label="Fermer le menu">&#10005;</button></div>'
             + "".join('<a class="lien" href="%s">%s</a>' % (esc(h), esc(l)) for h, l in liens)
             + '<a class="resa" href="%s" target="_blank" rel="noopener">Réserver une table</a></div>' % esc(S["reservation"]))
 
 def barre(courante=None):
     return ('<div class="minihd" id="minihd">'
-            '<span class="n"><a href="./" style="color:inherit;text-decoration:none"><b>L</b>ouisette</a></span>'
+            '<span class="n"><a href="./" style="color:inherit;text-decoration:none"><img class="logo-c" src="assets/louisette-logo-c.png" alt="Louisette" width="2172" height="724"></a></span>'
             + navigation(courante) +
             '<button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">&#9776;</button>'
             '<a href="%s" target="_blank" rel="noopener">Réserver</a></div>' % esc(S["reservation"]))
@@ -389,7 +389,7 @@ def page(slug):
          '<title>%s</title>' % esc(m["titre"]),
          '<meta name="description" content="%s">' % esc(m["description"]),
          '<meta name="robots" content="noindex,nofollow">',
-         '<meta name="theme-color" content="#0C0910">',
+         '<meta name="theme-color" content="#21141F">',
          '<link rel="icon" href="%s">' % FAVICON,
          '<meta property="og:type" content="article">',
          '<meta property="og:site_name" content="%s">' % esc(S["nom"]),
@@ -408,8 +408,9 @@ def page(slug):
          '<link rel="canonical" href="%s%s">' % (SITE, f),
          POLICES,
          '<link rel="stylesheet" href="assets/site.css">',
+         '<link rel="stylesheet" href="assets/louisette-brand.css">',
          ariane_ld(m["ariane"], f),
-         '</head>', '<body class="page">',
+         '</head>', '<body class="page%s">' % (' brand-night' if slug == 'bar-cocktails' else ''),
          '<a href="#contenu" class="skip">Aller au contenu</a>',
          '<div class="grain" aria-hidden="true"></div>',
          barre(f), tiroir(), fil(m["ariane"]),
